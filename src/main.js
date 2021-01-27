@@ -3,8 +3,11 @@ window.addEventListener('DOMContentLoaded', function() {
 const addButton = document.getElementById('add-button');
 const sortButton = document.getElementById('sort-button');
 const userInput = document.getElementById('text-input');
-const list = document.getElementById('todo-list')
-const userPriority = document.getElementById('priority-selector')
+const list = document.getElementById('todo-list');
+const userPriority = document.getElementById('priority-selector');
+const counter = document.getElementById('counter');
+let count = list.querySelectorAll('li').length
+console.log(count)
 //BASE END
 
 //FUNCTIONS
@@ -27,6 +30,10 @@ const addToList = () => {
     itemContainer.appendChild(todoText);
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
+    userInput.value = "";
+    userInput.focus();
+    count = list.querySelectorAll('li').length
+    console.log(count)
 }
 //COMFY DATE
 const comfyDate = () => {
@@ -36,6 +43,8 @@ const comfyDate = () => {
   }
 
 //BEGIN
+userInput.focus();
+// counter.appendChild(document.createTextNode(count + ' tasks'));
 addButton.addEventListener('click',addToList);
 
 

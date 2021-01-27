@@ -1,3 +1,11 @@
+#control-section {
+  display: flex;
+}
+
+#control-section * {
+  margin: 6px;
+}
+
 .todo-text {
   color: red;
 }
