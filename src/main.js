@@ -6,11 +6,14 @@ const userInput = document.getElementById('text-input');
 const list = document.getElementById('todo-list');
 const userPriority = document.getElementById('priority-selector');
 const counter = document.getElementById('counter').appendChild(document.createTextNode(""));
+const saved = localStorage.getItem('listinput')
 //BASE END
 
 //FUNCTIONS
 //FUNCTION: ADD TO LIST
 const addToList = () => {
+    if (userInput.value === "") {
+      userInput.focus(); return;}
     const listItem = document.createElement('li');
     const itemContainer = document.createElement('div');
     const todoText = document.createElement('div');
@@ -51,12 +54,33 @@ const comfyDate = () => {
 
 
 //FUNCTION: SORT LIST
-
+function sortList() {
+  let i;
+  let shouldSwitch;
+  let switching = true;
+  while (switching) {
+    switching = false;
+    const listItems = list.getElementsByTagName("LI");
+    for (i = 0; i < listItems.length - 1; i++) {
+      shouldSwitch = false;
+      let priorityValue = listItems[i].querySelector("div.todo-priority").innerHTML;
+      if (priorityValue > listItems[i + 1].querySelector("div.todo-priority").innerHTML) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      listItems[i].parentNode.insertBefore(listItems[i + 1], listItems[i]);
+      switching = true;
+    }
+  }
+}
 
 
 // --- BEGIN --- //
 userInput.focus();
 addButton.addEventListener('click',addToList);
+sortButton.addEventListener('click',sortList);
 
 
 
