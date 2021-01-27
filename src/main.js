@@ -21,8 +21,8 @@ const addToList = () => {
     todoDate.classList.add('todo-created-at');
     todoPriority.classList.add('todo-priority');
     todoText.appendChild(document.createTextNode(userInput.value));
-    todoDate.appendChild(document.createTextNode(', added at: ' + comfyDate()))
-    todoPriority.appendChild(document.createTextNode(', Priority ' + userPriority.value))
+    todoDate.appendChild(document.createTextNode(', added at: ' + comfyDate() + ',  Priority: '))
+    todoPriority.appendChild(document.createTextNode(userPriority.value))
     list.appendChild(listItem);
     listItem.appendChild(itemContainer);
     itemContainer.appendChild(todoText);
