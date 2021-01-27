@@ -6,6 +6,7 @@
     <title>My TODO List</title>
     <script src="utils.js"></script>
     <script src="main.js"></script>
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -21,6 +22,12 @@
         <option value="5" id="5">5 - Anytime, no rush</option>
       </select>
       <div id="counter">You have: </div>
+      <div id="registration">
+        <label>First name: </label><input type="text" id="first-name">
+        <label>Last name: </label><input type="text" id="last-name">
+        <button type="submit" id="register-button">Submit</button>
+        <span id="registered"></span>
+      </div>
     </div>
     <div id="view-section">
       <ul id="todo-list"></ul>
