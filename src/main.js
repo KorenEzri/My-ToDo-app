@@ -74,6 +74,8 @@ function sortList() {
       switching = true;
     }
   }
+  userInput.focus();
+
 }
 
 
