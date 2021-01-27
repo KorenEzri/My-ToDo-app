@@ -5,13 +5,11 @@ const sortButton = document.getElementById('sort-button');
 const userInput = document.getElementById('text-input');
 const list = document.getElementById('todo-list');
 const userPriority = document.getElementById('priority-selector');
-const counter = document.getElementById('counter');
-let count = list.querySelectorAll('li').length
-console.log(count)
+const counter = document.getElementById('counter').appendChild(document.createTextNode(""));
 //BASE END
 
 //FUNCTIONS
-//ADD TO LIST
+//FUNCTION: ADD TO LIST
 const addToList = () => {
     const listItem = document.createElement('li');
     const itemContainer = document.createElement('div');
@@ -32,19 +30,32 @@ const addToList = () => {
     itemContainer.appendChild(todoPriority);
     userInput.value = "";
     userInput.focus();
-    count = list.querySelectorAll('li').length
-    console.log(count)
+    updateCounter()
 }
-//COMFY DATE
+
+//FUNCTION: UPDATE COUNTER
+const updateCounter = () => {
+  let count = list.querySelectorAll('li').length
+  if (count === 1) {
+    counter.textContent = count + " task"
+  }
+  else counter.textContent = count + " tasks"
+}
+
+//FUNCTION: COMFY DATE
 const comfyDate = () => {
     const current_datetime = new Date();
     const formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
     return formatted_date;
   }
 
-//BEGIN
+
+//FUNCTION: SORT LIST
+
+
+
+// --- BEGIN --- //
 userInput.focus();
-// counter.appendChild(document.createTextNode(count + ' tasks'));
 addButton.addEventListener('click',addToList);
 
 
