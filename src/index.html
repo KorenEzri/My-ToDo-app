@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My TODO List</title>
-    <script src="utils.js"></script>
+    <!-- <script src="utils.js"></script> -->
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div id="control-section">
@@ -12,15 +14,15 @@
       <button id="sort-button">Sort</button>
       <input type="text" id="text-input">
       <select name="priority-selector" id="priority-selector">
-        <option value="1" id="1">1 - Most Important</option>
-        <option value="2" id="2">2 - Important</option>
-        <option value="3" id="3">3 - Somewhat Important</option>
-        <option value="4" id="4">4 - Not too pressing</option>
-        <option value="5" id="5">5 - Anytime, no rush</option>
+        <option value="1 - Most Important" id="1">1 - Most Important</option>
+        <option value="2 - Important" id="2">2 - Important</option>
+        <option value="3 - Somewhat Important" id="3">3 - Somewhat Important</option>
+        <option value="4 - Not too pressing" id="4">4 - Not too pressing</option>
+        <option value="5 - Anytime, no rush" id="5">5 - Anytime, no rush</option>
       </select>
     </div>
     <div id="view-section">
-      <ul>
+      <ul id="todo-list">
 
       </ul>
     </div>

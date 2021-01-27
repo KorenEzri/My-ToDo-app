@@ -1,0 +1,16 @@
+.todo-text {
+  color: red;
+}
+
+.todo-created-at {
+  color: green;
+}
+
+.todo-priority {
+  color: blue;
+}
+
+.todo-container {
+  display: flex;
+  background-color: whitesmoke;
+}
