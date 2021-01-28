@@ -9,7 +9,6 @@ const sortButton = document.getElementById('sort-button');
 const registerButton = document.getElementById('register-button');
 //BUTTONS END
 //REGISTRATION
-const newUserData = []
 const firstNameInput = document.getElementById('first-name');
 const lastNameInput = document.getElementById('last-name');
 const registerConfirm = document.getElementById('registered');
@@ -94,31 +93,37 @@ function sortList() {
 }
 
 //FUNCTION: CREATE BIN
-//https://api.jsonbin.io/b 
+const registerData = []
+const newUserData = []
 const CREATE_BIN = `https://api.jsonbin.io/b`;
 const CREATE_BIN_KEY = `$2b$10$M/SuUy3w9OBnfU3zREzMHODNu1OFT8C1.5uGt.UGXEWctobSXMIjO`;
-const createBin = async (first,last) => {
-  const response = await axios.post(CREATE_BIN, {
-    firstName: first,
-    lastName: last,
-  },
-  {
-  headers: {
-    'secret-key': CREATE_BIN_KEY,
-    'private': false
-  },
-})
-  const userId = response.data.id;
-  const userCredentials = response.data.data;
+registerData.push({firstname: firstNameInput.value, lastname: lastNameInput.value})
+
+const createBin = async (url = CREATE_BIN, data = JSON.stringify(registerData)) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'secret-key': CREATE_BIN_KEY,
+      'private': false
+    },
+    body: data
+  });
+  const jsonRes = await response.json();
+  const userId = jsonRes.id;
+  const userCredentials = jsonRes.data;
+  console.log(userCredentials)
   newUserData.push({name: userId}, {initial: userCredentials});
   registerConfirm.appendChild(document.createTextNode('Congratulations! Your log-in details are: '));
   registerConfirm.appendChild(document.createElement('br'));
-  registerConfirm.appendChild(document.createTextNode('Username: ' + userCredentials.firstName + " " + userCredentials.lastName))
+  registerConfirm.appendChild(document.createTextNode('Username: ' + userCredentials.firstname + " " + userCredentials.lastname))
   registerConfirm.appendChild(document.createElement('br'));
   registerConfirm.appendChild(document.createTextNode('Your super-secret-ID-number is: ' + userId))
   registerConfirm.appendChild(document.createElement('br'));
   registerConfirm.appendChild(document.createTextNode("You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"))
 }
+
+
 
 //READ BIN
 //https://api.jsonbin.io/ 
@@ -152,7 +157,7 @@ sortButton.addEventListener('click',sortList);
 
 //REGISTRATION
 registerButton.addEventListener('click', () => {
-  createBin(firstNameInput.value,lastNameInput.value);
+  createBin();
 })
 
 
