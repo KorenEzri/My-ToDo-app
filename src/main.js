@@ -1,4 +1,3 @@
-// const { default: axios } = require("axios");
 window.addEventListener("DOMContentLoaded", function () {
   //BASE
   // BUTTONS
@@ -21,7 +20,6 @@ window.addEventListener("DOMContentLoaded", function () {
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
   //LIST END
-  const saved = localStorage.getItem("listinput");
   //BASE END
 
   //FUNCTIONS
@@ -55,13 +53,11 @@ window.addEventListener("DOMContentLoaded", function () {
     updateCounter();
     updateBin();
   };
-
   //FUNCTION: UPDATE COUNTER
   const updateCounter = () => {
     let count = list.querySelectorAll("li").length;
     counter.textContent = count;
   };
-
   //FUNCTION: COMFY DATE
   const comfyDate = () => {
     const current_datetime = new Date();
@@ -80,7 +76,6 @@ window.addEventListener("DOMContentLoaded", function () {
       "  ";
     return formatted_date;
   };
-
   //FUNCTION: SORT LIST
   function sortList() {
     let i;
@@ -108,7 +103,6 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     userInput.focus();
   }
-
   //FUNCTION: CREATE BIN
   const registerData = [];
   const newUserDetails = [];
@@ -157,7 +151,6 @@ window.addEventListener("DOMContentLoaded", function () {
       )
     );
   };
-
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
     for (let i = 0; i < oldList.length; i++) {
@@ -187,7 +180,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   const oldList = [];
   const readBin = async () => {
-    const PASS = "601308561de5467ca6bd78f0";
+    const PASS = "601333211de5467ca6bd88ef";
     const GET_BIN = `https://api.jsonbin.io/v3/b/${PASS}/latest`;
     const binData = await fetch(GET_BIN);
     let main = await binData.json();
@@ -203,7 +196,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: UPDATE BIN
   const updateBin = async () => {
     const BIN_ID = `${userPassword.value}`;
-    const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/601308561de5467ca6bd78f0`;
+    const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/601333211de5467ca6bd88ef`;
     let todoList = [];
     const allDates = document.querySelectorAll(
       "#todo-list > li > div > div.todo-created-at"
@@ -222,7 +215,6 @@ window.addEventListener("DOMContentLoaded", function () {
       };
       todoList.push(obj);
     }
-    // todoList = todoList.concat(oldList);
     const binUpdate = await fetch(UPDATE_BIN_URL, {
       method: "PUT",
       headers: {
@@ -230,16 +222,15 @@ window.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({ "my-todo": todoList }),
     });
-    let main = await binUpdate.json();
   };
   // 601305b81de5467ca6bd77e7
+
   // --- BEGIN --- //
   readBin();
 
   userInput.focus();
   addButton.addEventListener("click", addToList);
   sortButton.addEventListener("click", sortList);
-  //REGISTRATION
   registerButton.addEventListener("click", () => {
     createBin();
   });
