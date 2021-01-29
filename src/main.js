@@ -14,6 +14,9 @@ window.addEventListener("DOMContentLoaded", function () {
   const registerConfirm = document.getElementById("registered");
   const introUsername = document.getElementById("intro-username");
   const introPassword = document.getElementById("intro-password");
+  const registerData = [];
+  const newUserDetails = [];
+  const CREATE_BIN = `https://api.jsonbin.io/v3/b`;
   //REGISTRATION END
   //LIST
   const userInput = document.getElementById("text-input");
@@ -24,12 +27,10 @@ window.addEventListener("DOMContentLoaded", function () {
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
   const search = document.getElementById("search");
-
   //LIST END
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   //BASE END
-
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
   const addToList = (text, date, priority) => {
@@ -149,11 +150,7 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     }
   };
-
   //FUNCTION: CREATE BIN
-  const registerData = [];
-  const newUserDetails = [];
-  const CREATE_BIN = `https://api.jsonbin.io/v3/b`;
   const createBin = async () => {
     registerData.push({
       firstname: firstNameInput.value,
@@ -264,10 +261,8 @@ window.addEventListener("DOMContentLoaded", function () {
   };
 
   /*---          -----       BEGIN       -----          ---*/
-
   readBin(storedPassword);
   userInput.focus();
-
   //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
   userInput.onkeyup = (event) => {
@@ -275,21 +270,16 @@ window.addEventListener("DOMContentLoaded", function () {
       addButton.click();
     }
   };
-
   //SORT LIST
   sortButton.addEventListener("click", sortList);
-
   //SEARCH LIST
   search.addEventListener("keyup", searchList);
-
   //WIPE LIST
   wipeButton.addEventListener("click", wipeList);
-
   //REGISTER TO SERVICE
   registerButton.addEventListener("click", () => {
     createBin();
   });
-
   //SIGN IN
   signInButton.addEventListener("click", () => {
     localStorage.removeItem("password");

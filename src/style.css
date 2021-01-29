@@ -117,8 +117,19 @@ body * {
 
 /* THE LIST */
 
-ul {
+#todo-list {
+  position: relative;
   margin-top: -2vh;
+  overflow-y: scroll;
+  height: 70vh;
+}
+body * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body *::-webkit-scrollbar {
+  display: none;
 }
 
 ul * {
