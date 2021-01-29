@@ -21,6 +21,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //LIST
   const userInput = document.getElementById("text-input");
   const list = document.getElementById("todo-list");
+  const listItemsAll = list.getElementsByTagName("LI");
   const oldList = [];
   const userPriority = document.getElementById("priority-selector");
   const counter = document
@@ -31,6 +32,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   //BASE END
+
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
   const addToList = (text, date, priority) => {
@@ -43,25 +45,49 @@ window.addEventListener("DOMContentLoaded", function () {
     const todoText = document.createElement("div");
     const todoDate = document.createElement("div");
     const todoPriority = document.createElement("div");
+    const removeBtnDiv = document.createElement("div");
+    const removeBtn = document.createElement("button");
+    removeBtn.innerHTML = "Delete";
+    removeBtn.classList.add("delete-button");
     itemContainer.classList.add("todo-container");
     todoText.classList.add("todo-text");
     todoDate.classList.add("todo-created-at");
     todoPriority.classList.add("todo-priority");
+    removeBtnDiv.classList.add("deletebtn-div");
     todoText.appendChild(document.createTextNode(userInput.value));
     todoDate.appendChild(
       document.createTextNode(", added at: " + comfyDate() + "Priority: ")
     );
     todoPriority.appendChild(document.createTextNode(userPriority.value));
+    removeBtnDiv.appendChild(removeBtn);
     list.appendChild(listItem);
     listItem.appendChild(itemContainer);
     itemContainer.appendChild(todoText);
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
+    itemContainer.appendChild(removeBtnDiv);
     userInput.value = "";
     userInput.focus();
     updateCounter();
     updateBin();
   };
+  //FUNCTION: DELETE LIST ITEM
+  // removeBtn.addEventListener("click", (e) => {
+  //   let ok = true;
+  //   if (on) {
+  //     ok = confirm("Are you sure?");
+  //   }
+  //   if (ok) {
+  //     e.target.parentNode.parentNode.style.textDecoration = "line-through";
+  //     e.target.hidden = true;
+  //     setTimeout(() => {
+  //       e.target.parentNode.parentNode.remove(); //removing the list item if remove button clicked
+  //     }, 1000); //adding delay of 1 second
+  //     setTimeout(() => {
+  //       localStorage.setItem("list", lsti.innerHTML); //removing the list item if remove button clicked
+  //     }, 1200);
+  //   }
+  // });
   //FUNCTION: WIPE LIST
   const wipeList = async () => {
     const shouldIwipe = confirm("Are you sure you want to delete?");
@@ -139,7 +165,6 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: SEARCH LIST
   const searchList = () => {
     let filter = search.value;
-    const listItemsAll = list.getElementsByTagName("LI");
     for (let i = 0; i < listItemsAll.length; i++) {
       result = listItemsAll[i];
       innerValue = result.textContent || result.innerText;
@@ -192,18 +217,25 @@ window.addEventListener("DOMContentLoaded", function () {
       const todoText = document.createElement("div");
       const todoDate = document.createElement("div");
       const todoPriority = document.createElement("div");
+      const removeBtn = document.createElement("button");
+      const removeBtnDiv = document.createElement("div");
+      removeBtn.innerHTML = "Delete";
+      removeBtn.classList.add("delete-button");
       itemContainer.classList.add("todo-container");
       todoText.classList.add("todo-text");
       todoDate.classList.add("todo-created-at");
       todoPriority.classList.add("todo-priority");
+      removeBtnDiv.classList.add("deletebtn-div");
       todoText.appendChild(document.createTextNode(text));
       todoDate.appendChild(document.createTextNode(date));
       todoPriority.appendChild(document.createTextNode(priority));
+      removeBtnDiv.appendChild(removeBtn);
       list.appendChild(listItem);
       listItem.appendChild(itemContainer);
       itemContainer.appendChild(todoText);
       itemContainer.appendChild(todoDate);
       itemContainer.appendChild(todoPriority);
+      itemContainer.appendChild(removeBtnDiv);
       userInput.value = "";
       userInput.focus();
       updateCounter();
@@ -263,6 +295,7 @@ window.addEventListener("DOMContentLoaded", function () {
   /*---          -----       BEGIN       -----          ---*/
   readBin(storedPassword);
   userInput.focus();
+
   //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
   userInput.onkeyup = (event) => {
