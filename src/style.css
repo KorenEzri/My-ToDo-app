@@ -85,6 +85,22 @@ body * {
   padding: 1px;
 }
 
+#counter-div {
+  display: flex;
+  margin-left: 21vw;
+  margin-top: -2vh;
+}
+
+#search-div {
+  padding-top: 12px;
+}
+
+.search-input {
+  width: 12vw;
+  max-width: 200px;
+  padding: 2px;
+}
+
 /* VIEW SECTION */
 #view-section {
   display: block;
@@ -100,6 +116,11 @@ body * {
 }
 
 /* THE LIST */
+
+ul {
+  margin-top: -2vh;
+}
+
 ul * {
   font-size: 16px;
   list-style-type: none;

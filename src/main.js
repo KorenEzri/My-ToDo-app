@@ -18,6 +18,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //LIST
   const userInput = document.getElementById("text-input");
   const list = document.getElementById("todo-list");
+  const oldList = [];
   const userPriority = document.getElementById("priority-selector");
   const counter = document
     .getElementById("counter")
@@ -136,20 +137,18 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: SEARCH LIST
   const searchList = () => {
-    let filter = search.value.toUpperCase();
+    let filter = search.value;
     const listItemsAll = list.getElementsByTagName("LI");
     for (let i = 0; i < listItemsAll.length; i++) {
       result = listItemsAll[i];
       innerValue = result.textContent || result.innerText;
-      if (innerValue.toUpperCase().indexOf(filter) > -1) {
+      if (innerValue.indexOf(filter) > -1) {
         listItemsAll[i].style.display = "";
       } else {
         listItemsAll[i].style.display = "none";
       }
     }
   };
-
-  // proccess.env.NODE_ENV;
 
   //FUNCTION: CREATE BIN
   const registerData = [];
@@ -187,7 +186,6 @@ window.addEventListener("DOMContentLoaded", function () {
     );
     localStorage.setItem("password", JSON.stringify(jsonRes.metadata.id));
   };
-
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
     for (let i = 0; i < oldList.length; i++) {
@@ -214,7 +212,6 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
-  const oldList = [];
   const readBin = async (password) => {
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -234,8 +231,6 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     postBin();
   };
-  // 601375f8ef99c57c734b5334
-  // 6013fd641de5467ca6bdcda1
   //FUNCTION: UPDATE BIN
   const updateBin = async () => {
     let BIN_ID = `${userPassword.value}`;
@@ -268,7 +263,8 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   };
 
-  // --- BEGIN --- //
+  /*---          -----       BEGIN       -----          ---*/
+
   readBin(storedPassword);
   userInput.focus();
 
@@ -302,6 +298,3 @@ window.addEventListener("DOMContentLoaded", function () {
     window.location.reload();
   });
 });
-
-// 601358891de5467ca6bd94c2 FFFF
-// 601358c4ef99c57c734b4871 SSSSS
