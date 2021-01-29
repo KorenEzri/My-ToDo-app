@@ -42,10 +42,24 @@ body * {
 }
 
 #sign-in {
-  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #signin-btn-span {
+}
+
+.hidden {
+  display: none;
+}
+
+#registered {
+  max-width: fit-content;
+  padding-top: 20px;
+  font-size: 22px;
+}
+
+#boldpart {
+  font-size: 22px;
 }
 
 #load-list {
@@ -64,8 +78,8 @@ body * {
 }
 
 #priority-selector {
-  width: 10vw;
-  max-width: 180px;
+  width: 13vw;
+  max-width: 200px;
   font-size: 12px;
   height: 30px;
   padding: 1px;

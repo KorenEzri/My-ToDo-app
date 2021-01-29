@@ -25,19 +25,20 @@
         <option value="4" id="4">4 - Not too pressing</option>
         <option value="5" id="5">5 - Anytime, no rush</option>
       </select>
+      <button id="wipe-button" class="control-buttons">Delete list</button>
       <br>
       <span>Task-count: </span><div id="counter"></div>
     </div>
 
     <div id="registration">
-      <label>First name: </label><input type="text" id="first-name" class="control-inputs register-inputs" placeholder="Awesome Mode only">
-      <label>Last name: </label><input type="text" id="last-name" class="control-inputs register-inputs" placeholder="Awesome Mode only">
-      <label>Your password: </label><input type="password" id="password" class="control-inputs register-inputs" placeholder="Awesome Mode only">
+      <label>First name: </label><input type="text" id="first-name" class="control-inputs register-inputs" placeholder="Your name">
+      <label>Last name: </label><input type="text" id="last-name" class="control-inputs register-inputs" placeholder="Your last name">
       <button type="submit" id="register-button" class="register-buttons">Register!</button>
-      <span id="registered"></span>
       <div id="sign-in">
-      <button id="load-list" class="register-buttons">or <span id="signin-btn-span">sign-in</span></button>
-      </div>
+        <button id="load-list" class="register-buttons">or <span id="signin-btn-span">sign-in</span></button>
+        </div>
+      <label>Your password: </label><input type="password" id="password" class="control-inputs register-inputs" placeholder="password">
+      <span id="registered" class="hidden"><strong>Congratulations!</strong> <br> <p id="intro-username">Username: </p><strong id="intro-password">Your super-secret-password is: </strong><br><br>You have to<b id="boldpart"> sign in </b>to start working on your list. </span>
     </div>
     <div id="view-section">
       <!-- <div class="todo-container"></div> -->

@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
   // BUTTONS
   const addButton = document.getElementById("add-button");
   const sortButton = document.getElementById("sort-button");
+  const wipeButton = document.getElementById("wipe-button");
   const registerButton = document.getElementById("register-button");
   const signInButton = document.getElementById("load-list");
   //BUTTONS END
@@ -11,6 +12,8 @@ window.addEventListener("DOMContentLoaded", function () {
   const lastNameInput = document.getElementById("last-name");
   const userPassword = document.getElementById("password");
   const registerConfirm = document.getElementById("registered");
+  const introUsername = document.getElementById("intro-username");
+  const introPassword = document.getElementById("intro-password");
   //REGISTRATION END
   //LIST
   const userInput = document.getElementById("text-input");
@@ -20,6 +23,8 @@ window.addEventListener("DOMContentLoaded", function () {
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
   //LIST END
+  const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
+  const storedPassword = JSON.parse(localStorage.getItem("password"));
   //BASE END
 
   //FUNCTIONS
@@ -53,6 +58,30 @@ window.addEventListener("DOMContentLoaded", function () {
     updateCounter();
     updateBin();
   };
+  //FUNCTION: WIPE LIST
+  const wipeList = async () => {
+    const shouldIwipe = confirm("Are you sure you want to delete?");
+    if (storedPassword === "601375f8ef99c57c734b5334") {
+      return;
+    } else if (shouldIwipe) {
+      const safeWord = prompt(
+        "To delete, please type: 'I'm a little piggy' without the ''s "
+      );
+      if (safeWord === "I'm a little piggy") {
+        const PASS = storedPassword;
+        const DELETE_BIN = `https://api.jsonbin.io/v3/b/${PASS}`;
+        const binData = await fetch(DELETE_BIN, {
+          method: "DELETE",
+          headers: {
+            "X-Master-Key": X_MASTER_KEY,
+          },
+        });
+        // localStorage.setItem('password',"601375f8ef99c57c734b5334");
+        localStorage.removeItem("password");
+        window.location.reload();
+      }
+    }
+  }; //601375f8ef99c57c734b5334
   //FUNCTION: UPDATE COUNTER
   const updateCounter = () => {
     let count = list.querySelectorAll("li").length;
@@ -103,11 +132,11 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     userInput.focus();
   }
+
   //FUNCTION: CREATE BIN
   const registerData = [];
   const newUserDetails = [];
   const CREATE_BIN = `https://api.jsonbin.io/v3/b`;
-  const CREATE_BIN_KEY = `$2b$10$M/SuUy3w9OBnfU3zREzMHODNu1OFT8C1.5uGt.UGXEWctobSXMIjO`;
   const createBin = async () => {
     registerData.push({
       firstname: firstNameInput.value,
@@ -118,7 +147,7 @@ window.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Master-Key": CREATE_BIN_KEY,
+        "X-Master-Key": X_MASTER_KEY,
         "X-Bin-Private": false,
       },
       body: data,
@@ -126,31 +155,21 @@ window.addEventListener("DOMContentLoaded", function () {
     const jsonRes = await response.json();
     const userCredentials = jsonRes.record[0];
     newUserDetails.push(userCredentials);
-    registerConfirm.appendChild(
-      document.createTextNode("Congratulations! Your log-in details are: ")
-    );
-    registerConfirm.appendChild(document.createElement("br"));
-    registerConfirm.appendChild(
+    registerConfirm.classList.toggle("hidden");
+    introUsername.appendChild(
       document.createTextNode(
-        "Username: " +
-          userCredentials.firstname +
-          " " +
-          userCredentials.lastname
+        userCredentials.firstname + " " + userCredentials.lastname
       )
     );
-    registerConfirm.appendChild(document.createElement("br"));
-    registerConfirm.appendChild(
-      document.createTextNode(
-        "Your super-secret-Password is: " + jsonRes.metadata.id
-      )
-    );
-    registerConfirm.appendChild(document.createElement("br"));
+    introPassword.appendChild(document.createTextNode(jsonRes.metadata.id));
     registerConfirm.appendChild(
       document.createTextNode(
         "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
       )
     );
+    localStorage.setItem("password", JSON.stringify(jsonRes.metadata.id));
   };
+
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
     for (let i = 0; i < oldList.length; i++) {
@@ -177,12 +196,17 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
-
   const oldList = [];
-  const readBin = async () => {
-    const PASS = "601333211de5467ca6bd88ef";
+  const readBin = async (password) => {
+    let PASS = userPassword.value;
+    if (password) PASS = password;
+    if (!PASS) PASS = "601375f8ef99c57c734b5334";
     const GET_BIN = `https://api.jsonbin.io/v3/b/${PASS}/latest`;
-    const binData = await fetch(GET_BIN);
+    const binData = await fetch(GET_BIN, {
+      headers: {
+        "X-Master-Key": X_MASTER_KEY,
+      },
+    });
     let main = await binData.json();
     const todoList = main.record["my-todo"];
     if (todoList) {
@@ -192,11 +216,13 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     postBin();
   };
+  // 601375f8ef99c57c734b5334
 
   //FUNCTION: UPDATE BIN
   const updateBin = async () => {
-    const BIN_ID = `${userPassword.value}`;
-    const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/601333211de5467ca6bd88ef`;
+    let BIN_ID = `${userPassword.value}`;
+    if (storedPassword) BIN_ID = storedPassword;
+    const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
     let todoList = [];
     const allDates = document.querySelectorAll(
       "#todo-list > li > div > div.todo-created-at"
@@ -223,19 +249,38 @@ window.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify({ "my-todo": todoList }),
     });
   };
-  // 601305b81de5467ca6bd77e7
 
   // --- BEGIN --- //
-  readBin();
-
+  readBin(storedPassword);
   userInput.focus();
+
+  //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
+  userInput.onkeyup = (event) => {
+    if (event.keyCode == 13 || event.which == 13) {
+      addButton.click();
+    }
+  };
+
+  //SORT LIST
   sortButton.addEventListener("click", sortList);
+
+  //WIPE LIST
+  wipeButton.addEventListener("click", wipeList);
+
+  //REGISTER TO SERVICE
   registerButton.addEventListener("click", () => {
     createBin();
   });
 
+  //SIGN IN
   signInButton.addEventListener("click", () => {
-    if (!oldList[0]) readBin();
+    localStorage.removeItem("password");
+    localStorage.setItem("password", JSON.stringify(userPassword.value));
+    readBin(storedPassword);
+    window.location.reload();
   });
 });
+
+// 601358891de5467ca6bd94c2 FFFF
+// 601358c4ef99c57c734b4871 SSSSS
