@@ -28,6 +28,7 @@ window.addEventListener("DOMContentLoaded", function () {
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
   const search = document.getElementById("search");
+  const counterDiv = document.getElementById("counter-div");
   //LIST END
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
@@ -107,6 +108,11 @@ window.addEventListener("DOMContentLoaded", function () {
   const updateCounter = () => {
     let count = list.querySelectorAll("li").length;
     counter.textContent = count;
+    if (count === 0 || !count) {
+      list.classList.add("no-tasks");
+    } else {
+      list.classList.remove("no-tasks");
+    }
   };
   //FUNCTION: COMFY DATE
   const comfyDate = () => {

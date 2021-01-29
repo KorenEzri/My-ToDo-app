@@ -115,6 +115,11 @@ body * {
   display: flex;
 }
 
+.no-tasks {
+  background-image: url(../pics/noTASKS.jpg);
+  background-size: contain;
+}
+
 /* VIEW SECTION: THE LIST */
 .deletebtn-div {
   position: absolute;
