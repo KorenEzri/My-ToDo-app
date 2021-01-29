@@ -32,6 +32,9 @@ window.addEventListener("DOMContentLoaded", function () {
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   const mainWrapper = document.getElementById("main-wrapper");
+  navigator.permissions.query({ name: "clipboard-write" }).then((status) => {
+    status.onchange = () => {};
+  });
   //BASE END
 
   //FUNCTIONS
@@ -46,7 +49,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const todoText = document.createElement("div");
     const todoDate = document.createElement("div");
     const todoPriority = document.createElement("div");
-    const removeBtnDiv = document.createElement("div");
+    const buttonsDiv = document.createElement("div");
     const removeBtn = document.createElement("button");
     const copyBtn = document.createElement("button");
     const chosenPriority =
@@ -60,20 +63,20 @@ window.addEventListener("DOMContentLoaded", function () {
     todoDate.classList.add("todo-created-at");
     todoPriority.classList.add("todo-priority");
     colorPriority(chosenPriority, todoPriority);
-    removeBtnDiv.classList.add("deletebtn-div");
+    buttonsDiv.classList.add("buttons-div");
     todoText.appendChild(document.createTextNode(userInput.value));
     todoDate.appendChild(
       document.createTextNode(", added at: " + comfyDate() + "Priority ")
     );
     todoPriority.appendChild(document.createTextNode(chosenPriority));
-    removeBtnDiv.appendChild(copyBtn);
-    removeBtnDiv.appendChild(removeBtn);
+    buttonsDiv.appendChild(copyBtn);
+    buttonsDiv.appendChild(removeBtn);
     list.appendChild(listItem);
     listItem.appendChild(itemContainer);
     itemContainer.appendChild(todoText);
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
-    itemContainer.appendChild(removeBtnDiv);
+    itemContainer.appendChild(buttonsDiv);
     removeBtn.addEventListener("click", (e) => {
       const shouldDelete = confirm("Are you sure?");
       if (shouldDelete) {
@@ -82,14 +85,20 @@ window.addEventListener("DOMContentLoaded", function () {
         updateBin();
       }
     });
-    // copyBtn.addEventListener("click"), (e) = > {
-
-    // })
+    list.onclick = (e) => {
+      let fullLi = e.target.parentNode.parentNode.textContent;
+      const liLength = fullLi.length;
+      const text = fullLi.substr(0, liLength - 10);
+      console.log(text);
+      navigator.clipboard.writeText(text);
+      e.target.innerHTML = "Copied!";
+    };
     userInput.value = "";
     userInput.focus();
     updateCounter();
     updateBin();
   };
+
   //FUNCTION: COLOR PRIORITY
   const colorPriority = (priority, element) => {
     switch (priority) {
@@ -245,25 +254,29 @@ window.addEventListener("DOMContentLoaded", function () {
       const todoDate = document.createElement("div");
       const todoPriority = document.createElement("div");
       const removeBtn = document.createElement("button");
-      const removeBtnDiv = document.createElement("div");
+      const copyBtn = document.createElement("button");
+      const buttonsDiv = document.createElement("div");
       removeBtn.innerHTML = "Delete";
       removeBtn.classList.add("delete-button");
+      copyBtn.innerHTML = "Copy";
+      copyBtn.classList.add("copy-button");
       itemContainer.classList.add("todo-container");
       todoText.classList.add("todo-text");
       todoDate.classList.add("todo-created-at");
       todoPriority.classList.add("todo-priority");
       colorPriority(priority, todoPriority);
-      removeBtnDiv.classList.add("deletebtn-div");
+      buttonsDiv.classList.add("buttons-div");
       todoText.appendChild(document.createTextNode(text));
       todoDate.appendChild(document.createTextNode(date));
       todoPriority.appendChild(document.createTextNode(priority));
-      removeBtnDiv.appendChild(removeBtn);
+      buttonsDiv.appendChild(copyBtn);
+      buttonsDiv.appendChild(removeBtn);
       list.appendChild(listItem);
       listItem.appendChild(itemContainer);
       itemContainer.appendChild(todoText);
       itemContainer.appendChild(todoDate);
       itemContainer.appendChild(todoPriority);
-      itemContainer.appendChild(removeBtnDiv);
+      itemContainer.appendChild(buttonsDiv);
       removeBtn.addEventListener("click", (e) => {
         const shouldDelete = confirm("Are you sure?");
         if (shouldDelete) {
@@ -272,6 +285,14 @@ window.addEventListener("DOMContentLoaded", function () {
           updateBin();
         }
       });
+      list.onclick = (e) => {
+        let fullLi = e.target.parentNode.parentNode.textContent;
+        const liLength = fullLi.length;
+        const text = fullLi.substr(0, liLength - 10);
+        console.log(text);
+        navigator.clipboard.writeText(text);
+        e.target.innerHTML = "Copied!";
+      };
       userInput.value = "";
       userInput.focus();
       updateCounter();
