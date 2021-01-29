@@ -28,10 +28,10 @@ window.addEventListener("DOMContentLoaded", function () {
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
   const search = document.getElementById("search");
-  const counterDiv = document.getElementById("counter-div");
   //LIST END
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
+  const mainWrapper = document.getElementById("main-wrapper");
   //BASE END
 
   //FUNCTIONS
@@ -48,18 +48,25 @@ window.addEventListener("DOMContentLoaded", function () {
     const todoPriority = document.createElement("div");
     const removeBtnDiv = document.createElement("div");
     const removeBtn = document.createElement("button");
+    const copyBtn = document.createElement("button");
+    const chosenPriority =
+      userPriority.options[userPriority.selectedIndex].text;
     removeBtn.innerHTML = "Delete";
     removeBtn.classList.add("delete-button");
+    copyBtn.innerHTML = "Copy";
+    copyBtn.classList.add("copy-button");
     itemContainer.classList.add("todo-container");
     todoText.classList.add("todo-text");
     todoDate.classList.add("todo-created-at");
     todoPriority.classList.add("todo-priority");
+    colorPriority(chosenPriority, todoPriority);
     removeBtnDiv.classList.add("deletebtn-div");
     todoText.appendChild(document.createTextNode(userInput.value));
     todoDate.appendChild(
-      document.createTextNode(", added at: " + comfyDate() + "Priority: ")
+      document.createTextNode(", added at: " + comfyDate() + "Priority ")
     );
-    todoPriority.appendChild(document.createTextNode(userPriority.value));
+    todoPriority.appendChild(document.createTextNode(chosenPriority));
+    removeBtnDiv.appendChild(copyBtn);
     removeBtnDiv.appendChild(removeBtn);
     list.appendChild(listItem);
     listItem.appendChild(itemContainer);
@@ -75,10 +82,33 @@ window.addEventListener("DOMContentLoaded", function () {
         updateBin();
       }
     });
+    // copyBtn.addEventListener("click"), (e) = > {
+
+    // })
     userInput.value = "";
     userInput.focus();
     updateCounter();
     updateBin();
+  };
+  //FUNCTION: COLOR PRIORITY
+  const colorPriority = (priority, element) => {
+    switch (priority) {
+      case "1":
+        element.classList.add("priorityOne");
+        break;
+      case "2":
+        element.classList.add("priorityTwo");
+        break;
+      case "3":
+        element.classList.add("priorityThree");
+        break;
+      case "4":
+        element.classList.add("priorityFour");
+        break;
+      case "5":
+        element.classList.add("priorityFive");
+        break;
+    }
   };
   //FUNCTION: WIPE LIST
   const wipeList = async () => {
@@ -109,9 +139,9 @@ window.addEventListener("DOMContentLoaded", function () {
     let count = list.querySelectorAll("li").length;
     counter.textContent = count;
     if (count === 0 || !count) {
-      list.classList.add("no-tasks");
+      mainWrapper.classList.add("no-tasks");
     } else {
-      list.classList.remove("no-tasks");
+      mainWrapper.classList.remove("no-tasks");
     }
   };
   //FUNCTION: COMFY DATE
@@ -222,6 +252,7 @@ window.addEventListener("DOMContentLoaded", function () {
       todoText.classList.add("todo-text");
       todoDate.classList.add("todo-created-at");
       todoPriority.classList.add("todo-priority");
+      colorPriority(priority, todoPriority);
       removeBtnDiv.classList.add("deletebtn-div");
       todoText.appendChild(document.createTextNode(text));
       todoDate.appendChild(document.createTextNode(date));

@@ -4,6 +4,21 @@ body * {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: calc(1rem - 2px);
 }
+body {
+  overflow-y: hidden;
+}
+
+#main-wrapper {
+  margin: 0 auto;
+  margin-top: 3vh;
+  border: thick solid rgb(87, 72, 72);
+  width: 90vw;
+  height: 90vh;
+  position: relative;
+  border-radius: 8px;
+  padding-top: 20px;
+  padding-left: 20px;
+}
 
 #control-section {
   display: block;
@@ -11,7 +26,7 @@ body * {
   margin-left: auto;
   margin-right: auto;
   margin-top: 3vh;
-  width: 60%;
+  width: 50%;
 }
 
 #control-section * {
@@ -35,10 +50,15 @@ body * {
 
 #registration {
   display: flex;
+  position: absolute;
   flex-direction: column;
-  float: right;
-  margin-top: -8vh;
+  top: 0;
+  right: 0;
   margin-right: 2vw;
+  margin-top: 4vh;
+  padding: 12px;
+  border: 2px solid rgb(87, 72, 72);
+  border-radius: 12px;
 }
 
 #sign-in {
@@ -78,7 +98,7 @@ body * {
 }
 
 #priority-selector {
-  width: 13vw;
+  width: 3vw;
   max-width: 200px;
   font-size: 12px;
   height: 30px;
@@ -87,8 +107,15 @@ body * {
 
 #counter-div {
   display: flex;
-  margin-left: 21vw;
   margin-top: -2vh;
+}
+
+.no-tasks {
+  background-image: url(../pics/noTASKS.jpg);
+  background-repeat: no-repeat;
+  background-size: 700px;
+  background-position-x: 40%;
+  background-position-y: 90%;
 }
 
 #search-div {
@@ -106,18 +133,11 @@ body * {
   display: block;
   position: relative;
   margin-top: 4vh;
-  margin-left: auto;
-  margin-right: 25vw;
-  width: 60%;
+  width: 66vw;
 }
 
 .todo-container {
   display: flex;
-}
-
-.no-tasks {
-  background-image: url(../pics/noTASKS.jpg);
-  background-size: contain;
 }
 
 /* VIEW SECTION: THE LIST */
@@ -128,12 +148,36 @@ body * {
   padding-right: 12px;
 }
 
+.delete-button {
+  box-shadow: inset 0px 1px 0px 0px #54a3f7;
+  background: linear-gradient(to bottom, #3b95c5 5%, #479edb 100%);
+  background-color: #007dc1;
+  border-radius: 3px;
+  border: 1px solid #124d77;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 4px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #154682;
+}
+.delete-button:hover {
+  transition: 200ms;
+  background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+  background-color: #0061a7;
+}
+.delete-button:active {
+  position: relative;
+  top: 1px;
+}
+
 #todo-list {
   position: relative;
   margin-top: -2vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 70vh;
+  height: 60vh;
 }
 body * {
   -ms-overflow-style: none;
@@ -157,6 +201,11 @@ li {
   display: inline-block;
 }
 
+li:hover {
+  transition: 0.4s;
+  background-color: rgba(112, 103, 243, 0.239);
+}
+
 .todo-container {
   height: 4vh;
 }
@@ -167,6 +216,20 @@ li {
 }
 
 .todo-text {
+  font-size: 18px;
+}
+
+.todo-created-at {
+  font-size: 14;
+  font-style: italic;
+}
+
+.disable-select {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 /* AWESOME-MODE TOGGLE SWITCH */
@@ -233,3 +296,63 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/* PRIORITIES */
+
+.one {
+  background-color: green;
+}
+
+.two {
+  background-color: yellow;
+}
+
+.three {
+  background-color: orange;
+}
+
+.four {
+  background-color: red;
+}
+
+.five {
+  background-color: rgb(139, 0, 0);
+  color: white;
+}
+
+.priorityOne {
+  background-color: rgba(0, 128, 0, 0.719);
+  color: white;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.priorityTwo {
+  background-color: rgba(255, 255, 0, 0.63);
+  color: rgb(0, 0, 0);
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.priorityThree {
+  background-color: rgba(255, 166, 0, 0.87);
+  color: rgb(15, 15, 15);
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.priorityFour {
+  background-color: rgba(255, 0, 0, 0.849);
+  color: white;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.priorityFive {
+  background-color: rgba(129, 23, 23, 0.863);
+  color: rgb(255, 255, 255);
+  border-radius: 6px;
+  padding: 4px;
+}
+
+/* PRIORITIES END */

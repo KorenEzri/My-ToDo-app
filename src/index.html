@@ -10,39 +10,40 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <label class="switch">
-      <input type="checkbox">
-      <span class="slider round"></span>
-    </label><label id="awesome-mode">Awesome Mode! ( I don't pass the TESTS. )</label>
-    <div id="control-section">
-      <button id="add-button" class="control-buttons">Add</button>
-      <button id="sort-button" class="control-buttons">Sort</button>
-      <input type="text" id="text-input" class="control-inputs">
-      <select name="priority-selector" id="priority-selector" class="control-inputs">
-        <option value="1" id="1">1 - Most Important</option>
-        <option value="2" id="2">2 - Important</option>
-        <option value="3" id="3">3 - Somewhat Important</option>
-        <option value="4" id="4">4 - Not too pressing</option>
-        <option value="5" id="5">5 - Anytime, no rush</option>
-      </select>
-      <button id="wipe-button" class="control-buttons">Delete list</button>
-      <div id="search-div"><span>Search </span><input type="text" id="search" class="search-input"></div>
-      <br>
-      <div id="counter-div"><span>Task-count: </span><div id="counter"></div></div>
-    </div>
-
-    <div id="registration">
-      <label>First name: </label><input type="text" id="first-name" class="control-inputs register-inputs" placeholder="Your name">
-      <label>Last name: </label><input type="text" id="last-name" class="control-inputs register-inputs" placeholder="Your last name">
-      <button type="submit" id="register-button" class="register-buttons">Register!</button>
-      <div id="sign-in">
-        <button id="load-list" class="register-buttons">or <span id="signin-btn-span">sign-in</span></button>
-        </div>
-      <label>Your password: </label><input type="password" id="password" class="control-inputs register-inputs" placeholder="password">
-      <span id="registered" class="hidden"><strong>Congratulations!</strong> <br> <p id="intro-username">Username: </p><strong id="intro-password">Your super-secret-password is: </strong><br><br>You have to<b id="boldpart"> sign in </b>to start working on your list. </span>
-    </div>
-    <div id="view-section">
-      <ul id="todo-list"></ul>
-    </div>
+    <div id="main-wrapper">
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label><label id="awesome-mode" class="disable-select">Awesome Mode! ( I don't pass the TESTS. )</label>
+      <div id="control-section" class="disable-select">
+        <button id="add-button" class="control-buttons">Add</button>
+        <button id="sort-button" class="control-buttons">Sort</button>
+        <input type="text" id="text-input" class="control-inputs">
+        <select name="priority-selector" id="priority-selector" class="control-inputs">
+          <option value="1" id="1" class="one">1</option>
+          <option value="2" id="2" class="two">2</option>
+          <option value="3" id="3" class="three">3</option>
+          <option value="4" id="4" class="four">4</option>
+          <option value="5" id="5" class="five">5</option>
+        </select>
+        <button id="wipe-button" class="control-buttons">Delete list</button>
+        <div id="search-div"><span>Search </span><input type="text" id="search" class="search-input"></div>
+        <br>
+        <div id="counter-div"><span>Task-count: </span><div id="counter"></div></div>
+      </div>
+      <div id="registration">
+        <label class="disable-select">First name: </label><input type="text" id="first-name" class="control-inputs register-inputs disable-select" placeholder="Your name">
+        <label class="disable-select">Last name: </label><input type="text" id="last-name" class="control-inputs register-inputs disable-select" placeholder="Your last name">
+        <button type="submit" id="register-button" class="register-buttons disable-select">Register!</button>
+        <div id="sign-in">
+          <button id="load-list" class="register-buttons disable-select">or <span id="signin-btn-span" class="disable-select">sign-in</span></button>
+          </div>
+        <label class="disable-select">Your password: </label><input type="password" id="password" class="control-inputs register-inputs disable-select" placeholder="password">
+        <span id="registered" class="hidden"><strong>Congratulations!</strong> <br> <p id="intro-username">Username: </p><strong id="intro-password">Your super-secret-password is: </strong><br><br>You have to<b id="boldpart"> sign in </b>to start working on your list. </span>
+      </div>
+      <div id="view-section" class="disable-select">
+        <ul id="todo-list"></ul>
+      </div>
+  </div>
   </body>
 </html>
