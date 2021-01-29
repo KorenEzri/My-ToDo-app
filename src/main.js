@@ -66,28 +66,19 @@ window.addEventListener("DOMContentLoaded", function () {
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
     itemContainer.appendChild(removeBtnDiv);
+    removeBtn.addEventListener("click", (e) => {
+      const shouldDelete = confirm("Are you sure?");
+      if (shouldDelete) {
+        e.target.parentNode.parentNode.parentNode.remove();
+        updateCounter();
+        updateBin();
+      }
+    });
     userInput.value = "";
     userInput.focus();
     updateCounter();
     updateBin();
   };
-  //FUNCTION: DELETE LIST ITEM
-  // removeBtn.addEventListener("click", (e) => {
-  //   let ok = true;
-  //   if (on) {
-  //     ok = confirm("Are you sure?");
-  //   }
-  //   if (ok) {
-  //     e.target.parentNode.parentNode.style.textDecoration = "line-through";
-  //     e.target.hidden = true;
-  //     setTimeout(() => {
-  //       e.target.parentNode.parentNode.remove(); //removing the list item if remove button clicked
-  //     }, 1000); //adding delay of 1 second
-  //     setTimeout(() => {
-  //       localStorage.setItem("list", lsti.innerHTML); //removing the list item if remove button clicked
-  //     }, 1200);
-  //   }
-  // });
   //FUNCTION: WIPE LIST
   const wipeList = async () => {
     const shouldIwipe = confirm("Are you sure you want to delete?");
@@ -236,6 +227,14 @@ window.addEventListener("DOMContentLoaded", function () {
       itemContainer.appendChild(todoDate);
       itemContainer.appendChild(todoPriority);
       itemContainer.appendChild(removeBtnDiv);
+      removeBtn.addEventListener("click", (e) => {
+        const shouldDelete = confirm("Are you sure?");
+        if (shouldDelete) {
+          e.target.parentNode.parentNode.parentNode.remove();
+          updateCounter();
+          updateBin();
+        }
+      });
       userInput.value = "";
       userInput.focus();
       updateCounter();
