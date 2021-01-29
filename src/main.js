@@ -86,6 +86,7 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     });
     list.onclick = (e) => {
+      if (e.target.innerHTML !== "Copy") return;
       let fullLi = e.target.parentNode.parentNode.textContent;
       const liLength = fullLi.length;
       const text = fullLi.substr(0, liLength - 10);
@@ -200,17 +201,28 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: SEARCH LIST
   const searchList = () => {
-    let filter = search.value;
+    let isUppercase = document.querySelector(".upper-case");
+    let filter = search.value.toUpperCase();
+    if (isUppercase.checked) {
+      filter = search.value;
+    }
     for (let i = 0; i < listItemsAll.length; i++) {
       result = listItemsAll[i];
-      innerValue = result.textContent || result.innerText;
-      if (innerValue.indexOf(filter) > -1) {
+      let innerValue = result.textContent || result.innerText;
+      if (isUppercase.checked) {
+        if (innerValue.indexOf(filter) > -1) {
+          listItemsAll[i].style.display = "";
+        } else {
+          listItemsAll[i].style.display = "none";
+        }
+      } else if (innerValue.toUpperCase().indexOf(filter) > -1) {
         listItemsAll[i].style.display = "";
       } else {
         listItemsAll[i].style.display = "none";
       }
     }
   };
+
   //FUNCTION: CREATE BIN
   const createBin = async () => {
     registerData.push({
@@ -286,6 +298,7 @@ window.addEventListener("DOMContentLoaded", function () {
         }
       });
       list.onclick = (e) => {
+        if (e.target.innerHTML !== "Copy") return;
         let fullLi = e.target.parentNode.parentNode.textContent;
         const liLength = fullLi.length;
         const text = fullLi.substr(0, liLength - 10);

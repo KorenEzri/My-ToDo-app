@@ -16,9 +16,10 @@
         <span class="slider round"></span>
       </label><label id="awesome-mode" class="disable-select">Awesome Mode! ( I don't pass the TESTS. )</label>
       <div id="control-section" class="disable-select">
-        <button id="add-button" class="control-buttons">Add</button>
-        <button id="sort-button" class="control-buttons">Sort</button>
-        <input type="text" id="text-input" class="control-inputs">
+        <button id="wipe-button" class="control-buttons delete-list-button">Delete list</button>
+        <button id="sort-button" class="control-buttons sort-button">Sort</button>
+        <button id="add-button" class="control-buttons add-button">Add</button>
+        <input type="text" id="text-input" class="control-inputs" placeholder="Add to list..">
         <select name="priority-selector" id="priority-selector" class="control-inputs">
           <option value="1" id="1" class="one">1</option>
           <option value="2" id="2" class="two">2</option>
@@ -26,10 +27,15 @@
           <option value="4" id="4" class="four">4</option>
           <option value="5" id="5" class="five">5</option>
         </select>
-        <button id="wipe-button" class="control-buttons">Delete list</button>
-        <div id="search-div"><span>Search </span><input type="text" id="search" class="search-input"></div>
+        <div id="search-div"><input type="text" id="search" class="search-input" placeholder="Search this list.."></div>
+        <label class="b-contain">
+          <span id="case">case-sensitive search</span>
+          <input type="checkbox" value="1" class="upper-case">
+          <div class="b-input"></div>
+        </label>
         <br>
-        <div id="counter-div"><span>Task-count: </span><div id="counter"></div></div>
+        <br>
+        <div id="counter-div"><span id="counts">Task-count: </span><div id="counter"></div></div>
       </div>
       <div id="registration">
         <label class="disable-select">First name: </label><input type="text" id="first-name" class="control-inputs register-inputs disable-select" placeholder="Your name">

@@ -12,6 +12,7 @@ body {
   margin: 0 auto;
   margin-top: 3vh;
   border: thick solid rgb(87, 72, 72);
+  background-color: rgba(245, 222, 179, 0.103);
   width: 90vw;
   height: 90vh;
   position: relative;
@@ -23,7 +24,7 @@ body {
 #control-section {
   display: block;
   position: relative;
-  margin-left: auto;
+  margin-left: 14vw;
   margin-right: auto;
   margin-top: 3vh;
   width: 50%;
@@ -40,6 +41,10 @@ body {
   height: 4vh;
 }
 
+.control-buttons:focus {
+  outline-style: none;
+}
+
 .register-buttons {
   width: 6vw;
   max-width: 80px;
@@ -54,18 +59,19 @@ body {
   flex-direction: column;
   top: 0;
   right: 0;
-  margin-right: 2vw;
+  margin-right: 1vw;
   margin-top: 4vh;
   padding: 12px;
-  border: 2px solid rgb(87, 72, 72);
   border-radius: 12px;
+  /* border: solid 1px rgb(61, 26, 26); */
+}
+
+#registration * {
+  font-family: Cambria, Cochin, Georgia, serif;
 }
 
 #sign-in {
   padding-bottom: 12px;
-}
-
-#signin-btn-span {
 }
 
 .hidden {
@@ -73,6 +79,8 @@ body {
 }
 
 #registered {
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 16px;
   max-width: fit-content;
   padding-top: 20px;
   font-size: 22px;
@@ -91,6 +99,25 @@ body {
   width: 20vw;
   max-width: 200px;
   padding: 4px;
+  outline: none;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 16px;
+}
+
+#text-input {
+  width: 17vw;
+  max-width: 220px;
+  padding: 5px;
+  padding-right: 40px;
+  outline: none;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 16px;
 }
 
 .register-inputs {
@@ -100,14 +127,33 @@ body {
 #priority-selector {
   width: 3vw;
   max-width: 200px;
-  font-size: 12px;
-  height: 30px;
+  font-size: 16px;
+  height: 32px;
   padding: 1px;
 }
 
 #counter-div {
   display: flex;
-  margin-top: -2vh;
+  margin-top: -1vh;
+}
+
+#counts {
+  padding: 4px;
+  outline: none;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 14px;
+}
+
+#counter {
+  padding: 4px;
+  outline: none;
+  border: 0.6px solid #99999955;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 14px;
 }
 
 .no-tasks {
@@ -119,20 +165,32 @@ body {
 }
 
 #search-div {
+  display: inline;
   padding-top: 12px;
 }
 
 .search-input {
   width: 12vw;
-  max-width: 200px;
-  padding: 2px;
+  max-width: 220px;
+  padding: 5px;
+  padding-right: 40px;
+  outline: none;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 16px;
+  background-position: 12.6vw 1px;
+  background-image: url(http://www.kirupa.com/images/search.png);
+  background-repeat: no-repeat;
+  background-size: 30px;
 }
 
 /* VIEW SECTION */
 #view-section {
   display: block;
   position: relative;
-  margin-top: 4vh;
+  margin-top: 2vh;
   width: 66vw;
 }
 
@@ -168,6 +226,70 @@ body {
   background-color: #476e9e;
 }
 .copy-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.case-sensitivity {
+  cursor: pointer;
+}
+
+.delete-list-button {
+  position: relative;
+  top: -1px;
+  background-color: #bd2d2d;
+  border-radius: 28px;
+  border: 1px solid #751e1e;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #e30d0d;
+  padding: 6px;
+}
+.delete-list-button:hover {
+  background-color: #e01b1b;
+}
+.delete-list-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.sort-button {
+  background-color: #44c767;
+  border-radius: 28px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 17px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+}
+.sort-button:hover {
+  background-color: #5cbf2a;
+}
+.sort-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.add-button {
+  background-color: #44c767;
+  border-radius: 28px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 17px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+}
+.add-button:hover {
+  background-color: #5cbf2a;
+}
+.add-button:active {
   position: relative;
   top: 1px;
 }
@@ -380,3 +502,205 @@ input:checked + .slider:before {
 }
 
 /* PRIORITIES END */
+
+/* CHECKBOXES */
+
+.b-contain *,
+.b-contain *::before,
+.b-contain *::after {
+  box-sizing: content-box !important;
+}
+
+.b-contain input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.b-contain span {
+  line-height: 1.54;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.b-contain {
+  display: table;
+  position: relative;
+  padding-left: 1.8rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.b-contain input[type="checkbox"] ~ .b-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.25rem;
+  width: 1.25rem;
+  background: rgba(241, 245, 248, 1);
+  transition: background 250ms;
+  border: 1px solid rgba(184, 194, 204, 1);
+  border-radius: 0.125rem;
+}
+
+.b-contain input[type="radio"] ~ .b-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.25rem;
+  width: 1.25rem;
+  background: rgba(241, 245, 248, 1);
+  transition: background 250ms;
+  border: 1px solid rgba(184, 194, 204, 1);
+  border-radius: 2rem;
+}
+
+.b-contain input[type="checkbox"] ~ .b-input::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 0.45rem;
+  top: 0.18rem;
+  width: 0.25rem;
+  height: 0.6rem;
+  border: solid rgba(255, 255, 255, 1);
+  border-width: 0 2px 2px 0;
+  transition: background 250ms;
+  transform: rotate(45deg);
+}
+
+.b-contain input[type="radio"] ~ .b-input::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 0.25rem;
+  top: 0.25rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 1);
+  transition: background 250ms;
+}
+
+.b-contain input:disabled ~ .b-input::after {
+  border-color: rgba(135, 149, 161, 1);
+}
+
+.b-contain input:checked ~ .b-input::after {
+  display: block;
+}
+
+.b-contain:hover input ~ .b-input,
+.b-contain input:focus ~ .b-input {
+  background: rgb(231, 238, 243);
+}
+
+.b-contain input:focus ~ .b-input {
+  box-shadow: 0 0 0 2px rgba(52, 144, 220, 0.5);
+}
+
+.b-contain input:checked ~ .b-input {
+  background: rgba(0, 130, 243, 1);
+  border-color: rgba(0, 130, 243, 1);
+}
+
+.b-contain input[type="checkbox"]:disabled ~ .b-input {
+  background: rgba(241, 245, 248, 1);
+  border-color: rgba(184, 194, 204, 1);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.b-contain input[type="radio"]:disabled ~ .b-input {
+  background: rgba(241, 245, 248, 1);
+  border-color: rgba(184, 194, 204, 1);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.b-contain input[type="radio"]:disabled ~ .b-input::after {
+  background: rgba(135, 149, 161, 1);
+}
+
+.b-contain input:checked:focus ~ .b-input,
+.b-contain:hover input:not([disabled]):checked ~ .b-input {
+  background: rgba(13, 143, 255, 1);
+  border-color: rgba(13, 143, 255, 1);
+}
+
+.b-contain .b-input::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  margin-left: -0.85rem;
+  margin-top: -0.85rem;
+  background: rgba(0, 130, 243, 1);
+  border-radius: 2rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+
+@keyframes b-ripple {
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes b-ripple-duplicate {
+  0% {
+    transform: scale(0);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.b-contain input + .b-input::before {
+  animation: b-ripple 250ms ease-out;
+}
+
+.b-contain input:checked + .b-input::before {
+  animation-name: b-ripple-duplicate;
+}
+
+.b-contain .b-input::before {
+  visibility: hidden;
+}
+
+.b-contain input:focus + .b-input::before {
+  visibility: visible;
+}
+
+.b-contain:first-child .b-input::before {
+  visibility: hidden;
+}
+
+#case {
+  position: relative;
+  top: 2px;
+  font-family: Cambria, Cochin, Georgia, serif;
+}
