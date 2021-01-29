@@ -22,6 +22,8 @@ window.addEventListener("DOMContentLoaded", function () {
   const counter = document
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
+  const search = document.getElementById("search");
+
   //LIST END
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
@@ -81,7 +83,7 @@ window.addEventListener("DOMContentLoaded", function () {
         window.location.reload();
       }
     }
-  }; //601375f8ef99c57c734b5334
+  };
   //FUNCTION: UPDATE COUNTER
   const updateCounter = () => {
     let count = list.querySelectorAll("li").length;
@@ -106,7 +108,7 @@ window.addEventListener("DOMContentLoaded", function () {
     return formatted_date;
   };
   //FUNCTION: SORT LIST
-  function sortList() {
+  const sortList = () => {
     let i;
     let shouldSwitch;
     let switching = true;
@@ -131,7 +133,23 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     }
     userInput.focus();
-  }
+  };
+  //FUNCTION: SEARCH LIST
+  const searchList = () => {
+    let filter = search.value.toUpperCase();
+    const listItemsAll = list.getElementsByTagName("LI");
+    for (let i = 0; i < listItemsAll.length; i++) {
+      result = listItemsAll[i];
+      innerValue = result.textContent || result.innerText;
+      if (innerValue.toUpperCase().indexOf(filter) > -1) {
+        listItemsAll[i].style.display = "";
+      } else {
+        listItemsAll[i].style.display = "none";
+      }
+    }
+  };
+
+  // proccess.env.NODE_ENV;
 
   //FUNCTION: CREATE BIN
   const registerData = [];
@@ -217,7 +235,7 @@ window.addEventListener("DOMContentLoaded", function () {
     postBin();
   };
   // 601375f8ef99c57c734b5334
-
+  // 6013fd641de5467ca6bdcda1
   //FUNCTION: UPDATE BIN
   const updateBin = async () => {
     let BIN_ID = `${userPassword.value}`;
@@ -264,6 +282,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
   //SORT LIST
   sortButton.addEventListener("click", sortList);
+
+  //SEARCH LIST
+  search.addEventListener("keyup", searchList);
 
   //WIPE LIST
   wipeButton.addEventListener("click", wipeList);
