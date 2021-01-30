@@ -385,10 +385,8 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: CHECK ITEM AS DONE
   viewSection.onclick = (e) => {
     let target = e.target;
-    if (target.tagName !== "DIV") return;
-    const itemText = document.querySelectorAll(".todo-text");
-    target.style.textDecoration = "line-through";
-    console.log(target);
+    if (target.tagName !== "LABEL") return;
+    target.parentNode.classList.toggle("line-through");
   };
   /*---          -----       BEGIN       -----          ---*/
   readBin(storedPassword);

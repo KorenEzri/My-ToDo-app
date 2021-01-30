@@ -385,6 +385,10 @@ ul {
   word-break: break-all;
 }
 
+.line-through {
+  text-decoration: line-through;
+}
+
 li {
   background-color: whitesmoke;
   margin: 6px;
@@ -727,7 +731,6 @@ input:checked + .slider:before {
 
 .checked-contain input {
   position: absolute;
-  z-index: -1;
   opacity: 0;
 }
 
@@ -743,6 +746,7 @@ input:checked + .slider:before {
   padding-left: 1.8rem;
   cursor: pointer;
   margin-bottom: 0.5rem;
+  width: 40px !important;
 }
 
 .checked-contain input[type="checkbox"] ~ .checked-input {
@@ -755,6 +759,10 @@ input:checked + .slider:before {
   transition: background 250ms;
   border: 1px solid rgba(184, 194, 204, 1);
   border-radius: 0.125rem;
+}
+
+.checked-input {
+  z-index: -1 !important;
 }
 
 .checked-contain input[type="checkbox"] ~ .checked-input::after {
@@ -788,22 +796,22 @@ input:checked + .slider:before {
   box-shadow: 0 0 0 2px rgba(52, 144, 220, 0.5);
 }
 
-.checked-contain input:checked ~ .checked-input {
-  background: rgba(0, 130, 243, 1);
+.checked-contain input:checked {
+  background: rgb(0, 130, 243);
   border-color: rgba(0, 130, 243, 1);
 }
 
-.checked-contain input[type="checkbox"]:disabled ~ .checked-input {
-  background: rgba(241, 245, 248, 1);
-  border-color: rgba(184, 194, 204, 1);
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.checked-contain input:checked:focus ~ .checked-input,
-.checked-contain:hover input:not([disabled]):checked ~ .checked-input {
+.checked-contain input:checked ~ .checked-input,
+.checked-contain:hover ~ .checked-input {
   background: rgba(13, 143, 255, 1);
   border-color: rgba(13, 143, 255, 1);
+}
+.checked-contain::after {
+  z-index: 9001 !important;
+}
+
+.checked-contain input:checked {
+  z-index: 9001 !important;
 }
 
 .checked-contain .checked-input::before {
