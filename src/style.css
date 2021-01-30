@@ -126,6 +126,7 @@ body {
 
 #priority-selector {
   width: 3vw;
+  min-width: 40px;
   max-width: 40px;
   font-size: 16px;
   height: 32px;
@@ -199,16 +200,35 @@ body {
   width: 66vw;
 }
 
+.todo-container * {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .todo-container {
+  height: 4vh;
   display: flex;
+  height: max-content;
+}
+
+summary:focus {
+  outline: none;
 }
 
 /* VIEW SECTION: THE LIST */
+
 .buttons-div {
   position: absolute;
   right: 0;
   padding-top: 7px;
   padding-right: 12px;
+}
+
+li:hover .todo-container {
+  transition: 0.4s;
+  background-color: rgba(112, 103, 243, 0.239);
+  border-radius: 16px;
+  padding: 8px;
 }
 
 .copy-button {
@@ -221,10 +241,12 @@ body {
   cursor: pointer;
   color: #ffffff;
   margin-right: 6px;
-  padding: 4px 12px;
+  padding: 5px 19px;
   font-size: 13px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #283966;
+  position: relative;
+  top: -7px;
 }
 .copy-button:hover {
   background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
@@ -303,15 +325,17 @@ body {
   box-shadow: inset 0px 1px 0px 0px #54a3f7;
   background: linear-gradient(to bottom, #3b95c5 5%, #479edb 100%);
   background-color: #007dc1;
-  border-radius: 3px;
+  border-radius: 10px;
   border: 1px solid #124d77;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
   font-size: 13px;
-  padding: 4px 12px;
+  padding: 6px 16px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #154682;
+  position: relative;
+  top: -7px;
 }
 .delete-button:hover {
   transition: 200ms;
@@ -353,26 +377,13 @@ li {
   margin: 6px;
   padding: 6px;
   width: 100%;
+  height: max-content;
   display: inline-block;
   word-break: break-all;
 }
 
 li * {
-  max-width: 50vw;
-}
-
-li:hover {
-  transition: 0.4s;
-  background-color: rgba(112, 103, 243, 0.239);
-}
-
-.todo-container {
-  height: 4vh;
-}
-
-.todo-container * {
-  margin-top: auto;
-  margin-bottom: auto;
+  max-width: 47vw;
 }
 
 .todo-text {
@@ -381,7 +392,6 @@ li:hover {
 
 .todo-created-at {
   font-size: 14;
-  font-style: italic;
   word-break: normal;
 }
 
