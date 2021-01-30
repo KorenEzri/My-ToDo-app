@@ -365,6 +365,9 @@ window.addEventListener("DOMContentLoaded", function () {
   /*---          -----       BEGIN       -----          ---*/
   readBin(storedPassword);
   userInput.focus();
+  userPriority.addEventListener("change", () => {
+    userInput.focus();
+  });
 
   //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
@@ -379,10 +382,32 @@ window.addEventListener("DOMContentLoaded", function () {
   search.addEventListener("keyup", searchList);
   //WIPE LIST
   wipeButton.addEventListener("click", wipeList);
-  //REGISTER TO SERVICE
+  //REGISTER TO SERVICE (ENTER AND CLICK)
   registerButton.addEventListener("click", () => {
+    if (!firstNameInput.value || !lastNameInput.value) {
+      alert("Please enter your name first =)");
+      return;
+    }
     createBin();
   });
+  lastNameInput.onkeyup = (event) => {
+    if (event.keyCode == 13 || event.which == 13) {
+      if (!firstNameInput.value || !lastNameInput.value) {
+        alert("Please enter your name first =)");
+        return;
+      }
+      createBin();
+    }
+  };
+  firstNameInput.onkeyup = (event) => {
+    if (event.keyCode == 13 || event.which == 13) {
+      if (!firstNameInput.value || !lastNameInput.value) {
+        alert("Please enter your name first =)");
+        return;
+      }
+      createBin();
+    }
+  };
   //SIGN IN
   signInButton.addEventListener("click", () => {
     localStorage.removeItem("password");
