@@ -63,7 +63,6 @@ body {
   margin-top: 4vh;
   padding: 12px;
   border-radius: 12px;
-  /* border: solid 1px rgb(61, 26, 26); */
 }
 
 #registration * {
@@ -131,6 +130,7 @@ body {
   font-size: 16px;
   height: 32px;
   padding: 1px;
+  cursor: pointer;
 }
 
 #counter-div {
@@ -209,6 +209,7 @@ body {
   height: 4vh;
   display: flex;
   height: max-content;
+  transition: 0.5s;
 }
 
 summary:focus {
@@ -229,14 +230,19 @@ li:hover .todo-container {
   background-color: rgba(112, 103, 243, 0.239);
   border-radius: 16px;
   padding: 8px;
+  cursor: pointer;
+}
+
+.copy-button:focus {
+  outline: none;
 }
 
 .copy-button {
-  box-shadow: 0px 0px 0px 2px #9fb4f2;
+  box-shadow: 0px 0px 0px 1.5px #9fb4f2;
   background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
   background-color: #7892c2;
   border-radius: 10px;
-  border: 1px solid #4e6096;
+  border: 0.2px solid #4e6096;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -261,6 +267,10 @@ li:hover .todo-container {
   cursor: pointer;
 }
 
+.delete-button:focus {
+  outline: none;
+}
+
 .delete-list-button {
   position: relative;
   top: -1px;
@@ -273,6 +283,7 @@ li:hover .todo-container {
   font-size: 14px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #e30d0d;
+  transition: 0.3s;
   padding: 6px;
 }
 .delete-list-button:hover {
@@ -292,6 +303,7 @@ li:hover .todo-container {
   color: #ffffff;
   font-size: 17px;
   text-decoration: none;
+  transition: 0.3s;
   text-shadow: 0px 1px 0px #2f6627;
 }
 .sort-button:hover {
@@ -309,6 +321,7 @@ li:hover .todo-container {
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
+  transition: 0.3s;
   font-size: 17px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #2f6627;
@@ -379,11 +392,17 @@ li {
   width: 100%;
   height: max-content;
   display: inline-block;
+  transition: 0.3s;
   word-break: break-all;
 }
 
 li * {
   max-width: 47vw;
+}
+
+li:hover {
+  background-color: unset;
+  transition: 0.3s;
 }
 
 .todo-text {
@@ -572,18 +591,6 @@ input:checked + .slider:before {
   border-radius: 0.125rem;
 }
 
-.b-contain input[type="radio"] ~ .b-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 1.25rem;
-  width: 1.25rem;
-  background: rgba(241, 245, 248, 1);
-  transition: background 250ms;
-  border: 1px solid rgba(184, 194, 204, 1);
-  border-radius: 2rem;
-}
-
 .b-contain input[type="checkbox"] ~ .b-input::after {
   content: "";
   position: absolute;
@@ -596,19 +603,6 @@ input:checked + .slider:before {
   border-width: 0 2px 2px 0;
   transition: background 250ms;
   transform: rotate(45deg);
-}
-
-.b-contain input[type="radio"] ~ .b-input::after {
-  content: "";
-  position: absolute;
-  display: none;
-  left: 0.25rem;
-  top: 0.25rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 2rem;
-  background: rgba(255, 255, 255, 1);
-  transition: background 250ms;
 }
 
 .b-contain input:disabled ~ .b-input::after {
@@ -638,17 +632,6 @@ input:checked + .slider:before {
   border-color: rgba(184, 194, 204, 1);
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.b-contain input[type="radio"]:disabled ~ .b-input {
-  background: rgba(241, 245, 248, 1);
-  border-color: rgba(184, 194, 204, 1);
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.b-contain input[type="radio"]:disabled ~ .b-input::after {
-  background: rgba(135, 149, 161, 1);
 }
 
 .b-contain input:checked:focus ~ .b-input,
@@ -725,6 +708,172 @@ input:checked + .slider:before {
 }
 
 .b-contain:first-child .b-input::before {
+  visibility: hidden;
+}
+
+#case {
+  position: relative;
+  top: 2px;
+  font-family: Cambria, Cochin, Georgia, serif;
+}
+
+/* LIST- CHECKED CHECKBOXES */
+
+.checked-contain *,
+.checked-contain *::before,
+.checked-contain *::after {
+  box-sizing: content-box !important;
+}
+
+.checked-contain input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.checked-contain span {
+  line-height: 1.54;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.checked-contain {
+  display: table;
+  position: relative;
+  padding-left: 1.8rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.checked-contain input[type="checkbox"] ~ .checked-input {
+  position: relative;
+  left: -10px;
+  top: 5px;
+  height: 1.25rem;
+  width: 1.25rem;
+  background: rgba(241, 245, 248, 1);
+  transition: background 250ms;
+  border: 1px solid rgba(184, 194, 204, 1);
+  border-radius: 0.125rem;
+}
+
+.checked-contain input[type="checkbox"] ~ .checked-input::after {
+  content: "";
+  position: relative;
+  display: none;
+  left: 0.45rem;
+  top: 0.18rem;
+  width: 0.25rem;
+  height: 0.6rem;
+  border: solid rgba(255, 255, 255, 1);
+  border-width: 0 2px 2px 0;
+  transition: background 250ms;
+  transform: rotate(45deg);
+}
+
+.checked-contain input:disabled ~ .checked-input::after {
+  border-color: rgba(135, 149, 161, 1);
+}
+
+.checked-contain input:checked ~ .checked-input::after {
+  display: block;
+}
+
+.checked-contain:hover input ~ .checked-input,
+.checked-contain input:focus ~ .checked-input {
+  background: rgb(231, 238, 243);
+}
+
+.checked-contain input:focus ~ .checked-input {
+  box-shadow: 0 0 0 2px rgba(52, 144, 220, 0.5);
+}
+
+.checked-contain input:checked ~ .checked-input {
+  background: rgba(0, 130, 243, 1);
+  border-color: rgba(0, 130, 243, 1);
+}
+
+.checked-contain input[type="checkbox"]:disabled ~ .checked-input {
+  background: rgba(241, 245, 248, 1);
+  border-color: rgba(184, 194, 204, 1);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checked-contain input:checked:focus ~ .checked-input,
+.checked-contain:hover input:not([disabled]):checked ~ .checked-input {
+  background: rgba(13, 143, 255, 1);
+  border-color: rgba(13, 143, 255, 1);
+}
+
+.checked-contain .checked-input::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  margin-left: -0.85rem;
+  margin-top: -0.85rem;
+  background: rgba(0, 130, 243, 1);
+  border-radius: 2rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+
+@keyframes b-ripple {
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes b-ripple-duplicate {
+  0% {
+    transform: scale(0);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.checked-contain input + .checked-input::before {
+  animation: b-ripple 250ms ease-out;
+}
+
+.checked-contain input:checked + .checked-input::before {
+  animation-name: b-ripple-duplicate;
+}
+
+.checked-contain .checked-input::before {
+  visibility: hidden;
+}
+
+.checked-contain input:focus + .checked-input::before {
+  visibility: visible;
+}
+
+.checked-contain:first-child .checked-input::before {
   visibility: hidden;
 }
 

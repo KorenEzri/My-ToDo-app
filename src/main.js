@@ -29,6 +29,7 @@ window.addEventListener("DOMContentLoaded", function () {
     .appendChild(document.createTextNode(""));
   const search = document.getElementById("search");
   //LIST END
+  const viewSection = document.getElementById("view-section");
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   const mainWrapper = document.getElementById("main-wrapper");
@@ -52,6 +53,16 @@ window.addEventListener("DOMContentLoaded", function () {
     const buttonsDiv = document.createElement("div");
     const removeBtn = document.createElement("button");
     const copyBtn = document.createElement("button");
+    //checkbox
+    const checkedLabel = document.createElement("label");
+    const checkedInput = document.createElement("input");
+    const checkedDiv = document.createElement("div");
+    checkedLabel.classList.add("checked-contain");
+    checkedDiv.classList.add("checked-input");
+    checkedInput.setAttribute("type", "checkbox");
+    checkedLabel.appendChild(checkedInput);
+    checkedLabel.appendChild(checkedDiv);
+    //checkbox end
     const chosenPriority =
       userPriority.options[userPriority.selectedIndex].text;
     removeBtn.innerHTML = "Delete";
@@ -76,12 +87,8 @@ window.addEventListener("DOMContentLoaded", function () {
     itemContainer.appendChild(todoText);
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
+    itemContainer.appendChild(checkedLabel);
     itemContainer.appendChild(buttonsDiv);
-    // if (itemContainer.innerHTML.length > 160) {
-    //   const summary = document.createElement("summary");
-    //   summary.innerHTML = "kaka";
-    //   todo - container.appendChild(summary);
-    // }
     removeBtn.addEventListener("click", (e) => {
       const shouldDelete = confirm("Are you sure?");
       if (shouldDelete) {
@@ -104,7 +111,6 @@ window.addEventListener("DOMContentLoaded", function () {
     updateCounter();
     updateBin();
   };
-
   //FUNCTION: COLOR PRIORITY
   const colorPriority = (priority, element) => {
     switch (priority) {
@@ -227,7 +233,6 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     }
   };
-
   //FUNCTION: CREATE BIN
   const createBin = async () => {
     registerData.push({
@@ -273,6 +278,16 @@ window.addEventListener("DOMContentLoaded", function () {
       const removeBtn = document.createElement("button");
       const copyBtn = document.createElement("button");
       const buttonsDiv = document.createElement("div");
+      //checkbox
+      const checkedLabel = document.createElement("label");
+      const checkedInput = document.createElement("input");
+      const checkedDiv = document.createElement("div");
+      checkedLabel.classList.add("checked-contain");
+      checkedDiv.classList.add("checked-input");
+      checkedInput.setAttribute("type", "checkbox");
+      checkedLabel.appendChild(checkedInput);
+      checkedLabel.appendChild(checkedDiv);
+      //checkbox end
       removeBtn.innerHTML = "Delete";
       removeBtn.classList.add("delete-button");
       copyBtn.innerHTML = "Copy";
@@ -294,6 +309,8 @@ window.addEventListener("DOMContentLoaded", function () {
       itemContainer.appendChild(todoDate);
       itemContainer.appendChild(todoPriority);
       itemContainer.appendChild(buttonsDiv);
+      itemContainer.appendChild(checkedLabel);
+
       removeBtn.addEventListener("click", (e) => {
         const shouldDelete = confirm("Are you sure?");
         if (shouldDelete) {
@@ -365,7 +382,14 @@ window.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify({ "my-todo": todoList }),
     });
   };
-
+  //FUNCTION: CHECK ITEM AS DONE
+  viewSection.onclick = (e) => {
+    let target = e.target;
+    if (target.tagName !== "DIV") return;
+    const itemText = document.querySelectorAll(".todo-text");
+    target.style.textDecoration = "line-through";
+    console.log(target);
+  };
   /*---          -----       BEGIN       -----          ---*/
   readBin(storedPassword);
   userInput.focus();
