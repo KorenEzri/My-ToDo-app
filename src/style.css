@@ -747,6 +747,7 @@ input:checked + .slider:before {
   cursor: pointer;
   margin-bottom: 0.5rem;
   width: 40px !important;
+  height: 26px !important;
 }
 
 .checked-contain input[type="checkbox"] ~ .checked-input {
