@@ -77,6 +77,11 @@ window.addEventListener("DOMContentLoaded", function () {
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
     itemContainer.appendChild(buttonsDiv);
+    // if (itemContainer.innerHTML.length > 160) {
+    //   const summary = document.createElement("summary");
+    //   summary.innerHTML = "kaka";
+    //   todo - container.appendChild(summary);
+    // }
     removeBtn.addEventListener("click", (e) => {
       const shouldDelete = confirm("Are you sure?");
       if (shouldDelete) {
@@ -302,7 +307,6 @@ window.addEventListener("DOMContentLoaded", function () {
         let fullLi = e.target.parentNode.parentNode.textContent;
         const liLength = fullLi.length;
         const text = fullLi.substr(0, liLength - 10);
-        console.log(text);
         navigator.clipboard.writeText(text);
         e.target.innerHTML = "Copied!";
       };

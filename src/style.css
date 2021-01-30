@@ -112,7 +112,6 @@ body {
   height: 2.2vh;
   max-width: 220px;
   padding: 5px;
-  padding-right: 40px;
   outline: none;
   border: 2px solid #999999;
   border-radius: 5px;
@@ -345,12 +344,21 @@ ul * {
   list-style-type: none;
 }
 
+ul {
+  word-break: break-all;
+}
+
 li {
   background-color: whitesmoke;
   margin: 6px;
   padding: 6px;
   width: 100%;
   display: inline-block;
+  word-break: break-all;
+}
+
+li * {
+  max-width: 50vw;
 }
 
 li:hover {
@@ -374,6 +382,11 @@ li:hover {
 .todo-created-at {
   font-size: 14;
   font-style: italic;
+  word-break: normal;
+}
+
+.todo-priority {
+  /* max */
 }
 
 .disable-select {
