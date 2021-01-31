@@ -179,10 +179,6 @@ body {
   max-width: 10px;
 }
 
-/* .tasks-finished {
-  top: 200px;
-} */
-
 .no-tasks {
   background-image: url(../pics/noTASKS.jpg);
   background-repeat: no-repeat;
@@ -196,7 +192,7 @@ body {
   background-repeat: no-repeat;
   background-size: 280px 140px;
   background-position-x: 60%;
-  background-position-y: 13.2%;
+  background-position-y: 15%;
 }
 
 #search-div {
@@ -257,14 +253,6 @@ summary:focus {
   right: 0;
   padding-top: 7px;
   padding-right: 12px;
-}
-
-li:hover .todo-container {
-  transition: 0.4s;
-  background-color: rgba(112, 103, 243, 0.239);
-  border-radius: 16px;
-  padding: 8px;
-  cursor: pointer;
 }
 
 .copy-button:focus {
@@ -417,10 +405,19 @@ ul * {
 
 ul {
   word-break: break-all;
+  width: 100%;
+  max-width: 900px;
 }
 
 .line-through {
   text-decoration: line-through;
+}
+
+li:hover .todo-container {
+  transition: 0.4s;
+  background-color: rgba(112, 103, 243, 0.239);
+  border-radius: 16px;
+  padding: 8px;
 }
 
 li {
@@ -435,7 +432,6 @@ li {
 }
 
 li * {
-  max-width: 47vw;
 }
 
 li:hover {
@@ -775,13 +771,13 @@ input:checked + .slider:before {
 }
 
 .checked-contain {
-  display: table;
   position: relative;
   padding-left: 1.8rem;
   cursor: pointer;
   margin-bottom: 0.5rem;
   width: 40px !important;
   height: 26px !important;
+  margin-right: 170px;
 }
 
 .checked-contain input[type="checkbox"] ~ .checked-input {
