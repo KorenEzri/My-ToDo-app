@@ -69,6 +69,7 @@ window.addEventListener("DOMContentLoaded", function () {
     checkedLabel.setAttribute("id", "check-label");
     checkedDiv.classList.add("checked-input");
     checkedInput.setAttribute("type", "checkbox");
+    checkedInput.setAttribute("id", "checkinputt");
     checkedLabel.appendChild(checkedInput);
     checkedLabel.appendChild(checkedDiv);
     //checkbox end
