@@ -6,9 +6,24 @@ window.addEventListener("DOMContentLoaded", function () {
   const wipeButton = document.getElementById("wipe-button");
   const registerButton = document.getElementById("register-button");
   const signInButton = document.getElementById("load-list");
+  //BUTTONS END
+  //DARKMODE
+  const swapStyleSheets = (sheet) => {
+    document.getElementById("style").setAttribute("href", sheet);
+  };
   const darkModeSwitch = document.getElementById("dark-mode-switch");
   const darkModeselected = document.getElementById("dark-mode-select");
-  //BUTTONS END
+  const darkbackground = document.getElementById("background-image");
+  darkbackground.hidden = true;
+  const darkModeChecked = JSON.parse(localStorage.getItem("darkmodeon"));
+  if (darkModeChecked == true) {
+    darkModeselected.checked = true;
+  }
+  if (darkModeselected.checked) {
+    swapStyleSheets("darkmode.css");
+    darkbackground.hidden = false;
+  }
+  //DARKMODE - END
   //REGISTRATION
   const firstNameInput = document.getElementById("first-name");
   const lastNameInput = document.getElementById("last-name");
@@ -47,7 +62,6 @@ window.addEventListener("DOMContentLoaded", function () {
   navigator.permissions.query({ name: "clipboard-write" }).then((status) => {
     status.onchange = () => {};
   });
-  const darkbackground = document.getElementById("background-image");
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
@@ -467,10 +481,6 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     listItemsAllArray.length = 0;
   };
-  //FUNCTIONl SWAP STYLESHEETS
-  const swapStyleSheets = (sheet) => {
-    document.getElementById("style").setAttribute("href", sheet);
-  };
 
   ///////////////////////***********************************************************/////////////////////////////////
   /*---          -----       BEGIN       -----          ---*/
@@ -550,10 +560,12 @@ window.addEventListener("DOMContentLoaded", function () {
     if (darkModeselected.checked) {
       swapStyleSheets("darkmode.css");
       darkbackground.hidden = false;
+      localStorage.setItem("darkmodeon", darkModeselected.checked);
     }
     if (!darkModeselected.checked) {
       swapStyleSheets("style.css");
       darkbackground.hidden = true;
+      localStorage.removeItem("darkmodeon");
     }
   });
 });
