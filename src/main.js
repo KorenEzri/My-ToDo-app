@@ -22,20 +22,22 @@ window.addEventListener("DOMContentLoaded", function () {
   const userInput = document.getElementById("text-input");
   const list = document.getElementById("todo-list");
   const listItemsAll = list.getElementsByTagName("LI");
+  const listItemsAllArray = [];
   const oldList = [];
   const userPriority = document.getElementById("priority-selector");
   const counter = document
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
   const search = document.getElementById("search");
+  const allSpans = list.getElementsByTagName("SPAN");
+  const checkedArr = [];
   //LIST END
   //COUNTER
   const counts = document.getElementById("tasks-finished");
   const finishedCounter = document.getElementById("finished-counter");
-  counts.style.display = "none";
   finishedCounter.style.display = "none";
   //COUNTER END
-  const viewSection = document.getElementById("view-section");
+  // const viewSection = document.getElementById("view-section");
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   const mainWrapper = document.getElementById("main-wrapper");
@@ -108,7 +110,6 @@ window.addEventListener("DOMContentLoaded", function () {
       let fullLi = e.target.parentNode.parentNode.textContent;
       const liLength = fullLi.length;
       const text = fullLi.substr(0, liLength - 10);
-      console.log(text);
       navigator.clipboard.writeText(text);
       e.target.innerHTML = "Copied!";
     };
@@ -180,11 +181,13 @@ window.addEventListener("DOMContentLoaded", function () {
     } else {
       mainWrapper.classList.remove("done-all-tasks");
     }
-    if (count === 0 || !count) {
-      mainWrapper.classList.add("no-tasks");
-    } else {
-      mainWrapper.classList.remove("no-tasks");
-    }
+    setTimeout(function () {
+      if (count === 0 || !count) {
+        mainWrapper.classList.add("no-tasks");
+      } else {
+        mainWrapper.classList.remove("no-tasks");
+      }
+    }, 800);
   };
   //FUNCTION: COMFY DATE
   const comfyDate = () => {
@@ -290,7 +293,12 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
     for (let i = 0; i < oldList.length; i++) {
-      const { date, priority, text, tags } = oldList[i];
+      const currentLapse = i;
+      const { date, priority, text } = oldList[i];
+      const { amount, index } = oldList[oldList.length - 1];
+      if (!date || !priority || !text) {
+        return;
+      }
       const listItem = document.createElement("li");
       const itemContainer = document.createElement("div");
       const todoText = document.createElement("div");
@@ -308,6 +316,17 @@ window.addEventListener("DOMContentLoaded", function () {
       checkedInput.setAttribute("type", "checkbox");
       checkedLabel.appendChild(checkedInput);
       checkedLabel.appendChild(checkedDiv);
+      if (index) {
+        for (let t = 0; t < index.length; t++) {
+          if (!checkedArr.includes(index[t])) checkedArr.push(index[t]);
+          let k = index[t];
+          if (k === currentLapse) {
+            checkedInput.setAttribute("checked", "checked");
+            itemContainer.classList.toggle("line-through");
+            checkedLabel.appendChild(document.createElement("span"));
+          }
+        }
+      }
       //checkbox end
       removeBtn.innerHTML = "Delete";
       removeBtn.classList.add("delete-button");
@@ -352,8 +371,6 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
-  // const checkedList = [];
-
   const readBin = async (password) => {
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -374,11 +391,15 @@ window.addEventListener("DOMContentLoaded", function () {
     postBin();
   };
   //FUNCTION: UPDATE BIN
-  const updateBin = async () => {
+  const updateBin = async (checked) => {
     let BIN_ID = `${userPassword.value}`;
     if (storedPassword) BIN_ID = storedPassword;
     const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
     let todoList = [];
+    const amountofChecks = {
+      amount: list.getElementsByTagName("SPAN").length,
+      index: checked,
+    };
     const allDates = document.querySelectorAll(
       "#todo-list > li > div > div.todo-created-at"
     );
@@ -396,40 +417,58 @@ window.addEventListener("DOMContentLoaded", function () {
       };
       todoList.push(obj);
     }
+    todoList.push(amountofChecks);
     const binUpdate = await fetch(UPDATE_BIN_URL, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "my-todo": todoList }), //+ {'tags': allTags},
+      body: JSON.stringify({ "my-todo": todoList }),
     });
   };
   //FUNCTION: CHECK ITEM AS DONE
   const checkFinishedTasks = (e) => {
     let target = e.target;
-    const spans = target.getElementsByTagName("SPAN");
-    const allSpans = list.getElementsByTagName("SPAN");
     if (target.tagName !== "LABEL") return;
+    for (let i = 0; i < listItemsAll.length; i++) {
+      listItemsAllArray.push(listItemsAll[i]);
+    }
+    let listItemIndex = listItemsAllArray.indexOf(target.closest("LI"));
+    const spans = target.getElementsByTagName("SPAN");
     target.parentNode.classList.toggle("line-through");
     if (target.parentNode.classList.contains("line-through")) {
       target.appendChild(document.createElement("span"));
       setTimeout(function () {
         updateCounter(allSpans.length);
-      }, 240);
+      });
+      checkedArr.push(listItemIndex);
+      updateBin(checkedArr);
     }
     if (!target.parentNode.classList.contains("line-through")) {
       spans[0].remove();
+      let remove = checkedArr.indexOf(listItemIndex);
+      if (remove !== -1) {
+        checkedArr.splice(remove, 1);
+      }
       updateCounter(allSpans.length);
+      updateBin(checkedArr);
     }
+    listItemsAllArray.length = 0;
   };
+
+  ///////////////////////***********************************************************/////////////////////////////////
   /*---          -----       BEGIN       -----          ---*/
+  ///////////////////////***********************************************************/////////////////////////////////
+  //LOAD USER'S LIST
   readBin(storedPassword);
+  //FOCUS ON TASK INPUT BOX
   userInput.focus();
+  //FOCUS ON TASK INPUT EVERY TIME YOU CHANGE PRIORITY
   userPriority.addEventListener("change", () => {
     userInput.focus();
   });
-  viewSection.addEventListener("click", checkFinishedTasks);
-
+  //CHECKBOX WHEN HOVER ON LI: "FINISH TASK"
+  list.addEventListener("click", checkFinishedTasks);
   //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
   userInput.onkeyup = (event) => {
