@@ -27,7 +27,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const userPriority = document.getElementById("priority-selector");
   const search = document.getElementById("search");
   //LIST END
-  //COUNTER / COUNTER-RELATED
+  //COUNTER - COUNTER-RELATED
   const counts = document.getElementById("tasks-finished");
   const finishedCounter = document.getElementById("finished-counter");
   const allSpans = list.getElementsByTagName("SPAN");
@@ -48,7 +48,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
-  const addToList = (text, date, priority) => {
+  const addToList = () => {
     if (userInput.value === "") {
       userInput.focus();
       return;
@@ -66,6 +66,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const checkedInput = document.createElement("input");
     const checkedDiv = document.createElement("div");
     checkedLabel.classList.add("checked-contain");
+    checkedLabel.setAttribute("id", "check-label");
     checkedDiv.classList.add("checked-input");
     checkedInput.setAttribute("type", "checkbox");
     checkedLabel.appendChild(checkedInput);
@@ -312,6 +313,7 @@ window.addEventListener("DOMContentLoaded", function () {
       const checkedInput = document.createElement("input");
       const checkedDiv = document.createElement("div");
       checkedLabel.classList.add("checked-contain");
+      checkedLabel.setAttribute("id", "check-label");
       checkedDiv.classList.add("checked-input");
       checkedInput.setAttribute("type", "checkbox");
       checkedLabel.appendChild(checkedInput);
@@ -466,7 +468,6 @@ window.addEventListener("DOMContentLoaded", function () {
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
   readBin(storedPassword);
-
   //FOCUS ON TASK INPUT BOX
   userInput.focus();
   //FOCUS ON TASK INPUT EVERY TIME YOU CHANGE PRIORITY
