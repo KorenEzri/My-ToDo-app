@@ -416,6 +416,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const allPriorities = document.querySelectorAll(
       "#todo-list > li > div > div.todo-priority"
     );
+
     for (let j = 0; j < allDates.length; j++) {
       const obj = {
         date: allDates[j].textContent,
@@ -517,9 +518,25 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //SIGN IN
   signInButton.addEventListener("click", () => {
-    localStorage.removeItem("password");
-    localStorage.setItem("password", JSON.stringify(userPassword.value));
-    readBin(storedPassword);
-    window.location.reload();
+    if (userPassword.value.length < storedPassword.length) {
+      alert(
+        `Please check your password and try again. Your saved password is: ${storedPassword}`
+      );
+    }
+    if (userPassword.value === storedPassword || userPassword.value === "") {
+      readBin(storedPassword);
+      window.location.reload();
+    }
+    if (
+      userPassword.value !== storedPassword &&
+      userPassword.value.length >= storedPassword.length
+    ) {
+      localStorage.removeItem("password");
+      localStorage.setItem("password", JSON.stringify(userPassword.value));
+      readBin(storedPassword);
+      window.location.reload();
+    }
   });
 });
+
+// "601700fd13b20d48e8bfb495"
