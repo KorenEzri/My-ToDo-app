@@ -5,7 +5,6 @@ const puppeteer = require("puppeteer");
 const full4s = require("@suvelocity/tester");
 const nock = require("nock");
 const useNock = require("nock-puppeteer");
-
 const path = "file://" + __dirname + "/src/index.html";
 let page;
 let browser;
@@ -91,6 +90,8 @@ describe(projectName, () => {
     const elements = await page.$$(".todo-text");
     expect(elements.length).toBe(0);
   });
+
+
 
   test("Can add todo task with text and priority", async () => {
     const mockToDo = mockToDos[0];
@@ -193,7 +194,7 @@ describe(projectName, () => {
     ).jsonValue();
     expect(currentCounter).toBe("2");
   });
-  //imhere
+
   test("Can sort by priority", async () => {
     await nock("https://api.jsonbin.io/v3")
       .get(/.*/)
@@ -252,4 +253,9 @@ describe(projectName, () => {
     expect(text).toBe(mocks.fetchTest.record["my-todo"][0].text);
     expect(priority).toBe(mocks.fetchTest.record["my-todo"][0].priority);
   });
+
+  test("The checkbox button remains check after refreshing", async () => {
+    
+  }
+
 });

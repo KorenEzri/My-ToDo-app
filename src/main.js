@@ -25,17 +25,18 @@ window.addEventListener("DOMContentLoaded", function () {
   const listItemsAllArray = [];
   const oldList = [];
   const userPriority = document.getElementById("priority-selector");
+  const search = document.getElementById("search");
+  //LIST END
+  //COUNTER / COUNTER-RELATED
+  const counts = document.getElementById("tasks-finished");
+  const finishedCounter = document.getElementById("finished-counter");
+  const allSpans = list.getElementsByTagName("SPAN");
+  const checkedArr = [];
   const counter = document
     .getElementById("counter")
     .appendChild(document.createTextNode(""));
-  const search = document.getElementById("search");
-  const allSpans = list.getElementsByTagName("SPAN");
-  const checkedArr = [];
-  //LIST END
-  //COUNTER
-  const counts = document.getElementById("tasks-finished");
-  const finishedCounter = document.getElementById("finished-counter");
   finishedCounter.style.display = "none";
+  counts.style.display = "none";
   //COUNTER END
   // const viewSection = document.getElementById("view-section");
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
@@ -45,7 +46,6 @@ window.addEventListener("DOMContentLoaded", function () {
     status.onchange = () => {};
   });
   //BASE END
-
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
   const addToList = (text, date, priority) => {
@@ -295,7 +295,7 @@ window.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < oldList.length; i++) {
       const currentLapse = i;
       const { date, priority, text } = oldList[i];
-      const { amount, index } = oldList[oldList.length - 1];
+      const { index } = oldList[oldList.length - 1];
       if (!date || !priority || !text) {
         return;
       }
@@ -389,6 +389,11 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     }
     postBin();
+    if (checkedArr.length > 0) {
+      finishedCounter.style.display = "unset";
+      counts.style.display = "unset";
+      finishedCounter.innerText = checkedArr.length;
+    }
   };
   //FUNCTION: UPDATE BIN
   const updateBin = async (checked) => {
@@ -461,6 +466,7 @@ window.addEventListener("DOMContentLoaded", function () {
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
   readBin(storedPassword);
+
   //FOCUS ON TASK INPUT BOX
   userInput.focus();
   //FOCUS ON TASK INPUT EVERY TIME YOU CHANGE PRIORITY
