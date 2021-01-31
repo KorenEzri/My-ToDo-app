@@ -29,6 +29,12 @@ window.addEventListener("DOMContentLoaded", function () {
     .appendChild(document.createTextNode(""));
   const search = document.getElementById("search");
   //LIST END
+  //COUNTER
+  const counts = document.getElementById("tasks-finished");
+  const finishedCounter = document.getElementById("finished-counter");
+  counts.style.display = "none";
+  finishedCounter.style.display = "none";
+  //COUNTER END
   const viewSection = document.getElementById("view-section");
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
@@ -156,9 +162,24 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: UPDATE COUNTER
-  const updateCounter = () => {
-    let count = list.querySelectorAll("li").length;
+  const updateCounter = (n) => {
+    const count = list.querySelectorAll("li").length;
     counter.textContent = count;
+    if (n > 0) {
+      counts.style.display = "unset";
+      finishedCounter.style.display = "unset";
+      finishedCounter.textContent = n;
+    }
+    if (n <= 0 || n === "" || n === undefined) {
+      finishedCounter.textContent = "";
+      finishedCounter.style.display = "none";
+      counts.style.display = "none";
+    }
+    if (n > 0 && n === count) {
+      mainWrapper.classList.add("done-all-tasks");
+    } else {
+      mainWrapper.classList.remove("done-all-tasks");
+    }
     if (count === 0 || !count) {
       mainWrapper.classList.add("no-tasks");
     } else {
@@ -269,7 +290,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
     for (let i = 0; i < oldList.length; i++) {
-      const { date, priority, text } = oldList[i];
+      const { date, priority, text, tags } = oldList[i];
       const listItem = document.createElement("li");
       const itemContainer = document.createElement("div");
       const todoText = document.createElement("div");
@@ -310,7 +331,6 @@ window.addEventListener("DOMContentLoaded", function () {
       itemContainer.appendChild(todoPriority);
       itemContainer.appendChild(buttonsDiv);
       itemContainer.appendChild(checkedLabel);
-
       removeBtn.addEventListener("click", (e) => {
         const shouldDelete = confirm("Are you sure?");
         if (shouldDelete) {
@@ -332,6 +352,8 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
+  // const checkedList = [];
+
   const readBin = async (password) => {
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -379,14 +401,26 @@ window.addEventListener("DOMContentLoaded", function () {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "my-todo": todoList }),
+      body: JSON.stringify({ "my-todo": todoList }), //+ {'tags': allTags},
     });
   };
   //FUNCTION: CHECK ITEM AS DONE
-  viewSection.onclick = (e) => {
+  const checkFinishedTasks = (e) => {
     let target = e.target;
+    const spans = target.getElementsByTagName("SPAN");
+    const allSpans = list.getElementsByTagName("SPAN");
     if (target.tagName !== "LABEL") return;
     target.parentNode.classList.toggle("line-through");
+    if (target.parentNode.classList.contains("line-through")) {
+      target.appendChild(document.createElement("span"));
+      setTimeout(function () {
+        updateCounter(allSpans.length);
+      }, 240);
+    }
+    if (!target.parentNode.classList.contains("line-through")) {
+      spans[0].remove();
+      updateCounter(allSpans.length);
+    }
   };
   /*---          -----       BEGIN       -----          ---*/
   readBin(storedPassword);
@@ -394,6 +428,7 @@ window.addEventListener("DOMContentLoaded", function () {
   userPriority.addEventListener("change", () => {
     userInput.focus();
   });
+  viewSection.addEventListener("click", checkFinishedTasks);
 
   //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
@@ -422,7 +457,7 @@ window.addEventListener("DOMContentLoaded", function () {
         alert("Please enter your name first =)");
         return;
       }
-      createBin();
+      registerButton.click();
     }
   };
   firstNameInput.onkeyup = (event) => {
@@ -431,7 +466,7 @@ window.addEventListener("DOMContentLoaded", function () {
         alert("Please enter your name first =)");
         return;
       }
-      createBin();
+      registerButton.click();
     }
   };
   //SIGN IN

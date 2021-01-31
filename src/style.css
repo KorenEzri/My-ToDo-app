@@ -139,6 +139,13 @@ body {
   margin-top: -1vh;
 }
 
+#finished-div {
+  position: relative;
+  display: inline;
+  left: 130px;
+  top: -32px;
+}
+
 #counts {
   padding: 4px;
   outline: none;
@@ -158,12 +165,38 @@ body {
   font-size: 14px;
 }
 
+.counters {
+  padding: 4px;
+  outline: none;
+  border: 0.6px solid #99999955;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 14px;
+}
+
+#finished-counter {
+  max-width: 10px;
+}
+
+/* .tasks-finished {
+  top: 200px;
+} */
+
 .no-tasks {
   background-image: url(../pics/noTASKS.jpg);
   background-repeat: no-repeat;
   background-size: 700px;
   background-position-x: 40%;
   background-position-y: 90%;
+}
+
+.done-all-tasks {
+  background-image: url(../pics/rick-astley.jpg);
+  background-repeat: no-repeat;
+  background-size: 280px 140px;
+  background-position-x: 60%;
+  background-position-y: 13.2%;
 }
 
 #search-div {
