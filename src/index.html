@@ -7,15 +7,16 @@
     <script src="utils.js"></script>
     <script src="main.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="darkmode.css" id="style">
   </head>
   <body>
     <div id="main-wrapper">
       <img src="../pics/rename.png" alt="" id="background-image">
-      <!-- <label class="switch">
-        <input type="checkbox">
+      <br>
+      <label class="switch" id="dark-mode-switch">
+        <input type="checkbox" id="dark-mode-select">
         <span class="slider round"></span>
-      </label><label id="awesome-mode" class="disable-select"></label> -->
+      </label><label id="dark-mode" class="disable-select">Toggle Dark Mode</label>
       <div id="control-section" class="disable-select">
         <button id="wipe-button" class="control-buttons delete-list-button">Delete list</button>
         <button id="sort-button" class="control-buttons sort-button">Sort</button>

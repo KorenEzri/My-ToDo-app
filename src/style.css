@@ -454,10 +454,6 @@ li:hover {
   margin-right: 6px;
 }
 
-.todo-priority {
-  /* max */
-}
-
 .disable-select {
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
@@ -466,9 +462,10 @@ li:hover {
   -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
-/* AWESOME-MODE TOGGLE SWITCH */
-#awesome-mode {
+/* DARK-MODE TOGGLE SWITCH */
+#dark-mode {
   padding-left: 12px;
+  font-size: 12px;
 }
 
 .switch {
@@ -476,6 +473,7 @@ li:hover {
   display: inline-block;
   width: 64px;
   height: 34px;
+  margin-left: 20px;
 }
 
 .switch input {
@@ -491,7 +489,7 @@ li:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: rgb(204, 204, 204);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
