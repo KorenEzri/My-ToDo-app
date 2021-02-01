@@ -14,7 +14,8 @@ body {
   margin-top: 3vh;
   border: thick solid rgb(87, 72, 72);
   background-color: rgba(245, 222, 179, 0.103);
-  width: 90vw;
+  width: 100%;
+
   max-width: 1250px;
   height: 90vh;
   position: relative;
@@ -64,6 +65,12 @@ body {
   margin-top: 4vh;
   padding: 12px;
   border-radius: 12px;
+}
+
+#registration-div {
+  display: flex;
+  max-width: fit-content;
+  max-height: 220px;
 }
 
 #registration * {
@@ -227,7 +234,7 @@ body {
   display: block;
   position: relative;
   margin-top: 2vh;
-  width: 66vw;
+  width: 100%;
 }
 
 .todo-container * {
