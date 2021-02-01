@@ -64,6 +64,7 @@ window.addEventListener("DOMContentLoaded", function () {
   navigator.permissions.query({ name: "clipboard-write" }).then((status) => {
     status.onchange = () => {};
   });
+  const spinner = document.getElementById("spinner");
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
@@ -281,6 +282,7 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: CREATE BIN
   const createBin = async () => {
+    spinner.classList.add("show");
     registerData.push({
       firstname: firstNameInput.value,
       lastname: lastNameInput.value,
@@ -296,6 +298,8 @@ window.addEventListener("DOMContentLoaded", function () {
       body: data,
     });
     const jsonRes = await response.json();
+    // spinner.classList.remove("show");
+
     const userCredentials = jsonRes.record[0];
     newUserDetails.push(userCredentials);
     registerConfirm.classList.toggle("hidden");
@@ -419,14 +423,21 @@ window.addEventListener("DOMContentLoaded", function () {
       finishedCounter.innerText = checkedArr.length;
     }
     if (user) {
-      const userSpan = document.createElement("span");
-      userSpan.setAttribute("id", "user-span");
-      userSpan.appendChild(
-        document.createTextNode(
-          `Signed in as: ${user.firstname} ${user.lastname}`
-        )
-      );
-      controlSection.appendChild(userSpan);
+      if (user.firstname) {
+        const userSpan = document.createElement("span");
+        userSpan.setAttribute("id", "user-span");
+        userSpan.appendChild(
+          document.createTextNode(
+            `Signed in as: ${user.firstname} ${user.lastname}`
+          )
+        );
+        controlSection.appendChild(userSpan);
+      } else {
+        const userSpan = document.createElement("span");
+        userSpan.setAttribute("id", "user-span");
+        userSpan.appendChild(document.createTextNode(`Signed in as: ${user}`));
+        controlSection.appendChild(userSpan);
+      }
     }
   };
   //FUNCTION: UPDATE BIN
@@ -495,7 +506,6 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     listItemsAllArray.length = 0;
   };
-
   ///////////////////////***********************************************************/////////////////////////////////
   /*---          -----       BEGIN       -----          ---*/
   ///////////////////////***********************************************************/////////////////////////////////
@@ -568,7 +578,13 @@ window.addEventListener("DOMContentLoaded", function () {
       return;
     }
     if (userPassword.value === storedPassword || userPassword.value === "") {
-      readBin(storedPassword);
+      if (firstNameInput.value || lastNameInput.value) {
+        const credintials = firstNameInput.value + " " + lastNameInput.value;
+        console.log(credintials);
+        readBin(storedPassword, credintials);
+      } else {
+        readBin(storedPassword);
+      }
       window.location.reload();
     }
     if (
@@ -577,7 +593,12 @@ window.addEventListener("DOMContentLoaded", function () {
     ) {
       localStorage.removeItem("password");
       localStorage.setItem("password", JSON.stringify(userPassword.value));
-      readBin(storedPassword);
+      if (firstNameInput.value || lastNameInput.value) {
+        const credintials = firstNameInput.value + " " + lastNameInput.value;
+        readBin(storedPassword, credintials);
+      } else {
+        readBin(storedPassword);
+      }
       window.location.reload();
     }
   });
@@ -594,10 +615,6 @@ window.addEventListener("DOMContentLoaded", function () {
       darkbackground.hidden = true;
       localStorage.removeItem("darkmodeon");
     }
+    window.location.reload();
   });
-  //MOBILE SCROLL SETTINGS
-  document
-    .getElementById("registration")
-    .scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-  //MOBILE SCROLL SETTINGS END
 });

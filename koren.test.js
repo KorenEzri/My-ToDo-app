@@ -9,7 +9,7 @@ const mockToDos = [
   {
     text: "first task input",
     priority: "1",
-    date: new Date(),
+    date: new Date("2021-02-02"),
   },
   {
     text: "second task input",
@@ -53,7 +53,7 @@ const mocks = {
   },
 };
 
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 const projectName = "pre.Todo App";
 describe(projectName, () => {
   beforeAll(async () => {
@@ -73,26 +73,22 @@ describe(projectName, () => {
     // await full4s.afterAll(projectName);
     await browser.close();
   });
-  test("The finished-task counter counts", async () => {
+  test("The copy-button copies the task", async () => {
     const mockToDo = mockToDos[0];
     const firstTaskText = mockToDo.text;
     const firstTaskPriority = mockToDo.priority;
-
     await page.goto(path, { waitUntil: "networkidle0" });
-
-    await page.type("#text-input", firstTaskText);
+    await page.type("#text-input", "Let's see if you can copy");
     await page.select("#priority-selector", firstTaskPriority);
     await page.click("#add-button");
     await page.waitForSelector(".todo-text");
-
     const elements = await page.$$(".todo-text");
     const firstItem = await (
       await elements[0].getProperty("innerText")
     ).jsonValue();
 
     await page.waitForSelector(".todo-priority");
-
-    const priorityElements = await page.$$(".todo-priority");
+    let priorityElements = await page.$$(".todo-priority");
     const firstItemPriority = await (
       await priorityElements[0].getProperty("innerText")
     ).jsonValue();
@@ -101,16 +97,39 @@ describe(projectName, () => {
     await nock("https://api.jsonbin.io/v3")
       .get(/.*/)
       .reply(200, mocks.toDoAddSecondResponse);
+    // const comfyDate = (date) => {
+    //   const current_datetime = new Date(date);
+    //   console.log(current_datetime);
+    //   const formatted_date =
+    //     current_datetime.getFullYear() +
+    //     "-" +
+    //     `${current_datetime.getMonth() + 1}`.padStart(2, "0") +
+    //     "-" +
+    //     `${current_datetime.getDate()}`.padStart(2, "0") +
+    //     "T" +
+    //     +`${current_datetime.getHours()}`.padStart(2, "0") +
+    //     ":" +
+    //     current_datetime.getMinutes() +
+    //     ":" +
+    //     current_datetime.getSeconds() +
+    //     "." +
+    //     current_datetime.getMilliseconds();
+    //   return formatted_date;
+    // };
 
     await page.goto(path, { waitUntil: "networkidle0" });
-
+    priorityElements = await page.$$(".todo-priority");
+    const copyBtn = await page.$$(".copy-button");
     await page.waitForSelector(".todo-container");
-    // await page.select("#check-label");
-    await page.click("#check-label");
-    const finishedCounter = await page.$("#finished-counter");
-    const currentCount = await (
-      await finishedCounter.getProperty("innerText")
-    ).jsonValue();
-    expect(currentCount).toBe("1");
+    await priorityElements[0].hover();
+    await copyBtn[0].click();
+    const input = await page.$("#text-input");
+    await input.focus();
+    await page.keyboard.down("Control");
+    await page.keyboard.press("V");
+    await page.keyboard.up("Control");
+    const result = await (await input.getProperty("value")).jsonValue();
+    const { text, priority, date } = mockToDos[0];
+    expect(result).toBe(text + date.toISOString() + priority);
   });
 });

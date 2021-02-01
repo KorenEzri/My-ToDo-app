@@ -91,8 +91,6 @@ describe(projectName, () => {
     expect(elements.length).toBe(0);
   });
 
-
-
   test("Can add todo task with text and priority", async () => {
     const mockToDo = mockToDos[0];
     const firstTaskText = mockToDo.text;
@@ -253,9 +251,4 @@ describe(projectName, () => {
     expect(text).toBe(mocks.fetchTest.record["my-todo"][0].text);
     expect(priority).toBe(mocks.fetchTest.record["my-todo"][0].priority);
   });
-
-  test("The checkbox button remains check after refreshing", async () => {
-    
-  }
-
 });
