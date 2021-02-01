@@ -11,7 +11,7 @@ body {
 
 #main-wrapper {
   margin: 0 auto;
-  margin-top: 2vh;
+  margin-top: 3vh;
   border: thick solid rgb(87, 72, 72);
   background-color: rgba(245, 222, 179, 0.103);
   width: 100%;
@@ -27,7 +27,7 @@ body {
   position: relative;
   margin-left: 14vw;
   margin-right: auto;
-  margin-top: -7vh;
+  margin-top: 3vh;
   width: 50%;
 }
 
@@ -80,14 +80,11 @@ body {
 
 #registered {
   font-family: Cambria, Cochin, Georgia, serif;
-  padding-top: 10px;
-  z-index: 9001;
-}
-
-#registration-div {
-  display: flex;
+  font-size: 16px;
   max-width: fit-content;
-  max-height: 200px;
+  padding-top: 20px;
+  font-size: 22px;
+  z-index: 9001;
 }
 
 #boldpart {
@@ -231,6 +228,7 @@ body {
 #view-section {
   display: block;
   position: relative;
+  margin-top: 2vh;
   width: 100%;
 }
 
@@ -396,7 +394,7 @@ summary:focus {
   margin-top: -2vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 56vh;
+  height: 60vh;
 }
 body * {
   -ms-overflow-style: none;
@@ -440,9 +438,12 @@ li {
   word-break: break-all;
 }
 
+li * {
+}
+
 li:hover {
   background-color: unset;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .todo-text {
@@ -465,10 +466,8 @@ li:hover {
 
 /* DARK-MODE TOGGLE SWITCH */
 #dark-mode {
-  position: relative;
   padding-left: 12px;
   font-size: 12px;
-  bottom: 5vh;
 }
 
 .switch {
@@ -476,8 +475,7 @@ li:hover {
   display: inline-block;
   width: 64px;
   height: 34px;
-  margin-left: 10px;
-  bottom: 5vh;
+  margin-left: 20px;
 }
 
 .switch input {
