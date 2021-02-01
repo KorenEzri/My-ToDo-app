@@ -31,9 +31,11 @@ window.addEventListener("DOMContentLoaded", function () {
   const registerConfirm = document.getElementById("registered");
   const introUsername = document.getElementById("intro-username");
   const introPassword = document.getElementById("intro-password");
+  const getUser = JSON.parse(localStorage.getItem("user"));
   const registerData = [];
   const newUserDetails = [];
   const CREATE_BIN = `https://api.jsonbin.io/v3/b`;
+  const controlSection = document.getElementById("control-section");
   //REGISTRATION END
   //LIST
   const userInput = document.getElementById("text-input");
@@ -164,9 +166,9 @@ window.addEventListener("DOMContentLoaded", function () {
       return;
     } else if (shouldIwipe) {
       const safeWord = prompt(
-        "To delete, please type: 'I'm a little piggy' without the ''s "
+        "To delete, please type: 'Taylor Swift was right' without the ''s "
       );
-      if (safeWord === "I'm a little piggy") {
+      if (safeWord === "Taylor Swift was right") {
         const PASS = storedPassword;
         const DELETE_BIN = `https://api.jsonbin.io/v3/b/${PASS}`;
         const binData = await fetch(DELETE_BIN, {
@@ -177,6 +179,7 @@ window.addEventListener("DOMContentLoaded", function () {
         });
         // localStorage.setItem('password',"601375f8ef99c57c734b5334");
         localStorage.removeItem("password");
+        localStorage.removeItem("user");
         window.location.reload();
       }
     }
@@ -308,6 +311,7 @@ window.addEventListener("DOMContentLoaded", function () {
       )
     );
     localStorage.setItem("password", JSON.stringify(jsonRes.metadata.id));
+    localStorage.setItem("user", JSON.stringify(userCredentials));
   };
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
@@ -391,7 +395,7 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
-  const readBin = async (password) => {
+  const readBin = async (password, user) => {
     let PASS = userPassword.value;
     if (password) PASS = password;
     if (!PASS) PASS = "601375f8ef99c57c734b5334";
@@ -413,6 +417,16 @@ window.addEventListener("DOMContentLoaded", function () {
       finishedCounter.style.display = "unset";
       counts.style.display = "unset";
       finishedCounter.innerText = checkedArr.length;
+    }
+    if (user) {
+      const userSpan = document.createElement("span");
+      userSpan.setAttribute("id", "user-span");
+      userSpan.appendChild(
+        document.createTextNode(
+          `Signed in as: ${user.firstname} ${user.lastname}`
+        )
+      );
+      controlSection.appendChild(userSpan);
     }
   };
   //FUNCTION: UPDATE BIN
@@ -486,7 +500,7 @@ window.addEventListener("DOMContentLoaded", function () {
   /*---          -----       BEGIN       -----          ---*/
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
-  readBin(storedPassword);
+  readBin(storedPassword, getUser);
   //FOCUS ON TASK INPUT BOX
   userInput.focus();
   //FOCUS ON TASK INPUT EVERY TIME YOU CHANGE PRIORITY
@@ -536,10 +550,22 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //SIGN IN
   signInButton.addEventListener("click", () => {
-    if (userPassword.value.length < storedPassword.length) {
+    if (
+      !userPassword.value ||
+      userPassword.value == "" ||
+      userPassword.value.length === null
+    ) {
+      alert(`Please enter a valid password.`);
+      return;
+    }
+    if (userPassword.value.length < 24 && storedPassword) {
       alert(
-        `Please check your password and try again. Your saved password is: ${storedPassword}`
+        `Please check your password and try again. Your saved password is: ${storedPassword}.`
       );
+      return;
+    } else if (userPassword.value.length < 24 && !storedPassword) {
+      `Please check your password and try again.`;
+      return;
     }
     if (userPassword.value === storedPassword || userPassword.value === "") {
       readBin(storedPassword);
@@ -547,7 +573,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     if (
       userPassword.value !== storedPassword &&
-      userPassword.value.length >= storedPassword.length
+      userPassword.value.length >= 24
     ) {
       localStorage.removeItem("password");
       localStorage.setItem("password", JSON.stringify(userPassword.value));
@@ -555,6 +581,7 @@ window.addEventListener("DOMContentLoaded", function () {
       window.location.reload();
     }
   });
+  // 6017e27babdf9c556795ee54
   //DARK MODE
   darkModeSwitch.addEventListener("change", () => {
     if (darkModeselected.checked) {

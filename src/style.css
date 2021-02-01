@@ -7,6 +7,20 @@ body * {
 }
 body {
   overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+#user-span {
+  position: relative;
+  float: right;
+  left: 11vw;
+  padding: 8px;
+  outline: none;
+  border: 0.6px solid #99999955;
+  border-radius: 12px;
+  background-color: #fbfbfb;
+  font-family: Cambria, Cochin, Georgia, serif;
+  font-size: 18px;
 }
 
 #main-wrapper {
@@ -17,7 +31,7 @@ body {
   width: 100%;
 
   max-width: 1250px;
-  height: 90vh;
+  height: 92vh;
   position: relative;
   border-radius: 8px;
   padding-top: 20px;
@@ -65,6 +79,7 @@ body {
   margin-top: 4vh;
   padding: 12px;
   border-radius: 12px;
+  z-index: 9001;
 }
 
 #registration-div {
@@ -96,11 +111,6 @@ body {
 #boldpart {
   font-size: 22px;
 }
-
-/* #load-list {
-  position: relative;
-  width: 60px;
-} */
 
 .control-inputs {
   width: 20vw;
@@ -399,7 +409,7 @@ summary:focus {
   margin-top: -2vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 60vh;
+  height: 62vh;
 }
 body * {
   -ms-overflow-style: none;
