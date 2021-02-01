@@ -19,15 +19,14 @@ body {
 
 #main-wrapper {
   margin: 0 auto;
-  margin-top: 3vh;
+  margin-top: 2vh;
   border: thick solid rgb(0, 0, 0);
   color: #88558b;
-  width: 160%;
+  width: 100%;
   max-width: 1250px;
-  height: 90vh;
+  height: 93vh;
   position: relative;
   border-radius: 8px;
-  padding-top: 20px;
 }
 
 #background-image {
@@ -43,8 +42,8 @@ body {
   display: block;
   position: relative;
   margin-left: 14vw;
+  margin-top: -2vh;
   margin-right: auto;
-  margin-top: 3vh;
   width: 50%;
 }
 
@@ -81,6 +80,7 @@ body {
   margin-top: 4vh;
   padding: 12px;
   border-radius: 12px;
+  z-index: 9001;
 }
 
 #registration * {
@@ -97,11 +97,14 @@ body {
 
 #registered {
   font-family: Cambria, Cochin, Georgia, serif;
-  font-size: 16px;
-  max-width: fit-content;
-  padding-top: 20px;
+  padding-top: 10px;
   z-index: 9001;
-  font-size: 22px;
+}
+
+#registration-div {
+  display: flex;
+  max-width: fit-content;
+  max-height: 200px;
 }
 
 #boldpart {
@@ -259,7 +262,6 @@ body {
 #view-section {
   display: block;
   position: relative;
-  margin-top: 2vh;
   width: 100%;
 }
 
@@ -437,10 +439,10 @@ summary:focus {
 
 #todo-list {
   position: relative;
-  margin-top: -2vh;
+  margin-top: -3.6vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 60vh;
+  height: 56vh;
 }
 body * {
   -ms-overflow-style: none;
@@ -509,8 +511,10 @@ li:hover {
 
 /* DARK-MODE TOGGLE SWITCH */
 #dark-mode {
-  font-size: 12px;
+  position: relative;
   padding-left: 12px;
+  font-size: 12px;
+  bottom: 1vh;
 }
 
 .switch {
@@ -518,7 +522,8 @@ li:hover {
   display: inline-block;
   width: 64px;
   height: 34px;
-  margin-left: 20px;
+  margin-left: 10px;
+  bottom: 1vh;
 }
 
 .switch input {
