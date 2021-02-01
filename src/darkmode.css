@@ -1448,15 +1448,16 @@ input:checked + .slider:before {
 
   #main-wrapper {
     margin: 0 auto;
-    margin-top: 2vh;
+    margin-top: -0.4vh;
     border: thick solid rgb(0, 0, 0);
     color: #88558b;
     width: 100%;
     max-width: 1250px;
     height: 93vh;
     position: relative;
+    margin-left: -1vh;
     border-radius: 8px;
-    overflow-y: scroll !important;
+    overflow-y: hidden !important;
   }
 
   #background-image {
@@ -1565,9 +1566,6 @@ input:checked + .slider:before {
     width: 100%;
     max-width: 900px;
   }
-  .line-through {
-    text-decoration: line-through;
-  }
 
   li:hover .todo-container {
     all: unset;
@@ -1577,7 +1575,7 @@ input:checked + .slider:before {
     background-color: rgba(112, 103, 243, 0.239);
     border-radius: 2px;
     max-height: 64px;
-    /* overflow-y: hidden; */
+    overflow-y: scroll;
   }
 
   li {
@@ -1603,7 +1601,16 @@ input:checked + .slider:before {
   }
 
   .todo-created-at {
-    margin-right: 6px;
+    all: unset;
+    position: relative;
+    left: -12px;
+  }
+
+  .todo-priority {
+    width: 3px !important;
+    position: relative;
+    top: -10px;
+    left: 163px;
   }
 
   #background-image {
@@ -1630,7 +1637,6 @@ input:checked + .slider:before {
   }
 
   #registration {
-    display: flex;
     position: absolute;
     flex-direction: column;
     top: 0;
@@ -1639,19 +1645,16 @@ input:checked + .slider:before {
     margin-top: 4vh;
     border-radius: 12px;
     overflow-y: scroll;
+    overscroll-behavior-y: contain;
     max-height: 80px;
+    transition: 0.7s;
   }
 
   #registration:hover {
     background-color: unset;
     transition: 0.7s;
-    max-height: 100%;
-  }
-
-  .todo-priority {
-    border-radius: 6px;
-    padding: 4px;
-    width: 10px;
+    max-height: 350px;
+    text-overflow: clip;
   }
 
   #registration * {
@@ -1717,7 +1720,7 @@ input:checked + .slider:before {
     text-decoration: none;
     text-shadow: 0px 1px 0px #263666;
     position: relative;
-    top: -25px;
+    top: -14px;
     left: 108px;
     width: 25px;
   }
@@ -1738,7 +1741,7 @@ input:checked + .slider:before {
     text-decoration: none;
     text-shadow: 0px 1px 0px #263666;
     position: relative;
-    top: -23px;
+    top: -10px;
     left: 110px;
     width: 32px;
   }

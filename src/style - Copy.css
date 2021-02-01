@@ -1121,14 +1121,13 @@ input:checked + .slider:before {
 
 /* RESPONSIVITY */
 @media only screen and (min-width: 320px) and (max-width: 480px) {
-  body * {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 10px !important;
-  }
   body {
     overflow-y: hidden;
     overflow-x: hidden;
+  }
+
+  body * {
+    font-size: 10px !important;
   }
 
   #control-section {
@@ -1166,8 +1165,8 @@ input:checked + .slider:before {
     padding: 4px;
     outline: none;
     border-radius: 5px;
-    background-color: #fbfbfb;
-
+    background-color: #411216c7;
+    color: #983d9c;
     font-family: Cambria, Cochin, Georgia, serif;
     font-size: 12px;
     position: relative;
@@ -1184,11 +1183,10 @@ input:checked + .slider:before {
     margin-left: 2px;
     padding: 3.5px;
     outline: none;
-    border: 0.6px solid #99999955;
-
+    border: 0.6px solid #3a090d;
     border-radius: 5px;
-    background-color: #fbfbfb;
-
+    background-color: #411216c7;
+    color: #983d9c;
     font-family: Cambria, Cochin, Georgia, serif;
     font-size: 14px;
   }
@@ -1197,11 +1195,10 @@ input:checked + .slider:before {
     all: unset;
     padding: 4px;
     outline: none;
-    border: 0.6px solid #99999955;
-
+    border: 0.6px solid #3a090d;
     border-radius: 5px;
-    background-color: #fbfbfb;
-
+    background-color: #411216c7;
+    color: #983d9c;
     font-family: Cambria, Cochin, Georgia, serif;
   }
 
@@ -1237,10 +1234,8 @@ input:checked + .slider:before {
     padding-right: 20px;
     outline: none;
     border: 2px solid #999999;
-
     border-radius: 5px;
-    background-color: #fbfbfb;
-
+    background-color: #181f2f;
     font-family: Cambria, Cochin, Georgia, serif;
 
     background-position: 19.5vw 2px;
@@ -1255,9 +1250,7 @@ input:checked + .slider:before {
     float: right;
     left: 17vw;
     top: -50px;
-    border: 0.6px solid #99999955;
-    border-radius: 12px;
-    background-color: #fbfbfb;
+    background-color: #77081159;
     padding: 5px;
     border-radius: 12px;
   }
@@ -1265,11 +1258,9 @@ input:checked + .slider:before {
   .sort-button {
     all: unset;
     text-shadow: 0px 1px 0px #2f6627;
-
-    border: 1px solid #18ab29;
+    border: 1px solid #18ab2988;
     transition: 0.3s;
-    background-color: #44c767;
-
+    background-color: #41c263c5;
     border-radius: 28px;
     display: inline-block;
     cursor: pointer;
@@ -1292,11 +1283,8 @@ input:checked + .slider:before {
   .add-button {
     all: unset;
     text-shadow: 0px 1px 0px #2f6627;
-
-    border: 1px solid #18ab29;
-
-    background-color: #44c767;
-
+    border: 1px solid #18ab2988;
+    background-color: #41c263c5;
     transition: 0.3s;
     border-radius: 28px;
     display: inline-block;
@@ -1334,11 +1322,8 @@ input:checked + .slider:before {
   .delete-list-button {
     all: unset;
     text-shadow: 0px 1px 0px #e30d0d;
-
-    background-color: #bd2d2d;
-
-    border: 1px solid #751e1e;
-
+    background-color: #8a1010c5;
+    border: 1px solid #751e1eb9;
     transition: 0.3s;
     border-radius: 28px;
     display: inline-block;
@@ -1350,7 +1335,7 @@ input:checked + .slider:before {
     text-decoration: none;
   }
   .delete-list-button:hover {
-    background-color: #e01b1b;
+    background-color: #c51c1cc5;
   }
   .delete-list-button:active {
     position: relative;
@@ -1363,15 +1348,15 @@ input:checked + .slider:before {
 
   #main-wrapper {
     margin: 0 auto;
-    border: thick solid rgb(87, 72, 72);
-    background-color: rgba(245, 222, 179, 0.103);
+    margin-top: 2vh;
+    border: thick solid rgb(0, 0, 0);
+    color: #88558b;
     width: 100%;
     max-width: 1250px;
-    height: 92vh;
-    margin-left: -1vh;
+    height: 93vh;
     position: relative;
     border-radius: 8px;
-    padding-top: 20px;
+    overflow-y: scroll !important;
   }
 
   #background-image {
@@ -1423,6 +1408,7 @@ input:checked + .slider:before {
     display: inline-block;
     width: 24px;
     height: 14px;
+    margin-left: 10px;
     bottom: 5.2vh;
   }
 
@@ -1432,8 +1418,8 @@ input:checked + .slider:before {
     content: "";
     height: 14px;
     width: 12px;
-    left: 2px;
-    background-color: white;
+    left: -15px;
+    background-color: rgba(133, 95, 64, 0.534);
     -webkit-transition: 0.4s;
     transition: 0.4s;
   }
@@ -1491,18 +1477,18 @@ input:checked + .slider:before {
     background-color: rgba(112, 103, 243, 0.239);
     border-radius: 2px;
     max-height: 64px;
-    overflow-x: hidden;
+    /* overflow-y: hidden; */
   }
 
   li {
-    background-color: whitesmoke;
+    all: unset;
+    background-color: rgba(112, 103, 243, 0.239);
     margin: 6px;
     padding: 6px;
-    width: 100%;
+    width: 86%;
     height: max-content;
     display: inline-block;
     transition: 0.7s;
-
     word-break: break-all;
   }
 
@@ -1518,19 +1504,15 @@ input:checked + .slider:before {
 
   .todo-created-at {
     margin-right: 6px;
-    position: relative;
-    left: -10px;
-  }
-
-  .todo-priority {
-    width: 3px !important;
-    position: relative;
-    top: -10px;
-    left: 163px;
   }
 
   #background-image {
-    display: none;
+    display: inline;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0.3px;
+    z-index: -1;
   }
 
   .register-buttons {
@@ -1548,6 +1530,7 @@ input:checked + .slider:before {
   }
 
   #registration {
+    display: flex;
     position: absolute;
     flex-direction: column;
     top: 0;
@@ -1556,16 +1539,13 @@ input:checked + .slider:before {
     margin-top: 4vh;
     border-radius: 12px;
     overflow-y: scroll;
-    overscroll-behavior-y: contain;
     max-height: 80px;
-    transition: 0.7s;
   }
 
   #registration:hover {
     background-color: unset;
     transition: 0.7s;
-    max-height: 350px;
-    text-overflow: clip;
+    max-height: 100%;
   }
 
   .todo-priority {
@@ -1623,10 +1603,11 @@ input:checked + .slider:before {
 
   .copy-button {
     all: unset;
-    background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
-    background-color: #7892c2;
+    box-shadow: inset 0px 0px 15px 3px #23395e;
+    background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+    background-color: #2e466e;
     border-radius: 10px;
-    border: 0.2px solid #4e6096;
+    border: 1px solid #1f2f47;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -1636,19 +1617,18 @@ input:checked + .slider:before {
     text-decoration: none;
     text-shadow: 0px 1px 0px #263666;
     position: relative;
-    top: -15px;
+    top: -25px;
     left: 108px;
     width: 25px;
   }
 
   .delete-button {
     all: unset;
-    box-shadow: inset 0px 1px 0px 0px #54a3f7;
-    background: linear-gradient(to bottom, #3b95c5 5%, #479edb 100%);
-    background-color: #007dc1;
+    box-shadow: inset 0px 0px 15px 3px #23395e;
+    background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+    background-color: #2e466e;
     border-radius: 10px;
-    border: 1px solid #124d77;
-
+    border: 1px solid #1f2f47;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -1656,11 +1636,9 @@ input:checked + .slider:before {
     padding: 1px 4px;
     font-size: 13px;
     text-decoration: none;
-    text-shadow: 0px 1px 0px #154682;
-
+    text-shadow: 0px 1px 0px #263666;
     position: relative;
-    top: -12px;
+    top: -23px;
     left: 110px;
     width: 32px;
   }
-}
