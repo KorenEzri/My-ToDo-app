@@ -595,4 +595,9 @@ window.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("darkmodeon");
     }
   });
+  //MOBILE SCROLL SETTINGS
+  document
+    .getElementById("registration")
+    .scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+  //MOBILE SCROLL SETTINGS END
 });

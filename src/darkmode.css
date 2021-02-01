@@ -213,9 +213,6 @@ body {
   font-size: 14px;
 }
 
-#finished-counter {
-}
-
 #tasks-finished {
   padding: 4px;
   outline: none;
@@ -379,7 +376,7 @@ summary:focus {
   outline: none;
 }
 
-.copy-button {
+/* .copy-button {
   box-shadow: 0px 0px 0px 1.5px #9fb4f2;
   background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
   background-color: #7892c2;
@@ -395,7 +392,7 @@ summary:focus {
   text-shadow: 0px 1px 0px #283966;
   position: relative;
   top: -7px;
-}
+} */
 
 .copy-button {
   box-shadow: inset 0px 0px 15px 3px #23395e;
@@ -1225,7 +1222,7 @@ input:checked + .slider:before {
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-width: 320px) and (max-width: 480px) {
   body {
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
   }
 
@@ -1277,15 +1274,14 @@ input:checked + .slider:before {
 
   #counter-div {
     all: unset;
-    display: flex;
-    margin-top: -1vh;
     position: relative;
-    top: -30px;
+    top: -34px;
   }
 
   #counter {
     all: unset;
-    padding: 4px;
+    margin-left: 2px;
+    padding: 3.5px;
     outline: none;
     border: 0.6px solid #3a090d;
     border-radius: 5px;
@@ -1304,7 +1300,6 @@ input:checked + .slider:before {
     background-color: #411216c7;
     color: #983d9c;
     font-family: Cambria, Cochin, Georgia, serif;
-    font-size: 14px;
   }
 
   #tasks-finished {
@@ -1347,6 +1342,17 @@ input:checked + .slider:before {
     background-image: url(http://www.kirupa.com/images/search.png);
     background-repeat: no-repeat;
     background-size: 16px;
+  }
+
+  #user-span {
+    all: unset;
+    position: relative;
+    float: right;
+    left: 17vw;
+    top: -50px;
+    background-color: #77081159;
+    padding: 5px;
+    border-radius: 12px;
   }
 
   .sort-button {
@@ -1450,6 +1456,7 @@ input:checked + .slider:before {
     height: 93vh;
     position: relative;
     border-radius: 8px;
+    overflow-y: scroll !important;
   }
 
   #background-image {
@@ -1461,10 +1468,24 @@ input:checked + .slider:before {
     z-index: -1;
   }
 
+  #registration {
+    all: unset;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: -20px;
+    right: -15px;
+    margin-right: 1vw;
+    margin-top: 4vh;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
   #registered {
     font-family: Cambria, Cochin, Georgia, serif;
     padding-top: 10px;
     z-index: 9001;
+    position: relative;
   }
 
   #registration-div {
@@ -1473,14 +1494,6 @@ input:checked + .slider:before {
     max-height: 200px;
   }
 
-  #todo-list {
-    position: relative;
-    margin-top: -3.6vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 71vh;
-    max-width: 480px;
-  }
   /* imhere */
   #dark-mode {
     all: unset;
@@ -1511,11 +1524,223 @@ input:checked + .slider:before {
     transition: 0.4s;
   }
 
+  #view-section * {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #view-section {
+    position: relative;
+    width: 65%;
+    top: -8vh;
+    overflow-y: hidden;
+    height: 280px;
+  }
+
+  #todo-list {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    position: relative;
+    overflow-x: hidden;
+    width: 62vw;
+    height: 100%;
+  }
+
+  .todo-container * {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .todo-container {
+    all: unset;
+    height: 3vh;
+    overflow-y: hidden;
+    transition: 0.5s;
+  }
+
+  ul {
+    word-break: break-all;
+    width: 100%;
+    max-width: 900px;
+  }
+  .line-through {
+    text-decoration: line-through;
+  }
+
   li:hover .todo-container {
-    transition: 0.4s;
+    all: unset;
+    transition: 0.7s;
+    padding: 8px;
+    margin: 2px;
     background-color: rgba(112, 103, 243, 0.239);
-    border-radius: 16px;
-    padding: 2px;
+    border-radius: 2px;
+    max-height: 64px;
+    /* overflow-y: hidden; */
+  }
+
+  li {
+    all: unset;
+    background-color: rgba(112, 103, 243, 0.239);
+    margin: 6px;
+    padding: 6px;
+    width: 86%;
+    height: max-content;
+    display: inline-block;
+    transition: 0.7s;
+    word-break: break-all;
+  }
+
+  li:hover {
+    background-color: unset;
+    transition: 0.7s;
+  }
+
+  .todo-text {
+    all: unset;
+    font-size: 12px;
+  }
+
+  .todo-created-at {
+    margin-right: 6px;
+  }
+
+  #background-image {
+    display: inline;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0.3px;
+    z-index: -1;
+  }
+
+  .register-buttons {
+    all: unset;
+    width: 6vw;
+    max-width: 80px;
+    min-width: 80px;
+    height: 4vh;
+    margin-top: 12px;
+  }
+  #registration-div {
+    display: flex;
+    max-width: fit-content;
+    max-height: 200px;
+  }
+
+  #registration {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    margin-right: 1vw;
+    margin-top: 4vh;
+    border-radius: 12px;
+    overflow-y: scroll;
+    max-height: 80px;
+  }
+
+  #registration:hover {
+    background-color: unset;
+    transition: 0.7s;
+    max-height: 100%;
+  }
+
+  .todo-priority {
+    border-radius: 6px;
+    padding: 4px;
+    width: 10px;
+  }
+
+  #registration * {
+    font-family: Cambria, Cochin, Georgia, serif;
+  }
+
+  #sign-in {
+    all: unset;
+    z-index: 9001;
+    padding-bottom: 12px;
+    padding-top: 6px;
+    position: relative;
+    left: 20px;
+  }
+
+  #registered {
+    font-family: Cambria, Cochin, Georgia, serif;
+    max-width: 2px;
+    position: relative;
+    z-index: 9001;
+  }
+
+  #boldpart {
+    font-size: 22px;
+  }
+
+  #check-label * {
+    all: unset;
+    display: none;
+  }
+
+  #checkinputt * {
+    all: unset;
+    display: none;
+  }
+
+  .line-through * {
+    all: unset;
+    display: none;
+  }
+
+  .buttons-div {
+    all: unset;
+    position: relative;
+    display: block;
+    /* max-width: 43px; */
+    /* overflow-y: hidden; */
+  }
+
+  .copy-button {
+    all: unset;
+    box-shadow: inset 0px 0px 15px 3px #23395e;
+    background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+    background-color: #2e466e;
+    border-radius: 10px;
+    border: 1px solid #1f2f47;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    padding: 1px 9px;
+    font-size: 13px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #263666;
+    position: relative;
+    top: -25px;
+    left: 108px;
+    width: 25px;
+  }
+
+  .delete-button {
+    all: unset;
+    box-shadow: inset 0px 0px 15px 3px #23395e;
+    background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+    background-color: #2e466e;
+    border-radius: 10px;
+    border: 1px solid #1f2f47;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    padding: 1px 4px;
+    font-size: 13px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #263666;
+    position: relative;
+    top: -23px;
+    left: 110px;
+    width: 32px;
   }
 }
 
@@ -1532,7 +1757,7 @@ input:checked + .slider:before {
 /* iPads (portrait and landscape) ----------- */
 @media only screen and (min-width: 766px) and (max-width: 1026px) {
   body {
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
   }
 
