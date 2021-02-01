@@ -14,7 +14,7 @@ body {
   margin-top: 3vh;
   border: thick solid rgb(87, 72, 72);
   background-color: rgba(245, 222, 179, 0.103);
-  width: 90vw;
+  width: 100%;
   max-width: 1250px;
   height: 90vh;
   position: relative;
@@ -84,6 +84,7 @@ body {
   max-width: fit-content;
   padding-top: 20px;
   font-size: 22px;
+  z-index: 9001;
 }
 
 #boldpart {
@@ -121,6 +122,7 @@ body {
 }
 
 .register-inputs {
+  z-index: 9001;
   margin: 6px;
 }
 
@@ -227,7 +229,7 @@ body {
   display: block;
   position: relative;
   margin-top: 2vh;
-  width: 66vw;
+  width: 100%;
 }
 
 .todo-container * {

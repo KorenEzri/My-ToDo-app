@@ -22,7 +22,7 @@ body {
   margin-top: 3vh;
   border: thick solid rgb(0, 0, 0);
   color: #88558b;
-  width: 90vw;
+  width: 160%;
   max-width: 1250px;
   height: 90vh;
   position: relative;
@@ -100,6 +100,7 @@ body {
   font-size: 16px;
   max-width: fit-content;
   padding-top: 20px;
+  z-index: 9001;
   font-size: 22px;
 }
 
@@ -138,6 +139,7 @@ body {
 }
 
 .register-inputs {
+  z-index: 9001;
   margin: 6px;
 }
 
@@ -258,7 +260,7 @@ body {
   display: block;
   position: relative;
   margin-top: 2vh;
-  width: 66vw;
+  width: 100%;
 }
 
 .todo-container * {
