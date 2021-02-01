@@ -536,14 +536,9 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //SIGN IN
   signInButton.addEventListener("click", () => {
-    if (
-      !userPassword.value ||
-      userPassword.value.length < storedPassword.length
-    ) {
+    if (userPassword.value.length < storedPassword.length) {
       alert(
-        `Please check your password and try again. Your saved password is: ${localStorage.getItem(
-          "password"
-        )} I will now try to log in with it for you.`
+        `Please check your password and try again. Your saved password is: ${storedPassword}`
       );
     }
     if (userPassword.value === storedPassword || userPassword.value === "") {
