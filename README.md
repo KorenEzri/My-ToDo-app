@@ -2,11 +2,11 @@
 # A ToDo list - by Koren, a Cyber 4s Pre-course student
 ![pic2](https://user-images.githubusercontent.com/73742515/106538148-790b7280-6504-11eb-8853-ef968a954135.PNG)
 ![pic one](https://user-images.githubusercontent.com/73742515/106538153-7ad53600-6504-11eb-8716-d00bdde514a9.PNG)
-## Introduction
+# Introduction
 
 This is my pre-course final project - a todo list with all sorts of nice features like online registration, persistent lists and user passwords.
 
-### Usage
+## Usage
 
 Simply visit the github page, sign up and start writing down your tasks!
 
@@ -25,17 +25,17 @@ Simply visit the github page, sign up and start writing down your tasks!
 * A test I made myself using Puppeteer.
 * Slick design with more to come.
 
-# features: showcase
-# The app and general design:
+## Features: showcase
+### The app and general design:
 
 ![](introgif.gif)
 ![](darkmodegif.gif)
 
-# Mobile versions:
+### Mobile versions:
 
 ![](responsivitygif.gif)
 
-# My new test:
+### My new test:
 
 
 
