@@ -1,6 +1,7 @@
 
 # A ToDo list - by Koren, a Cyber 4s Pre-course student
-![pic2](https://user-images.githubusercontent.com/73742515/106538148-790b7280-6504-11eb-8853-ef968a954135.PNG)
+![pic one](https://user-images.githubusercontent.com/73742515/106538153-7ad53600-6504-11eb-8716-d00bdde514a9.PNG)
+
 # Introduction
 
 This is my pre-course final project - a todo list with all sorts of nice features like online registration, persistent lists and user passwords.
@@ -25,7 +26,7 @@ Simply visit [the github page](https://korenezri.github.io/pre-course-2021-final
 * The no-task monster, who likes to stare into lazy people's souls at night.
 * Slick design with more to come.
 
-![pic one](https://user-images.githubusercontent.com/73742515/106538153-7ad53600-6504-11eb-8716-d00bdde514a9.PNG)
+![pic2](https://user-images.githubusercontent.com/73742515/106538148-790b7280-6504-11eb-8853-ef968a954135.PNG)
 
 
 ## Features: showcase
