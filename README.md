@@ -40,7 +40,7 @@ Simply visit [the github page](https://korenezri.github.io/pre-course-2021-final
 ![](responsivitygif.gif)
 
 ### My new test:
-(the test is designed to cheeck if a list item's "Copy!" button works. It will have to hover over a list item to check the copy button's functionality, because that button only appears when hovering.
+(the test is designed to check whether a list item's "Copy!" button works. It will have to hover over a list item to check the copy button's functionality, because that button only appears when hovering.
 
 ![](testgif.gif)
 
