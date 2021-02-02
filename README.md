@@ -37,7 +37,7 @@ Simply visit the github page, sign up and start writing down your tasks!
 
 ### My new test:
 
-
+![](testgif.gif)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
