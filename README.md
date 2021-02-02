@@ -36,6 +36,7 @@ Simply visit the github page, sign up and start writing down your tasks!
 ![](responsivitygif.gif)
 
 ### My new test:
+(the test is designed to cheeck if a list item's "Copy!" button works.
 
 ![](testgif.gif)
 
