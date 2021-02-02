@@ -3813,26 +3813,21 @@ input:checked + .slider:before {
   }
 
   #user-span {
-    left: 2vw;
-  }
-  #main-wrapper {
-    margin: 0 auto;
-    margin-top: 2vh;
-    max-width: 1000px;
-    height: 90vh;
-    position: relative;
-    border-radius: 8px;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    left: 1vw;
+    top: -6vh;
   }
 
   #view-section {
     left: -2vw;
-    top: 1vh;
+    top: -8vh;
   }
 
   #todo-list {
     max-width: 70%;
+  }
+
+  #control-section {
+    top: -3vh;
   }
 }
 
