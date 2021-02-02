@@ -23,6 +23,7 @@ Simply visit the github page, sign up and start writing down your tasks!
 * Task-counter, and finished-task-counter are both available.
 * Copy list items with the click of a button!
 * A test I made myself using Puppeteer.
+* The no-task monster, who likes to stare into lazy people's souls at night.
 * Slick design with more to come.
 
 ## Features: showcase
