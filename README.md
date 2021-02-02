@@ -8,7 +8,7 @@ This is my pre-course final project - a todo list with all sorts of nice feature
 
 ## Usage
 
-Simply visit the github page, sign up and start writing down your tasks!
+Simply visit [the github page](https://korenezri.github.io/pre-course-2021-final-boilerplate/src/), sign up and start writing down your tasks!
 
 ## Usage: Features
 
