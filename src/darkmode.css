@@ -1674,7 +1674,7 @@ input:checked + .slider:before {
 
   #registered {
     font-family: Cambria, Cochin, Georgia, serif;
-    max-width: 2px;
+    max-width: 80px;
     position: relative;
     z-index: 9001;
   }
@@ -1928,7 +1928,7 @@ input:checked + .slider:before {
     text-decoration: none;
     position: relative;
     top: 0.1px;
-    left: -12px;
+    left: -2px;
   }
 
   #priority-selector {
@@ -2068,7 +2068,7 @@ input:checked + .slider:before {
     top: -22px;
     width: 65%;
     overflow-y: hidden;
-    height: 520px;
+    height: 920px;
   }
 
   #todo-list {
@@ -2186,7 +2186,7 @@ input:checked + .slider:before {
   #registration:hover {
     background-color: unset;
     transition: 0.7s;
-    max-height: 350px;
+    max-height: 650px;
     text-overflow: clip;
   }
 
@@ -2205,7 +2205,7 @@ input:checked + .slider:before {
 
   #registered {
     font-family: Cambria, Cochin, Georgia, serif;
-    max-width: 2px;
+    max-width: 80px;
     position: relative;
     z-index: 9001;
   }
@@ -2328,10 +2328,10 @@ input:checked + .slider:before {
     margin-top: -3.6vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 71vh;
+    max-height: 100%;
     max-width: 480px;
   }
-  /* imhere */
+
   #dark-mode {
     position: relative;
     padding-left: 12px;
@@ -2368,6 +2368,7 @@ input:checked + .slider:before {
   }
 
   #user-span {
+    top: -9vh;
     left: 2vw;
   }
   #main-wrapper {
@@ -2391,7 +2392,7 @@ input:checked + .slider:before {
 
   #view-section {
     left: -2vw;
-    top: 1vh;
+    top: -3vh;
   }
 
   #todo-list {

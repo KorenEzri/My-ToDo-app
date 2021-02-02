@@ -3387,6 +3387,7 @@ input:checked + .slider:before {
 
   #todo-list {
     left: 1vw;
+    top: 5vh;
   }
 
   #control-section {

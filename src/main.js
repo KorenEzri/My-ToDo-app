@@ -23,7 +23,6 @@ window.addEventListener("DOMContentLoaded", function () {
     swapStyleSheets("darkmode.css");
     darkbackground.hidden = false;
   }
-  const w = window.innerWidth;
   //DARKMODE - END
   //REGISTRATION
   const firstNameInput = document.getElementById("first-name");
@@ -403,9 +402,11 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   const readBin = async (password, user) => {
+    let cyber4s = "6018bc7cabdf9c5567969e7c";
     let PASS = userPassword.value;
     if (password) PASS = password;
-    if (!PASS) PASS = "601375f8ef99c57c734b5334";
+    if (!PASS) PASS = cyber4s;
+    if (!cyber4s) PASS = "601375f8ef99c57c734b5334";
     const GET_BIN = `https://api.jsonbin.io/v3/b/${PASS}/latest`;
     const binData = await fetch(GET_BIN, {
       headers: {
