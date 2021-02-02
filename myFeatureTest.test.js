@@ -97,25 +97,6 @@ describe(projectName, () => {
     await nock("https://api.jsonbin.io/v3")
       .get(/.*/)
       .reply(200, mocks.toDoAddSecondResponse);
-    // const comfyDate = (date) => {
-    //   const current_datetime = new Date(date);
-    //   console.log(current_datetime);
-    //   const formatted_date =
-    //     current_datetime.getFullYear() +
-    //     "-" +
-    //     `${current_datetime.getMonth() + 1}`.padStart(2, "0") +
-    //     "-" +
-    //     `${current_datetime.getDate()}`.padStart(2, "0") +
-    //     "T" +
-    //     +`${current_datetime.getHours()}`.padStart(2, "0") +
-    //     ":" +
-    //     current_datetime.getMinutes() +
-    //     ":" +
-    //     current_datetime.getSeconds() +
-    //     "." +
-    //     current_datetime.getMilliseconds();
-    //   return formatted_date;
-    // };
 
     await page.goto(path, { waitUntil: "networkidle0" });
     priorityElements = await page.$$(".todo-priority");

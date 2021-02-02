@@ -219,16 +219,18 @@ window.addEventListener("DOMContentLoaded", function () {
     const formatted_date =
       current_datetime.getFullYear() +
       "-" +
-      (current_datetime.getMonth() + 1) +
+      `${current_datetime.getMonth() + 1}`.padStart(2, "0") +
       "-" +
-      current_datetime.getDate() +
-      " " +
-      current_datetime.getHours() +
+      `${current_datetime.getDate()}`.padStart(2, "0") +
+      "T" +
+      +`${current_datetime.getHours()}`.padStart(2, "0") +
       ":" +
       current_datetime.getMinutes() +
       ":" +
       current_datetime.getSeconds() +
-      "  ";
+      "." +
+      current_datetime.getMilliseconds() +
+      " ";
     return formatted_date;
   };
   //FUNCTION: SORT LIST
@@ -618,15 +620,8 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     window.location.reload();
   });
-  const calc = (w) => {
-    let newW = window.innerWidth;
-    if (newW > 760 && w < 900) {
-      console.log(newW);
-      window.location.reload();
-    }
-  };
   window.addEventListener("resize", function () {
-    let w = window.innerWidth;
-    if (w > 760) calc(w);
+    if (window.innerWidth > 700 && window.innerWidth < 1200)
+      window.location.reload();
   });
 });
