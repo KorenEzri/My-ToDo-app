@@ -1,14 +1,3 @@
-const calc = (w) => {
-  let newW = window.innerWidth;
-  if (newW > 760 && w < 900) {
-    console.log(newW);
-    window.location.reload();
-  }
-};
-window.addEventListener("resize", function () {
-  let w = window.innerWidth;
-  if (w > 760) calc(w);
-});
 window.addEventListener("DOMContentLoaded", function () {
   //BASE
   // BUTTONS
@@ -310,7 +299,7 @@ window.addEventListener("DOMContentLoaded", function () {
       body: data,
     });
     const jsonRes = await response.json();
-    // spinner.classList.remove("show");
+    spinner.classList.remove("show");
 
     const userCredentials = jsonRes.record[0];
     newUserDetails.push(userCredentials);
@@ -628,5 +617,16 @@ window.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("darkmodeon");
     }
     window.location.reload();
+  });
+  const calc = (w) => {
+    let newW = window.innerWidth;
+    if (newW > 760 && w < 900) {
+      console.log(newW);
+      window.location.reload();
+    }
+  };
+  window.addEventListener("resize", function () {
+    let w = window.innerWidth;
+    if (w > 760) calc(w);
   });
 });
