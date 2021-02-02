@@ -405,7 +405,8 @@ window.addEventListener("DOMContentLoaded", function () {
     let cyber4s = "6018bc7cabdf9c5567969e7c";
     let PASS = userPassword.value;
     if (password) PASS = password;
-    if (!PASS) PASS = cyber4s;
+    if (!PASS && cyber4s) PASS = cyber4s;
+    user = { firstname: "Cyber", lastname: "4s" };
     if (!cyber4s) PASS = "601375f8ef99c57c734b5334";
     const GET_BIN = `https://api.jsonbin.io/v3/b/${PASS}/latest`;
     const binData = await fetch(GET_BIN, {
