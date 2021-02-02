@@ -405,7 +405,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let cyber4s = "6018bc7cabdf9c5567969e7c";
     let PASS = userPassword.value;
     if (password) PASS = password;
-    if (!PASS && cyber4s) {
+    if (!password && cyber4s && !PASS) {
       PASS = cyber4s;
       user = { firstname: "Cyber", lastname: "4s" };
     }
