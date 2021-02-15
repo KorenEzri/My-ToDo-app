@@ -401,7 +401,8 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
-  const readBin = async (password, user) => {
+
+  const readBin = (password, user) => {
     let cyber4s = "6018bc7cabdf9c5567969e7c";
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -411,41 +412,45 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     if (!cyber4s) PASS = "601375f8ef99c57c734b5334";
     const GET_BIN = `https://api.jsonbin.io/v3/b/${PASS}/latest`;
-    const binData = await fetch(GET_BIN, {
+    fetch(GET_BIN, {
       headers: {
         "X-Master-Key": X_MASTER_KEY,
       },
+    }).then((initialResponse) => {
+      initialResponse.json().then((main) => {
+        const todoList = main.record["my-todo"];
+        if (todoList) {
+          for (let i = 0; i < todoList.length; i++) {
+            oldList.push(todoList[i]);
+          }
+        }
+        postBin();
+        if (checkedArr.length > 0) {
+          finishedCounter.style.display = "unset";
+          counts.style.display = "unset";
+          finishedCounter.innerText = checkedArr.length;
+        }
+        if (user) {
+          if (user.firstname) {
+            const userSpan = document.createElement("span");
+            userSpan.setAttribute("id", "user-span");
+            userSpan.appendChild(
+              document.createTextNode(
+                `Signed in as: ${user.firstname} ${user.lastname}`
+              )
+            );
+            controlSection.appendChild(userSpan);
+          } else {
+            const userSpan = document.createElement("span");
+            userSpan.setAttribute("id", "user-span");
+            userSpan.appendChild(
+              document.createTextNode(`Signed in as: ${user}`)
+            );
+            controlSection.appendChild(userSpan);
+          }
+        }
+      });
     });
-    let main = await binData.json();
-    const todoList = main.record["my-todo"];
-    if (todoList) {
-      for (let i = 0; i < todoList.length; i++) {
-        oldList.push(todoList[i]);
-      }
-    }
-    postBin();
-    if (checkedArr.length > 0) {
-      finishedCounter.style.display = "unset";
-      counts.style.display = "unset";
-      finishedCounter.innerText = checkedArr.length;
-    }
-    if (user) {
-      if (user.firstname) {
-        const userSpan = document.createElement("span");
-        userSpan.setAttribute("id", "user-span");
-        userSpan.appendChild(
-          document.createTextNode(
-            `Signed in as: ${user.firstname} ${user.lastname}`
-          )
-        );
-        controlSection.appendChild(userSpan);
-      } else {
-        const userSpan = document.createElement("span");
-        userSpan.setAttribute("id", "user-span");
-        userSpan.appendChild(document.createTextNode(`Signed in as: ${user}`));
-        controlSection.appendChild(userSpan);
-      }
-    }
   };
   //FUNCTION: UPDATE BIN
   const updateBin = async (checked) => {
