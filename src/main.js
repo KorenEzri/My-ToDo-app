@@ -11,6 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const swapStyleSheets = (sheet) => {
     document.getElementById("style").setAttribute("href", sheet);
   };
+
   const darkModeSwitch = document.getElementById("dark-mode-switch");
   const darkModeselected = document.getElementById("dark-mode-select");
   const darkbackground = document.getElementById("background-image");
@@ -57,14 +58,17 @@ window.addEventListener("DOMContentLoaded", function () {
   finishedCounter.style.display = "none";
   counts.style.display = "none";
   //COUNTER END
-  // const viewSection = document.getElementById("view-section");
+  const viewSection = document.getElementById("view-section");
   const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   const mainWrapper = document.getElementById("main-wrapper");
   navigator.permissions.query({ name: "clipboard-write" }).then((status) => {
     status.onchange = () => {};
   });
-  const spinner = document.getElementById("spinner");
+  const spinner = document.getElementById("spin");
+  spinner.style.display = "none";
+  const regspinner = document.getElementById("regspinner");
+  regspinner.style.display = "none";
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
@@ -161,7 +165,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: WIPE LIST
-  const wipeList = async () => {
+  const wipeList = () => {
     const shouldIwipe = confirm("Are you sure you want to delete?");
     if (storedPassword === "601375f8ef99c57c734b5334") {
       return;
@@ -172,7 +176,7 @@ window.addEventListener("DOMContentLoaded", function () {
       if (safeWord === "Taylor Swift was right") {
         const PASS = storedPassword;
         const DELETE_BIN = `https://api.jsonbin.io/v3/b/${PASS}`;
-        const binData = await fetch(DELETE_BIN, {
+        fetch(DELETE_BIN, {
           method: "DELETE",
           headers: {
             "X-Master-Key": X_MASTER_KEY,
@@ -283,41 +287,47 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: CREATE BIN
-  const createBin = async () => {
-    spinner.classList.add("show");
+
+  const createBin = () => {
+    regspinner.style.display = "block";
+    regspinner.style.left = "80px";
+    regspinner.style.top = "80px ";
     registerData.push({
       firstname: firstNameInput.value,
       lastname: lastNameInput.value,
     });
     const data = JSON.stringify(registerData);
-    const response = await fetch(CREATE_BIN, {
+    fetch(CREATE_BIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-Master-Key": X_MASTER_KEY,
         "X-Bin-Private": false,
       },
-      body: data,
-    });
-    const jsonRes = await response.json();
-    spinner.classList.remove("show");
 
-    const userCredentials = jsonRes.record[0];
-    newUserDetails.push(userCredentials);
-    registerConfirm.classList.toggle("hidden");
-    introUsername.appendChild(
-      document.createTextNode(
-        userCredentials.firstname + " " + userCredentials.lastname
-      )
-    );
-    introPassword.appendChild(document.createTextNode(jsonRes.metadata.id));
-    registerConfirm.appendChild(
-      document.createTextNode(
-        "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
-      )
-    );
-    localStorage.setItem("password", JSON.stringify(jsonRes.metadata.id));
-    localStorage.setItem("user", JSON.stringify(userCredentials));
+      body: data,
+    }).then((initialResponse) => {
+      initialResponse.json().then((jsonRes) => {
+        const userCredentials = jsonRes.record[0];
+        newUserDetails.push(userCredentials);
+        registerConfirm.classList.toggle("hidden");
+        introUsername.appendChild(
+          document.createTextNode(
+            userCredentials.firstname + " " + userCredentials.lastname
+          )
+        );
+        regspinner.style.display = "none";
+
+        introPassword.appendChild(document.createTextNode(jsonRes.metadata.id));
+        registerConfirm.appendChild(
+          document.createTextNode(
+            "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
+          )
+        );
+        localStorage.setItem("password", JSON.stringify(jsonRes.metadata.id));
+        localStorage.setItem("user", JSON.stringify(userCredentials));
+      });
+    });
   };
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
@@ -403,6 +413,9 @@ window.addEventListener("DOMContentLoaded", function () {
   };
 
   const readBin = (password, user) => {
+    spinner.style.display = "block";
+    spinner.style.left = "560px";
+    spinner.style.top = "200px";
     let cyber4s = "6018bc7cabdf9c5567969e7c";
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -424,6 +437,8 @@ window.addEventListener("DOMContentLoaded", function () {
             oldList.push(todoList[i]);
           }
         }
+        spinner.style.display = "none";
+
         postBin();
         if (checkedArr.length > 0) {
           finishedCounter.style.display = "unset";
@@ -453,7 +468,7 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   };
   //FUNCTION: UPDATE BIN
-  const updateBin = async (checked) => {
+  const updateBin = (checked) => {
     let BIN_ID = `${userPassword.value}`;
     if (storedPassword) BIN_ID = storedPassword;
     const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -481,7 +496,7 @@ window.addEventListener("DOMContentLoaded", function () {
       todoList.push(obj);
     }
     todoList.push(amountofChecks);
-    const binUpdate = await fetch(UPDATE_BIN_URL, {
+    const binUpdate = fetch(UPDATE_BIN_URL, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
