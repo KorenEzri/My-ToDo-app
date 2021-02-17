@@ -55,11 +55,15 @@
           <button id="load-list" class="disable-select sign-in-button">Or sign In...</button>
           </div>
         <label class="disable-select">Your password: </label><input type="password" id="password" class="control-inputs register-inputs disable-select" placeholder="password">
+        <span class="loader" id="regspinner"></span>
+        
         <span id="registered" class="hidden"><div id="spinner"></div><strong>Congratulations!</strong> <br> <p id="intro-username">Username: </p><strong id="intro-password">Your super-secret-password is: </strong><br><br>You have to<b id="boldpart"> sign in </b>to start working on your list. </span>
       </div>
       <div id="view-section" class="disable-select">
+        <span class="loader" id="spin"></span>
         <ul id="todo-list"></ul>
       </div>
   </div>
   </body>
 </html>
+
