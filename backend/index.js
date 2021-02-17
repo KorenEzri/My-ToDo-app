@@ -45,8 +45,8 @@ app.get("/b/:id", (req, res) => {
 
 //on a POST request, create a new bin, assign an ID to it, and show it
 app.post("/b", (req, res) => {
-  let obj = { task: [] };
-  obj.task.push({
+  let obj = { record: [] };
+  obj.record.push({
     date: req.body.date,
     text: req.body.text,
     priority: req.body.priority,
@@ -87,16 +87,6 @@ app.delete("/b/:id", (req, res) => {
   fs.unlink(`backend/bins/${req.params.id}.json`, (err) => {
     res.json(`The bin ${req.params.id} was deleted`);
   });
-  // const found = tasks.some((task) => task.id == req.params.id);
-  // if (found) {
-  //   const index = tasks.findIndex(
-  //     (task) => task.id === parseInt(req.params.id)
-  //   );
-  //   tasks.splice(index, 1);
-  //   res.json({ msg: "task deleted", tasks });
-  // } else {
-  //   res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-  // }
 });
 
 //on GET request: show all tasks
