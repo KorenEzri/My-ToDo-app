@@ -28,10 +28,10 @@ app.get("/b", (req, res) => {
     });
     if (listofTasks.length < 1) {
       return res.status(400).json({
-        msg: `No task found`,
+        msg: `No bins found`,
       });
     } else {
-      res.json(listofTasks);
+      res.json(`Bins available: ${listofTasks}`);
     }
   });
 });
@@ -39,7 +39,11 @@ app.get("/b", (req, res) => {
 //on GET request: if the specified ID exists, show appropriate bin
 app.get("/b/:id", (req, res) => {
   fs.readFile(`backend/bins/${req.params.id}.json`, "utf8", (err, data) => {
-    res.json(data);
+    if (!data) {
+      res.status(400).json(`No bin found by the id of ${req.params.id}`);
+    } else {
+      res.send(JSON.stringify(data, null, 2));
+    }
   });
 });
 
@@ -54,12 +58,12 @@ app.post("/b", (req, res) => {
 
   let json = JSON.stringify(obj, null, 2);
   const binID = uuid.v4();
+  if (!req.body.date || !req.body.text || !req.body.priority) {
+    return res
+      .status(400)
+      .json({ msg: `The task info is incorrect or missing` });
+  }
   fs.writeFile(`backend/bins/${binID}.json`, json, "utf8", () => {
-    if (!req.body.date || !req.body.text || !req.body.priority) {
-      return res
-        .status(400)
-        .json({ msg: "The task info is incorrect or missing" });
-    }
     res.json(`Created bin. id: ${binID}`);
   });
 });
@@ -72,7 +76,7 @@ app.put("/b/:id", (req, res) => {
     text: req.body.text,
     priority: req.body.priority,
   });
-  let json = JSON.stringify(obj, null, 2);
+  let json = JSON.stringify(obj);
   fs.writeFile(`backend/bins/${req.params.id}.json`, json, "utf8", (err) => {
     if (!json) {
       res.json(`There was an error updating the bin`);
