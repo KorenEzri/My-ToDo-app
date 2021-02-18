@@ -19,6 +19,8 @@ app.use(express.static(path.join(__dirname, "../src")));
 
 //ROUTES
 
+//BIN-SPECIFIC ROUTES
+
 //on GET request: show all bin IDs
 app.get("/b", (req, res) => {
   fs.readdir(`backend/bins/`, "utf8", (err, files) => {
@@ -86,81 +88,83 @@ app.put("/b/:id", (req, res) => {
   res.json(`Updated bin. id: ${req.params.id}, bin: ${json}`);
 });
 
-//on DELETE request: delete the specified task
+//on DELETE request: delete the specified bin
 app.delete("/b/:id", (req, res) => {
   fs.unlink(`backend/bins/${req.params.id}.json`, (err) => {
     res.json(`The bin ${req.params.id} was deleted`);
   });
 });
 
+//TASK-SPECIFIC ROUTES
+
 //on GET request: show all tasks
-// app.get("/b", (req, res) => {
-//   res.json(tasks);
-// });
+app.get("/b", (req, res) => {
+  res.json(tasks);
+});
 
 //on GET request: if the specified ID exists, show appropriate task
-// app.get("/b/:id", (req, res) => {
-//   const found = tasks.some((task) => task.id == req.params.id);
-//   if (found) {
-//     res.json(tasks.filter((task) => task.id == req.params.id));
-//   } else {
-//     res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-//   }
-// });
+app.get("/b/:id", (req, res) => {
+  const found = tasks.some((task) => task.id == req.params.id);
+  if (found) {
+    res.json(tasks.filter((task) => task.id == req.params.id));
+  } else {
+    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
+  }
+});
 
 //on POST request: create a new task, assign an ID to it, and show it
-// app.post("/b", (req, res) => {
-//   const newTask = {
-//     id: uuid.v4(),
-//     date: req.body.date,
-//     text: req.body.text,
-//     priority: req.body.priority,
-//   };
+app.post("/b", (req, res) => {
+  const newTask = {
+    id: uuid.v4(),
+    date: req.body.date,
+    text: req.body.text,
+    priority: req.body.priority,
+  };
 
-//   if (!newTask.date || !newTask.text || !newTask.priority) {
-//     return res
-//       .status(400)
-//       .json({ msg: "The task info is incorrect or missing" });
-//   }
+  if (!newTask.date || !newTask.text || !newTask.priority) {
+    return res
+      .status(400)
+      .json({ msg: "The task info is incorrect or missing" });
+  }
 
-//   tasks.push(newTask);
-//   res.json(newTask);
-// });
+  tasks.push(newTask);
+  res.json(newTask);
+});
 
 //on PUT request: update the task according to it's id
-// app.put("/b/:id", (req, res) => {
-//   const found = tasks.some((task) => task.id == req.params.id);
-//   if (found) {
-//     const updatedTask = req.body;
-//     tasks.forEach((task) => {
-//       if (task.id == req.params.id) {
-//         task.date = updatedTask.date ? updatedTask.date : task.date;
-//         task.text = updatedTask.text ? updatedTask.text : task.text;
-//         task.priority = updatedTask.priority
-//           ? updatedTask.priority
-//           : task.priority;
+app.put("/b/:id", (req, res) => {
+  const found = tasks.some((task) => task.id == req.params.id);
+  if (found) {
+    const updatedTask = req.body;
+    tasks.forEach((task) => {
+      if (task.id == req.params.id) {
+        task.date = updatedTask.date ? updatedTask.date : task.date;
+        task.text = updatedTask.text ? updatedTask.text : task.text;
+        task.priority = updatedTask.priority
+          ? updatedTask.priority
+          : task.priority;
 
-//         res.json({ msg: "Task updated", task });
-//       }
-//     });
-//   } else {
-//     res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-//   }
-// });
+        res.json({ msg: "Task updated", task });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
+  }
+});
 
 //on DELETE request: delete the specified task
-// app.delete("/b/:id", (req, res) => {
-//   const found = tasks.some((task) => task.id == req.params.id);
-//   if (found) {
-//     const index = tasks.findIndex(
-//       (task) => task.id === parseInt(req.params.id)
-//     );
-//     tasks.splice(index, 1);
-//     res.json({ msg: "task deleted", tasks });
-//   } else {
-//     res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-//   }
-// });
+app.delete("/b/:id", (req, res) => {
+  const found = tasks.some((task) => task.id == req.params.id);
+  if (found) {
+    const index = tasks.findIndex(
+      (task) => task.id === parseInt(req.params.id)
+    );
+    tasks.splice(index, 1);
+    res.json({ msg: "task deleted", tasks });
+  } else {
+    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
+  }
+});
 
 //ROUTES END
 
