@@ -40,7 +40,7 @@ app.get("/all", (req, res) => {
   });
 });
 
-//on GET request: if the specified ID exists, show appropriate bin
+//on GET request: if the specified ID exists, show appropriate bin (show ToDoList basically)
 app.get("/b/:id", (req, res) => {
   fs.readFile(`backend/bins/${req.params.id}.json`, "utf8", (err, data) => {
     if (!data) {
@@ -74,20 +74,13 @@ app.post("/", (req, res) => {
 
 //on PUT request: update the bin according to it's id
 app.put("/b/:id", (req, res) => {
-  let obj = { task: [] };
-  obj.task.push({
-    date: req.body.date,
-    text: req.body.text,
-    priority: req.body.priority,
-  });
+  const BIN_ID = req.params.id;
+  let obj = { record: [] };
+  obj.record.push(req.body);
   let json = JSON.stringify(obj, null, 2);
-  fs.writeFile(`backend/bins/${req.params.id}.json`, json, "utf8", (err) => {
-    if (!json) {
-      res.json(`There was an error updating the bin`);
-    }
+  fs.writeFile(`backend/bins/${BIN_ID}.json`, json, "utf8", (data) => {
+    res.send(`bin updated. ${json}`);
   });
-  // json = JSON.stringify(JSON.parse(json), null, 2);
-  res.send(`Updated bin. id: ${req.params.id}, bin: ${json}`);
 });
 
 //on DELETE request: delete the specified bin
@@ -102,70 +95,20 @@ app.delete("/b/:id", (req, res) => {
 //////////////////////////////////////////////////
 
 //on GET request: if the specified ID exists, show appropriate task
-app.get("/b/:id", (req, res) => {
-  const BIN_ID = req.params.id;
-  const userBin = require(`${BIN_ID}`);
-  const found = userBin.some((task) => task.id == req.params.id);
-  if (found) {
-    res.json(userBin.filter((task) => task.id == req.params.id));
-  } else {
-    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-  }
-});
-
-//on POST request: create a new task, assign an ID to it, and show it
-app.post("/b", (req, res) => {
-  const newTask = {
-    id: uuid.v4(),
-    date: req.body.date,
-    text: req.body.text,
-    priority: req.body.priority,
-  };
-
-  if (!newTask.date || !newTask.text || !newTask.priority) {
-    return res
-      .status(400)
-      .json({ msg: "The task info is incorrect or missing" });
-  }
-
-  userBin.push(newTask);
-  res.json(newTask);
-});
-
-//on PUT request: update the task according to it's id
-app.put("/b/:id", (req, res) => {
-  const found = userBin.some((task) => task.id == req.params.id);
-  if (found) {
-    const updatedTask = req.body;
-    userBin.forEach((task) => {
-      if (task.id == req.params.id) {
-        task.date = updatedTask.date ? updatedTask.date : task.date;
-        task.text = updatedTask.text ? updatedTask.text : task.text;
-        task.priority = updatedTask.priority
-          ? updatedTask.priority
-          : task.priority;
-
-        res.json({ msg: "Task updated", task });
-      }
-    });
-  } else {
-    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-  }
-});
 
 //on DELETE request: delete the specified task
-app.delete("/b/:id", (req, res) => {
-  const found = userBin.some((task) => task.id == req.params.id);
-  if (found) {
-    const index = userBin.findIndex(
-      (task) => task.id === parseInt(req.params.id)
-    );
-    userBin.splice(index, 1);
-    res.json({ msg: "task deleted", userBin });
-  } else {
-    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-  }
-});
+// app.delete("/b/:id", (req, res) => {
+//   const found = userBin.some((task) => task.id == req.params.id);
+//   if (found) {
+//     const index = userBin.findIndex(
+//       (task) => task.id === parseInt(req.params.id)
+//     );
+//     userBin.splice(index, 1);
+//     res.json({ msg: "task deleted", userBin });
+//   } else {
+//     res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
+//   }
+// });
 
 //ROUTES END
 

@@ -503,6 +503,7 @@ window.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({ "my-todo": todoList }),
     });
+    console.log(JSON.stringify({ "my-todo": todoList }));
   };
   //FUNCTION: CHECK ITEM AS DONE
   const checkFinishedTasks = (e) => {
