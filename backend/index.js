@@ -2,10 +2,7 @@
 const express = require("express");
 const uuid = require("uuid");
 const path = require("path");
-const binDir = path.join(__dirname, "bins/");
-const binDirPath = path.resolve(
-  "C:UserskorenDocumentsGitHubpre-course-2021-final-boilerplate\backend\bins"
-);
+
 let tasks = require("./Tasks");
 const fs = require("fs");
 const { error } = require("console");
