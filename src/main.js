@@ -35,7 +35,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const getUser = JSON.parse(localStorage.getItem("user"));
   const registerData = [];
   const newUserDetails = [];
-  const CREATE_BIN = "http://localhost:3001/";
+  const CREATE_BIN = `https://api.jsonbin.io/v3/b`;
   const controlSection = document.getElementById("control-section");
   //REGISTRATION END
   //LIST
@@ -175,10 +175,14 @@ window.addEventListener("DOMContentLoaded", function () {
       );
       if (safeWord === "Taylor Swift was right") {
         const PASS = storedPassword;
-        const DELETE_BIN = `http://localhost:3001/b/${PASS}`;
+        const DELETE_BIN = `https://api.jsonbin.io/v3/b/${PASS}`;
         fetch(DELETE_BIN, {
           method: "DELETE",
+          headers: {
+            "X-Master-Key": X_MASTER_KEY,
+          },
         });
+        // localStorage.setItem('password',"601375f8ef99c57c734b5334");
         localStorage.removeItem("password");
         localStorage.removeItem("user");
         window.location.reload();
@@ -283,6 +287,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: CREATE BIN
+
   const createBin = () => {
     regspinner.style.display = "block";
     regspinner.style.left = "80px";
@@ -296,12 +301,14 @@ window.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-Master-Key": X_MASTER_KEY,
+        "X-Bin-Private": false,
       },
+
       body: data,
     }).then((initialResponse) => {
       initialResponse.json().then((jsonRes) => {
-        console.log(jsonRes);
-        const userCredentials = "";
+        const userCredentials = jsonRes.record[0];
         newUserDetails.push(userCredentials);
         registerConfirm.classList.toggle("hidden");
         introUsername.appendChild(
@@ -310,13 +317,14 @@ window.addEventListener("DOMContentLoaded", function () {
           )
         );
         regspinner.style.display = "none";
-        introPassword.appendChild(document.createTextNode(jsonRes));
+
+        introPassword.appendChild(document.createTextNode(jsonRes.metadata.id));
         registerConfirm.appendChild(
           document.createTextNode(
             "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
           )
         );
-        localStorage.setItem("password", JSON.stringify(jsonRes));
+        localStorage.setItem("password", JSON.stringify(jsonRes.metadata.id));
         localStorage.setItem("user", JSON.stringify(userCredentials));
       });
     });
@@ -403,6 +411,7 @@ window.addEventListener("DOMContentLoaded", function () {
       updateCounter();
     }
   };
+
   const readBin = (password, user) => {
     spinner.style.display = "block";
     spinner.style.left = "560px";
@@ -415,17 +424,22 @@ window.addEventListener("DOMContentLoaded", function () {
       user = { firstname: "Cyber", lastname: "4s" };
     }
     if (!cyber4s) PASS = "601375f8ef99c57c734b5334";
-    const GET_BIN = `http://localhost:3001/b/${password}`;
-    console.log(password);
-    fetch(GET_BIN).then((initialResponse) => {
+    const GET_BIN = `https://api.jsonbin.io/v3/b/${PASS}/latest`;
+    fetch(GET_BIN, {
+      headers: {
+        "X-Master-Key": X_MASTER_KEY,
+      },
+    }).then((initialResponse) => {
       initialResponse.json().then((main) => {
-        const todoList = main.record[0]["my-todo"];
+        const todoList = main.record["my-todo"];
         if (todoList) {
           for (let i = 0; i < todoList.length; i++) {
             oldList.push(todoList[i]);
           }
         }
+        console.log(main);
         spinner.style.display = "none";
+
         postBin();
         if (checkedArr.length > 0) {
           finishedCounter.style.display = "unset";
@@ -458,7 +472,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const updateBin = (checked) => {
     let BIN_ID = `${userPassword.value}`;
     if (storedPassword) BIN_ID = storedPassword;
-    const UPDATE_BIN_URL = `http://localhost:3001/b/${BIN_ID}`;
+    const UPDATE_BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
     let todoList = [];
     const amountofChecks = {
       amount: list.getElementsByTagName("SPAN").length,
@@ -490,6 +504,7 @@ window.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({ "my-todo": todoList }),
     });
+    console.log(JSON.stringify({ "my-todo": todoList }));
   };
   //FUNCTION: CHECK ITEM AS DONE
   const checkFinishedTasks = (e) => {
@@ -594,6 +609,7 @@ window.addEventListener("DOMContentLoaded", function () {
     if (userPassword.value === storedPassword || userPassword.value === "") {
       if (firstNameInput.value || lastNameInput.value) {
         const credintials = firstNameInput.value + " " + lastNameInput.value;
+        console.log(credintials);
         readBin(storedPassword, credintials);
       } else {
         readBin(storedPassword);
@@ -615,6 +631,7 @@ window.addEventListener("DOMContentLoaded", function () {
       window.location.reload();
     }
   });
+  // 6017e27babdf9c556795ee54
   //DARK MODE
   darkModeSwitch.addEventListener("change", () => {
     if (darkModeselected.checked) {

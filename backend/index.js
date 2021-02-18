@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(express.static(path.join(__dirname, "../src")));
+app.use(express.static(path.join(__dirname, "../src")));
 //BASE END
 
 //ROUTES
@@ -53,11 +53,21 @@ app.get("/b/:id", (req, res) => {
 
 //on a POST request, CREATE a new bin, assign an ID to it, and show it
 app.post("/", (req, res) => {
-  const binID = uuid.v4();
   let obj = { record: [] };
+  // obj.record.push({
+  //   date: req.body.date,
+  //   text: req.body.text,
+  //   priority: req.body.priority,
+  // });
   let json = JSON.stringify(obj, null, 2);
-  fs.writeFile(`backend/bins/${binID}.json`, `${json}`, "utf8", () => {
-    res.json(`${binID}`);
+  const binID = uuid.v4();
+  // if (!req.body.date || !req.body.text || !req.body.priority) {
+  //   return res
+  //     .status(400)
+  //     .json({ msg: `The task info is incorrect or missing` });
+  // }
+  fs.writeFile(`backend/bins/${binID}.json`, json, "utf8", () => {
+    res.json(`Created bin. id: ${binID}`);
   });
 });
 
@@ -74,14 +84,9 @@ app.put("/b/:id", (req, res) => {
 
 //on DELETE request: delete the specified bin
 app.delete("/b/:id", (req, res) => {
-  const id = req.params.id;
-  const path = `backend/bins/${req.params.id}.json`;
-  try {
-    fs.unlinkSync(path);
-    res.send(`Deleted ${id}`);
-  } catch (err) {
-    console.log(err);
-  }
+  fs.unlink(`backend/bins/${req.params.id}.json`, (err) => {
+    res.json(`The bin ${req.params.id} was deleted`);
+  });
 });
 
 //////////////////////////////////////////////////
