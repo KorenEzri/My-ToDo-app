@@ -66,9 +66,9 @@ window.addEventListener("DOMContentLoaded", function () {
     status.onchange = () => {};
   });
   const spinner = document.getElementById("spin");
-  spinner.style.display = "none";
+  spinner.hidden = "true";
   const regspinner = document.getElementById("regspinner");
-  regspinner.style.display = "none";
+  regspinner.hidden = "true";
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
@@ -284,7 +284,7 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: CREATE BIN
   const createBin = () => {
-    regspinner.style.display = "block";
+    regspinner.hidden = "false";
     regspinner.style.left = "80px";
     regspinner.style.top = "80px ";
     registerData.push({
@@ -309,7 +309,7 @@ window.addEventListener("DOMContentLoaded", function () {
             userCredentials.firstname + " " + userCredentials.lastname
           )
         );
-        regspinner.style.display = "none";
+        regspinner.hidden = "true";
         introPassword.appendChild(document.createTextNode(jsonRes));
         registerConfirm.appendChild(
           document.createTextNode(
@@ -404,7 +404,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   const readBin = (password, user) => {
-    spinner.style.display = "block";
+    spinner.hidden = "false";
     spinner.style.left = "560px";
     spinner.style.top = "200px";
     let cyber4s = "6018bc7cabdf9c5567969e7c";
@@ -425,7 +425,7 @@ window.addEventListener("DOMContentLoaded", function () {
             oldList.push(todoList[i]);
           }
         }
-        spinner.style.display = "none";
+        spinner.hidden = "true";
         postBin();
         if (checkedArr.length > 0) {
           finishedCounter.style.display = "unset";
