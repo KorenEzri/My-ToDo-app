@@ -437,6 +437,7 @@ window.addEventListener("DOMContentLoaded", function () {
             oldList.push(todoList[i]);
           }
         }
+        console.log(main);
         spinner.style.display = "none";
 
         postBin();

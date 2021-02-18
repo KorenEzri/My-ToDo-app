@@ -54,19 +54,18 @@ app.get("/b/:id", (req, res) => {
 //on a POST request, CREATE a new bin, assign an ID to it, and show it
 app.post("/", (req, res) => {
   let obj = { record: [] };
-  obj.record.push({
-    date: req.body.date,
-    text: req.body.text,
-    priority: req.body.priority,
-  });
-
+  // obj.record.push({
+  //   date: req.body.date,
+  //   text: req.body.text,
+  //   priority: req.body.priority,
+  // });
   let json = JSON.stringify(obj, null, 2);
   const binID = uuid.v4();
-  if (!req.body.date || !req.body.text || !req.body.priority) {
-    return res
-      .status(400)
-      .json({ msg: `The task info is incorrect or missing` });
-  }
+  // if (!req.body.date || !req.body.text || !req.body.priority) {
+  //   return res
+  //     .status(400)
+  //     .json({ msg: `The task info is incorrect or missing` });
+  // }
   fs.writeFile(`backend/bins/${binID}.json`, json, "utf8", () => {
     res.json(`Created bin. id: ${binID}`);
   });
