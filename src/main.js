@@ -419,10 +419,12 @@ window.addEventListener("DOMContentLoaded", function () {
     console.log(password);
     fetch(GET_BIN).then((initialResponse) => {
       initialResponse.json().then((main) => {
-        const todoList = main.record[0]["my-todo"];
-        if (todoList) {
-          for (let i = 0; i < todoList.length; i++) {
-            oldList.push(todoList[i]);
+        if (main.record[0]) {
+          const todoList = main.record[0]["my-todo"];
+          if (todoList) {
+            for (let i = 0; i < todoList.length; i++) {
+              oldList.push(todoList[i]);
+            }
           }
         }
         spinner.hidden = "true";

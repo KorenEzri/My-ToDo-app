@@ -1,0 +1,21 @@
+{
+  "record": [
+    {
+      "my-todo": [
+        {
+          "date": ", added at: 2021-02-18T23:53:36.391 Priority ",
+          "text": "asdasdasd",
+          "priority": "1"
+        },
+        {
+          "date": ", added at: 2021-02-18T23:53:44.194 Priority ",
+          "text": "asd",
+          "priority": "1"
+        },
+        {
+          "amount": 0
+        }
+      ]
+    }
+  ]
+}

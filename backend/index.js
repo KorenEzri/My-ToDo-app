@@ -1,11 +1,7 @@
 //BASE PREP
 const express = require("express");
 const uuid = require("uuid");
-const path = require("path");
-
-let tasks = require("./Tasks");
 const fs = require("fs");
-const { error } = require("console");
 
 const app = express();
 
