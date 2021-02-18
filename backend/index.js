@@ -42,7 +42,7 @@ app.get("/b/:id", (req, res) => {
     if (!data) {
       res.status(400).json(`No bin found by the id of ${req.params.id}`);
     } else {
-      res.send(JSON.stringify(data, null, 2));
+      res.send(JSON.stringify(JSON.parse(data), null, 2));
     }
   });
 });
