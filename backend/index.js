@@ -2,12 +2,13 @@
 const express = require("express");
 const uuid = require("uuid");
 const fs = require("fs");
-
+const path = require("path");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(express.static(path.join(__dirname, "../src")));
+app.use(express.static(path.join(__dirname, "../src"), { etag: false }));
+
 //BASE END
 
 //ROUTES
@@ -28,7 +29,7 @@ app.get("/all", (req, res) => {
         msg: `No bins found`,
       });
     } else {
-      res.send(`Bins available: \n${listofTasks.join("\n")}`);
+      res.status(200).send(`Bins available: \n${listofTasks.join("\n")}`);
     }
   });
 });
@@ -55,14 +56,20 @@ app.post("/", (req, res) => {
 });
 
 //on PUT request: update the bin according to it's id
-app.put("/b/:id", (req, res) => {
+app.put("/b/:id", (req, res, next) => {
   const BIN_ID = req.params.id;
   let obj = { record: [] };
-  obj.record.push(req.body);
-  let json = JSON.stringify(obj, null, 2);
-  fs.writeFile(`backend/bins/${BIN_ID}.json`, json, "utf8", (data) => {
-    res.send(`bin updated. ${json}`);
-  });
+  if (req.body) {
+    obj.record.push(req.body);
+    let json = JSON.stringify(obj, null, 2);
+    fs.writeFile(`backend/bins/${BIN_ID}.json`, json, "utf8", (data) => {
+      res.status(201).send(`bin updated. ${json}`);
+    });
+  } else {
+    const error = new Error("Could not update bin");
+    error.httpStatusCode = 400;
+    return next(error);
+  }
 });
 
 //on DELETE request: delete the specified bin
@@ -76,26 +83,6 @@ app.delete("/b/:id", (req, res) => {
     console.log(err);
   }
 });
-
-//////////////////////////////////////////////////
-//TASK-SPECIFIC ROUTES (After sign-in) (can be used for things other than "Todolist")
-//////////////////////////////////////////////////
-
-//on GET request: if the specified ID exists, show appropriate task
-
-//on DELETE request: delete the specified task
-// app.delete("/b/:id", (req, res) => {
-//   const found = userBin.some((task) => task.id == req.params.id);
-//   if (found) {
-//     const index = userBin.findIndex(
-//       (task) => task.id === parseInt(req.params.id)
-//     );
-//     userBin.splice(index, 1);
-//     res.json({ msg: "task deleted", userBin });
-//   } else {
-//     res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-//   }
-// });
 
 //ROUTES END
 

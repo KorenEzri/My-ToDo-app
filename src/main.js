@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const registerConfirm = document.getElementById("registered");
   const introUsername = document.getElementById("intro-username");
   const introPassword = document.getElementById("intro-password");
-  const getUser = JSON.parse(localStorage.getItem("user"));
+  const getUser = localStorage.getItem("user");
   const registerData = [];
   const newUserDetails = [];
   const CREATE_BIN = "http://localhost:3001/";
@@ -58,17 +58,15 @@ window.addEventListener("DOMContentLoaded", function () {
   finishedCounter.style.display = "none";
   counts.style.display = "none";
   //COUNTER END
-  const viewSection = document.getElementById("view-section");
-  const X_MASTER_KEY = `$2b$10$VkZVpVqK/MhliqQKjLlGYOJ3ZxI71N1JOMqPZ4DLAkyZmH77.U1yW`;
   const storedPassword = JSON.parse(localStorage.getItem("password"));
   const mainWrapper = document.getElementById("main-wrapper");
   navigator.permissions.query({ name: "clipboard-write" }).then((status) => {
     status.onchange = () => {};
   });
   const spinner = document.getElementById("spin");
-  spinner.hidden = "true";
+  // spinner.hidden = "true";
   const regspinner = document.getElementById("regspinner");
-  regspinner.hidden = "true";
+  // regspinner.hidden = "true";
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
@@ -167,7 +165,9 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: WIPE LIST
   const wipeList = () => {
     const shouldIwipe = confirm("Are you sure you want to delete?");
-    if (storedPassword === "601375f8ef99c57c734b5334") {
+    console.log("Arrived");
+
+    if (storedPassword === "cyber4s" || "default") {
       return;
     } else if (shouldIwipe) {
       const safeWord = prompt(
@@ -284,13 +284,29 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: CREATE BIN
   const createBin = () => {
-    regspinner.hidden = "false";
-    regspinner.style.left = "80px";
-    regspinner.style.top = "80px ";
+    // regspinner.hidden = "false";
+    // regspinner.style.left = "80px";
+    // regspinner.style.top = "80px ";
     registerData.push({
       firstname: firstNameInput.value,
       lastname: lastNameInput.value,
     });
+    newUserDetails.push(registerData);
+    registerConfirm.classList.toggle("hidden");
+    introUsername.appendChild(
+      document.createTextNode(
+        registerData.firstname + " " + registerData.lastname
+      )
+    );
+    // regspinner.hidden = "true";
+    registerConfirm.appendChild(
+      document.createTextNode(
+        "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
+      )
+    );
+    localStorage.setItem("user", JSON.stringify(registerData));
+
+    console.log(registerData);
     const data = JSON.stringify(registerData);
     fetch(CREATE_BIN, {
       method: "POST",
@@ -298,28 +314,17 @@ window.addEventListener("DOMContentLoaded", function () {
         "Content-Type": "application/json",
       },
       body: data,
-    }).then((initialResponse) => {
-      initialResponse.json().then((jsonRes) => {
-        console.log(jsonRes);
-        const userCredentials = "";
-        newUserDetails.push(userCredentials);
-        registerConfirm.classList.toggle("hidden");
-        introUsername.appendChild(
-          document.createTextNode(
-            userCredentials.firstname + " " + userCredentials.lastname
-          )
-        );
-        regspinner.hidden = "true";
-        introPassword.appendChild(document.createTextNode(jsonRes));
-        registerConfirm.appendChild(
-          document.createTextNode(
-            "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
-          )
-        );
-        localStorage.setItem("password", JSON.stringify(jsonRes));
-        localStorage.setItem("user", JSON.stringify(userCredentials));
+    })
+      .then((initialResponse) => {
+        initialResponse.json().then((jsonRes) => {
+          console.log(jsonRes);
+          localStorage.setItem("password", JSON.stringify(jsonRes));
+          introPassword.appendChild(document.createTextNode(jsonRes));
+        });
+      })
+      .catch((err) => {
+        alert(`${err.message}, URL is most likely incorrect (status)`);
       });
-    });
   };
   //FUNCTION: READ BIN / SIGN IN
   const postBin = () => {
@@ -404,17 +409,17 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   const readBin = (password, user) => {
-    spinner.hidden = "false";
-    spinner.style.left = "560px";
-    spinner.style.top = "200px";
-    let cyber4s = "6018bc7cabdf9c5567969e7c";
+    // spinner.hidden = "false";
+    // spinner.style.left = "560px";
+    // spinner.style.top = "200px";
+    let cyber4s = "cyber4s";
     let PASS = userPassword.value;
     if (password) PASS = password;
     if (!password && cyber4s && !PASS) {
       PASS = cyber4s;
       user = { firstname: "Cyber", lastname: "4s" };
     }
-    if (!cyber4s) PASS = "601375f8ef99c57c734b5334";
+    if (!cyber4s) PASS = "default";
     const GET_BIN = `http://localhost:3001/b/${password}`;
     console.log(password);
     fetch(GET_BIN).then((initialResponse) => {
@@ -427,7 +432,7 @@ window.addEventListener("DOMContentLoaded", function () {
             }
           }
         }
-        spinner.hidden = "true";
+        // spinner.hidden = "true";
         postBin();
         if (checkedArr.length > 0) {
           finishedCounter.style.display = "unset";
@@ -455,6 +460,9 @@ window.addEventListener("DOMContentLoaded", function () {
         }
       });
     });
+    // .catch((err) => {
+    //   alert(`${err.message}, URL is most likely incorrect (status 404)`);
+    // });
   };
   //FUNCTION: UPDATE BIN
   const updateBin = (checked) => {
@@ -584,15 +592,16 @@ window.addEventListener("DOMContentLoaded", function () {
       alert(`Please enter a valid password.`);
       return;
     }
-    if (userPassword.value.length < 24 && storedPassword) {
-      alert(
-        `Please check your password and try again. Your saved password is: ${storedPassword}.`
-      );
-      return;
-    } else if (userPassword.value.length < 24 && !storedPassword) {
-      `Please check your password and try again.`;
-      return;
-    }
+    // if (userPassword.value.length < 24 && storedPassword) {
+    //   alert(
+    //     `Please check your password and try again. Your saved password is: ${storedPassword}.`
+    //   );
+    //   return;}
+    // else if (userPassword.value.length < 24 && !storedPassword) {
+    //   `Please check your password and try again.`;
+    //   return;
+    // }
+
     if (userPassword.value === storedPassword || userPassword.value === "") {
       if (firstNameInput.value || lastNameInput.value) {
         const credintials = firstNameInput.value + " " + lastNameInput.value;
@@ -602,10 +611,7 @@ window.addEventListener("DOMContentLoaded", function () {
       }
       window.location.reload();
     }
-    if (
-      userPassword.value !== storedPassword &&
-      userPassword.value.length >= 24
-    ) {
+    if (userPassword.value !== storedPassword) {
       localStorage.removeItem("password");
       localStorage.setItem("password", JSON.stringify(userPassword.value));
       if (firstNameInput.value || lastNameInput.value) {
