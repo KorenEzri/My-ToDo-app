@@ -11,7 +11,6 @@ window.addEventListener("DOMContentLoaded", function () {
   const swapStyleSheets = (sheet) => {
     document.getElementById("style").setAttribute("href", sheet);
   };
-
   const darkModeSwitch = document.getElementById("dark-mode-switch");
   const darkModeselected = document.getElementById("dark-mode-select");
   const darkbackground = document.getElementById("background-image");
@@ -29,8 +28,6 @@ window.addEventListener("DOMContentLoaded", function () {
   const firstNameInput = document.getElementById("first-name");
   const lastNameInput = document.getElementById("last-name");
   const userPassword = document.getElementById("password");
-  // const registerConfirm = document.getElementById("registered");
-  // const introUsername = document.getElementById("intro-username");
   const introPassword = document.getElementById("intro-password");
   const getUser = localStorage.getItem("user");
   const registerData = [];
@@ -66,6 +63,9 @@ window.addEventListener("DOMContentLoaded", function () {
   const regspinner = document.getElementById("regspinner");
   spinner.style.display = "none";
   regspinner.style.display = "none";
+  if (spinner.style.display == "inline-block") {
+    mainWrapper.classList.remove("no-tasks");
+  }
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
@@ -80,78 +80,27 @@ window.addEventListener("DOMContentLoaded", function () {
     const todoText = document.createElement("div");
     const todoDate = document.createElement("div");
     const todoPriority = document.createElement("div");
-    // const buttonsDiv = document.createElement("div");
-    // const removeBtn = document.createElement("button");
-    // const copyBtn = document.createElement("button");
-    // //checkbox
-    // const checkedLabel = document.createElement("label");
-    // const checkedInput = document.createElement("input");
-    // const checkedDiv = document.createElement("div");
-    // checkedLabel.classList.add("checked-contain");
-    // checkedLabel.setAttribute("id", "check-label");
-    // checkedDiv.classList.add("checked-input");
-    // checkedInput.setAttribute("type", "checkbox");
-    // checkedInput.setAttribute("id", "checkinputt");
-    // checkedLabel.appendChild(checkedInput);
-    // checkedLabel.appendChild(checkedDiv);
-    // //checkbox end
     const chosenPriority =
       userPriority.options[userPriority.selectedIndex].text;
-    // removeBtn.innerHTML = "Delete";
-    // removeBtn.classList.add("delete-button");
-    // copyBtn.innerHTML = "Copy";
-    // copyBtn.classList.add("copy-button");
     itemContainer.classList.add("todo-container");
     todoText.classList.add("todo-text");
     todoDate.classList.add("todo-created-at");
     todoPriority.classList.add("todo-priority");
     colorPriority(chosenPriority, todoPriority);
-    // buttonsDiv.classList.add("buttons-div");
     todoText.appendChild(document.createTextNode(userInput.value));
     todoDate.appendChild(
       document.createTextNode(", added at: " + comfyDate() + "Priority ")
     );
     todoPriority.appendChild(document.createTextNode(chosenPriority));
-    // buttonsDiv.appendChild(copyBtn);
-    // buttonsDiv.appendChild(removeBtn);
     list.appendChild(listItem);
     listItem.appendChild(itemContainer);
     itemContainer.appendChild(todoText);
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
-    // itemContainer.appendChild(checkedLabel);
-    // itemContainer.appendChild(buttonsDiv);
-    // removeBtn.addEventListener("click", (e) => {
-    //   // const shouldDelete = confirm("Are you sure?");
-    //   Swal.fire({
-    //     title: "Are you sure you want to delete?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     toast: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Yes, delete it!",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       updateCounter();
-    //       updateBin();
-    //       e.target.parentNode.parentNode.parentNode.remove();
-    //     }
-    //   });
-    // });
-    // list.onclick = (e) => {
-    //   if (e.target.innerHTML !== "Copy") return;
-    //   let fullLi = e.target.parentNode.parentNode.textContent;
-    //   const liLength = fullLi.length;
-    //   const text = fullLi.substr(0, liLength - 10);
-    //   navigator.clipboard.writeText(text);
-    //   e.target.innerHTML = "Copied!";
-    // };
     userInput.value = "";
     userInput.focus();
     updateCounter();
-    updateBin();
+    updateBin(checkedArr);
     spinner.style.display = "inline-block";
   };
   //FUNCTION: COLOR PRIORITY
@@ -176,7 +125,6 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: WIPE LIST
   const wipeList = () => {
-    // const shouldIwipe = confirm("Are you sure you want to delete?");
     Swal.fire({
       title: "Are you sure you want to delete?",
       text: "You won't be able to revert this!",
@@ -237,7 +185,17 @@ window.addEventListener("DOMContentLoaded", function () {
       counts.style.display = "none";
     }
     if (n > 0 && n === count) {
-      mainWrapper.classList.add("done-all-tasks");
+      Swal.fire({
+        width: 0,
+        background: "transparent",
+        backdrop: `
+          rgba(0,0,123,0.4)
+          url("../pics/rickrollgif.gif")
+          left top
+          no-repeat
+        `,
+        showConfirmButton: false,
+      });
     } else {
       mainWrapper.classList.remove("done-all-tasks");
     }
@@ -320,7 +278,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: CREATE BIN
-  const CREATE_BIN = "http://locaasdasdsadlhost:3001/";
+  const CREATE_BIN = "http://localhost:3001/";
   const createBin = () => {
     registerData.push(firstNameInput.value);
     registerData.push(lastNameInput.value);
@@ -568,9 +526,6 @@ window.addEventListener("DOMContentLoaded", function () {
   /*---          -----       BEGIN       -----          ---*/
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
-  if (spinner.style.display == "inline-block") {
-    mainWrapper.classList.remove("no-tasks");
-  }
   readBin(storedPassword, getUser);
   const signedFlag = sessionStorage.getItem("flag");
   const logInMsg = () => {
@@ -675,6 +630,7 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   });
   signInButton.addEventListener("click", () => {
+    sessionStorage.removeItem("flag");
     if (!allPasswords.includes(`${userPassword.value}.json`)) {
       return (
         Swal.fire({

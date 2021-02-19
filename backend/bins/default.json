@@ -3,17 +3,13 @@
     {
       "my-todo": [
         {
-          "date": ", added at: 2021-02-19T1:16:26.843 Priority ",
-          "text": "l,",
+          "date": ", added at: 2021-02-20T1:37:47.873 Priority ",
+          "text": "asd",
           "priority": "1"
         },
         {
-          "date": ", added at: 2021-02-19T1:22:40.694 Priority ",
-          "text": "sdf",
-          "priority": "1"
-        },
-        {
-          "amount": 0
+          "amount": 0,
+          "index": []
         }
       ]
     }
