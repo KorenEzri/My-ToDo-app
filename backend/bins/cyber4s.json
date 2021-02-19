@@ -3,6 +3,11 @@
     {
       "my-todo": [
         {
+          "date": ", added at: 2021-02-19T16:40:24.626 Priority ",
+          "text": "asdadsadas",
+          "priority": "1"
+        },
+        {
           "amount": 0
         }
       ]

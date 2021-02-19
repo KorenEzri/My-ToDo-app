@@ -10,6 +10,22 @@ body {
   overflow-x: hidden;
 }
 
+/* VIEW SECTION SPINNER */
+#spin {
+  display: inline-block;
+  position: relative;
+  left: 40%;
+  top: 15%;
+}
+
+/* REGISTER SECTION SPINNER */
+#regspinner {
+  display: inline-block;
+  position: relative;
+  left: 35%;
+  top: 10vh;
+}
+
 #spinner {
   visibility: hidden;
   width: 80px;

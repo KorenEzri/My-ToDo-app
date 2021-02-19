@@ -6,11 +6,12 @@
     <title>My TODO List</title>
     <script src="utils.js"></script>
     <script src="main.js"></script>
-    <!-- <script src="../node_modules/axios/dist/axios.min.js"></script> -->
     <link rel="stylesheet" href="style.css" id="style">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
   </head>
   <body>
     <div id="main-wrapper">
+
       <img src="../pics/rename.png" alt="" id="background-image">
       <br>
       <label class="switch" id="dark-mode-switch">
@@ -50,16 +51,15 @@
         <label class="disable-select">First name: </label><input type="text" id="first-name" class="control-inputs register-inputs disable-select" placeholder="Your name">
         <label class="disable-select">Last name: </label><input type="text" id="last-name" class="control-inputs register-inputs disable-select" placeholder="Your last name">
         <div id="register-button-div"><button type="submit" id="register-button" class="disable-select">Register NOW!</button></div>
-        <div id="sign-in">
+        <div id="sign-in"> 
           <button id="load-list" class="disable-select sign-in-button">Or sign In...</button>
-          </div>
+          </div>       
         <label class="disable-select">Your password: </label><input type="password" id="password" class="control-inputs register-inputs disable-select" placeholder="password">
-        <!-- <span class="loader" id="regspinner" hidden="true"></span> -->
-        
         <span id="registered" class="hidden"><div id="spinner"></div><strong>Congratulations!</strong> <br> <p id="intro-username">Username: </p><strong id="intro-password">Your super-secret-password is: </strong><br><br>You have to<b id="boldpart"> sign in </b>to start working on your list. </span>
+        <span class="loader" id="regspinner" hidden="true"></span>
       </div>
+      <span class="loader" id="spin" hidden="true"></span>
       <div id="view-section" class="disable-select">
-        <!-- <span class="loader" id="spin" hidden="true"></span> -->
         <ul id="todo-list"></ul>
       </div>
   </div>

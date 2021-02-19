@@ -64,13 +64,14 @@ window.addEventListener("DOMContentLoaded", function () {
     status.onchange = () => {};
   });
   const spinner = document.getElementById("spin");
-  // spinner.hidden = "true";
   const regspinner = document.getElementById("regspinner");
-  // regspinner.hidden = "true";
+  spinner.style.display = "none";
+  regspinner.style.display = "none";
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
   const addToList = () => {
+    list.style.display = "none";
     if (userInput.value === "") {
       userInput.focus();
       return;
@@ -124,9 +125,9 @@ window.addEventListener("DOMContentLoaded", function () {
     removeBtn.addEventListener("click", (e) => {
       const shouldDelete = confirm("Are you sure?");
       if (shouldDelete) {
-        e.target.parentNode.parentNode.parentNode.remove();
         updateCounter();
         updateBin();
+        e.target.parentNode.parentNode.parentNode.remove();
       }
     });
     list.onclick = (e) => {
@@ -141,6 +142,7 @@ window.addEventListener("DOMContentLoaded", function () {
     userInput.focus();
     updateCounter();
     updateBin();
+    spinner.style.display = "inline-block";
   };
   //FUNCTION: COLOR PRIORITY
   const colorPriority = (priority, element) => {
@@ -190,6 +192,13 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: UPDATE COUNTER
+  setTimeout(function () {
+    if (!counter.textContent) {
+      mainWrapper.classList.add("no-tasks");
+    } else {
+      mainWrapper.classList.remove("no-tasks");
+    }
+  }, 1100);
   const updateCounter = (n) => {
     const count = list.querySelectorAll("li").length;
     counter.textContent = count;
@@ -209,12 +218,12 @@ window.addEventListener("DOMContentLoaded", function () {
       mainWrapper.classList.remove("done-all-tasks");
     }
     setTimeout(function () {
-      if (count === 0 || !count) {
+      if (count === 0) {
         mainWrapper.classList.add("no-tasks");
       } else {
         mainWrapper.classList.remove("no-tasks");
       }
-    }, 800);
+    }, 1);
   };
   //FUNCTION: COMFY DATE
   const comfyDate = () => {
@@ -288,25 +297,10 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: CREATE BIN
   const createBin = () => {
-    // regspinner.hidden = "false";
-    // regspinner.style.left = "80px";
-    // regspinner.style.top = "80px ";
     registerData.push(firstNameInput.value);
     registerData.push(lastNameInput.value);
     newUserDetails.push(registerData);
-    registerConfirm.classList.toggle("hidden");
-    introUsername.appendChild(
-      document.createTextNode(registerData[0] + " " + registerData[1])
-    );
-    // regspinner.hidden = "true";
-    registerConfirm.appendChild(
-      document.createTextNode(
-        "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
-      )
-    );
     localStorage.setItem("user", registerData);
-
-    console.log(registerData);
     const data = JSON.stringify(registerData);
     fetch(CREATE_BIN, {
       method: "POST",
@@ -317,7 +311,6 @@ window.addEventListener("DOMContentLoaded", function () {
     })
       .then((initialResponse) => {
         initialResponse.json().then((jsonRes) => {
-          console.log(jsonRes);
           localStorage.setItem("password", JSON.stringify(jsonRes));
           introPassword.appendChild(document.createTextNode(jsonRes));
         });
@@ -409,9 +402,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   const readBin = (password, user) => {
-    // spinner.hidden = "false";
-    // spinner.style.left = "560px";
-    // spinner.style.top = "200px";
+    spinner.style.display = "inline-block";
     let cyber4s = "cyber4s";
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -432,7 +423,7 @@ window.addEventListener("DOMContentLoaded", function () {
             }
           }
         }
-        // spinner.hidden = "true";
+        spinner.style.display = "none";
         postBin();
         if (checkedArr.length > 0) {
           finishedCounter.style.display = "unset";
@@ -466,6 +457,8 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: UPDATE BIN
   const updateBin = (checked) => {
+    list.style.display = "none";
+    spinner.style.display = "inline-block";
     let BIN_ID = `${userPassword.value}`;
     if (storedPassword) BIN_ID = storedPassword;
     const UPDATE_BIN_URL = `http://localhost:3001/b/${BIN_ID}`;
@@ -535,6 +528,31 @@ window.addEventListener("DOMContentLoaded", function () {
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
   readBin(storedPassword, getUser);
+  const signedFlag = sessionStorage.getItem("flag");
+  const logInMsg = () => {
+    Swal.fire({
+      title: `<strong>Hey there,
+      <span id="intro-username"> ${localStorage
+        .getItem("user")
+        .replace(",", " ")}!</strong>`,
+      icon: "success",
+      html:
+        `</span>Your super-secret-password is: </br> <strong id="intro-password">${storedPassword}</strong>` +
+        `<br><br>You are now signed in. </span>`,
+      showCloseButton: false,
+      showCancelButton: false,
+      focusConfirm: false,
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+      confirmButtonAriaLabel: "Thumbs up, great!",
+      cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+      cancelButtonAriaLabel: "Thumbs down",
+    });
+  };
+  if (!signedFlag) {
+    logInMsg();
+    sessionStorage.setItem("flag", "1");
+  }
+
   //FOCUS ON TASK INPUT BOX
   userInput.focus();
   //FOCUS ON TASK INPUT EVERY TIME YOU CHANGE PRIORITY
@@ -563,6 +581,7 @@ window.addEventListener("DOMContentLoaded", function () {
       return;
     }
     createBin();
+    sessionStorage.clear();
   });
   lastNameInput.onkeyup = (event) => {
     if (event.keyCode == 13 || event.which == 13) {

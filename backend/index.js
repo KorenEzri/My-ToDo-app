@@ -5,6 +5,9 @@ const fs = require("fs");
 const path = require("path");
 const app = express();
 
+app.use(function (req, res, next) {
+  setTimeout(next, 1000);
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../src"), { etag: false }));
