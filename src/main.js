@@ -29,13 +29,12 @@ window.addEventListener("DOMContentLoaded", function () {
   const firstNameInput = document.getElementById("first-name");
   const lastNameInput = document.getElementById("last-name");
   const userPassword = document.getElementById("password");
-  const registerConfirm = document.getElementById("registered");
-  const introUsername = document.getElementById("intro-username");
+  // const registerConfirm = document.getElementById("registered");
+  // const introUsername = document.getElementById("intro-username");
   const introPassword = document.getElementById("intro-password");
   const getUser = localStorage.getItem("user");
   const registerData = [];
   const newUserDetails = [];
-  const CREATE_BIN = "http://localhost:3001/";
   const controlSection = document.getElementById("control-section");
   //REGISTRATION END
   //LIST
@@ -81,63 +80,74 @@ window.addEventListener("DOMContentLoaded", function () {
     const todoText = document.createElement("div");
     const todoDate = document.createElement("div");
     const todoPriority = document.createElement("div");
-    const buttonsDiv = document.createElement("div");
-    const removeBtn = document.createElement("button");
-    const copyBtn = document.createElement("button");
-    //checkbox
-    const checkedLabel = document.createElement("label");
-    const checkedInput = document.createElement("input");
-    const checkedDiv = document.createElement("div");
-    checkedLabel.classList.add("checked-contain");
-    checkedLabel.setAttribute("id", "check-label");
-    checkedDiv.classList.add("checked-input");
-    checkedInput.setAttribute("type", "checkbox");
-    checkedInput.setAttribute("id", "checkinputt");
-    checkedLabel.appendChild(checkedInput);
-    checkedLabel.appendChild(checkedDiv);
-    //checkbox end
+    // const buttonsDiv = document.createElement("div");
+    // const removeBtn = document.createElement("button");
+    // const copyBtn = document.createElement("button");
+    // //checkbox
+    // const checkedLabel = document.createElement("label");
+    // const checkedInput = document.createElement("input");
+    // const checkedDiv = document.createElement("div");
+    // checkedLabel.classList.add("checked-contain");
+    // checkedLabel.setAttribute("id", "check-label");
+    // checkedDiv.classList.add("checked-input");
+    // checkedInput.setAttribute("type", "checkbox");
+    // checkedInput.setAttribute("id", "checkinputt");
+    // checkedLabel.appendChild(checkedInput);
+    // checkedLabel.appendChild(checkedDiv);
+    // //checkbox end
     const chosenPriority =
       userPriority.options[userPriority.selectedIndex].text;
-    removeBtn.innerHTML = "Delete";
-    removeBtn.classList.add("delete-button");
-    copyBtn.innerHTML = "Copy";
-    copyBtn.classList.add("copy-button");
+    // removeBtn.innerHTML = "Delete";
+    // removeBtn.classList.add("delete-button");
+    // copyBtn.innerHTML = "Copy";
+    // copyBtn.classList.add("copy-button");
     itemContainer.classList.add("todo-container");
     todoText.classList.add("todo-text");
     todoDate.classList.add("todo-created-at");
     todoPriority.classList.add("todo-priority");
     colorPriority(chosenPriority, todoPriority);
-    buttonsDiv.classList.add("buttons-div");
+    // buttonsDiv.classList.add("buttons-div");
     todoText.appendChild(document.createTextNode(userInput.value));
     todoDate.appendChild(
       document.createTextNode(", added at: " + comfyDate() + "Priority ")
     );
     todoPriority.appendChild(document.createTextNode(chosenPriority));
-    buttonsDiv.appendChild(copyBtn);
-    buttonsDiv.appendChild(removeBtn);
+    // buttonsDiv.appendChild(copyBtn);
+    // buttonsDiv.appendChild(removeBtn);
     list.appendChild(listItem);
     listItem.appendChild(itemContainer);
     itemContainer.appendChild(todoText);
     itemContainer.appendChild(todoDate);
     itemContainer.appendChild(todoPriority);
-    itemContainer.appendChild(checkedLabel);
-    itemContainer.appendChild(buttonsDiv);
-    removeBtn.addEventListener("click", (e) => {
-      const shouldDelete = confirm("Are you sure?");
-      if (shouldDelete) {
-        updateCounter();
-        updateBin();
-        e.target.parentNode.parentNode.parentNode.remove();
-      }
-    });
-    list.onclick = (e) => {
-      if (e.target.innerHTML !== "Copy") return;
-      let fullLi = e.target.parentNode.parentNode.textContent;
-      const liLength = fullLi.length;
-      const text = fullLi.substr(0, liLength - 10);
-      navigator.clipboard.writeText(text);
-      e.target.innerHTML = "Copied!";
-    };
+    // itemContainer.appendChild(checkedLabel);
+    // itemContainer.appendChild(buttonsDiv);
+    // removeBtn.addEventListener("click", (e) => {
+    //   // const shouldDelete = confirm("Are you sure?");
+    //   Swal.fire({
+    //     title: "Are you sure you want to delete?",
+    //     text: "You won't be able to revert this!",
+    //     icon: "warning",
+    //     showCancelButton: true,
+    //     toast: true,
+    //     confirmButtonColor: "#3085d6",
+    //     cancelButtonColor: "#d33",
+    //     confirmButtonText: "Yes, delete it!",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       updateCounter();
+    //       updateBin();
+    //       e.target.parentNode.parentNode.parentNode.remove();
+    //     }
+    //   });
+    // });
+    // list.onclick = (e) => {
+    //   if (e.target.innerHTML !== "Copy") return;
+    //   let fullLi = e.target.parentNode.parentNode.textContent;
+    //   const liLength = fullLi.length;
+    //   const text = fullLi.substr(0, liLength - 10);
+    //   navigator.clipboard.writeText(text);
+    //   e.target.innerHTML = "Copied!";
+    // };
     userInput.value = "";
     userInput.focus();
     updateCounter();
@@ -166,30 +176,44 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: WIPE LIST
   const wipeList = () => {
-    const shouldIwipe = confirm("Are you sure you want to delete?");
-    if (storedPassword === "cyber4s" || storedPassword === "default") {
-      alert("This is our default bin, and you WILL NOT delete it!");
-      return;
-    } else if (shouldIwipe) {
-      const safeWord = prompt(
-        "To delete, please type: 'Taylor Swift was right' without the ''s "
-      );
-      if (safeWord === "Taylor Swift was right") {
-        const PASS = storedPassword;
-        localStorage.removeItem("password");
-        localStorage.removeItem("user");
-        const defaultpass = [];
-        defaultpass.push(`"cyber4s"`);
-        localStorage.setItem("password", defaultpass); //imhere
-        localStorage.setItem("user", "Cyber4s");
-        const DELETE_BIN = `http://localhost:3001/b/${PASS}`;
-        fetch(DELETE_BIN, {
-          method: "DELETE",
-        });
-
-        window.location.reload();
+    // const shouldIwipe = confirm("Are you sure you want to delete?");
+    Swal.fire({
+      title: "Are you sure you want to delete?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (storedPassword === "cyber4s" || storedPassword === "default") {
+          Swal.fire({
+            title: "This is our default bin, and you WILL NOT delete it!",
+            text: "",
+            icon: "error",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "I understand.",
+          });
+        } else {
+          const PASS = storedPassword;
+          localStorage.removeItem("password");
+          localStorage.removeItem("user");
+          const defaultpass = [];
+          defaultpass.push(`"cyber4s"`);
+          localStorage.setItem("password", defaultpass); //imhere
+          localStorage.setItem("user", "Cyber4s");
+          const DELETE_BIN = `http://localhost:3001/b/${PASS}`;
+          fetch(DELETE_BIN, {
+            method: "DELETE",
+          });
+          window.location.reload();
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
       }
-    }
+    });
   };
   //FUNCTION: UPDATE COUNTER
   setTimeout(function () {
@@ -296,6 +320,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   };
   //FUNCTION: CREATE BIN
+  const CREATE_BIN = "http://locaasdasdsadlhost:3001/";
   const createBin = () => {
     registerData.push(firstNameInput.value);
     registerData.push(lastNameInput.value);
@@ -316,7 +341,15 @@ window.addEventListener("DOMContentLoaded", function () {
         });
       })
       .catch((err) => {
-        alert(`${err.message}, URL is most likely incorrect (status)`);
+        Swal.fire({
+          title: `${err.message}.`,
+          text: "URL is most likely incorrect (status)",
+          icon: "error",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+        });
       });
   };
   //FUNCTION: READ BIN / SIGN IN
@@ -381,12 +414,23 @@ window.addEventListener("DOMContentLoaded", function () {
       itemContainer.appendChild(buttonsDiv);
       itemContainer.appendChild(checkedLabel);
       removeBtn.addEventListener("click", (e) => {
-        const shouldDelete = confirm("Are you sure?");
-        if (shouldDelete) {
-          e.target.parentNode.parentNode.parentNode.remove();
-          updateCounter();
-          updateBin();
-        }
+        Swal.fire({
+          title: "Are you sure you want to delete?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          position: "center",
+          showCancelButton: true,
+          toast: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            e.target.parentNode.parentNode.parentNode.remove();
+            updateCounter();
+            updateBin();
+          }
+        });
       });
       list.onclick = (e) => {
         if (e.target.innerHTML !== "Copy") return;
@@ -406,7 +450,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let cyber4s = "cyber4s";
     let PASS = userPassword.value;
     if (password) PASS = password;
-    if (!password && cyber4s && !PASS) {
+    if (password === "cyber4s" || password === `"cyber4s"`) {
       PASS = cyber4s;
       user = { firstname: "Cyber", lastname: "4s" };
     }
@@ -436,7 +480,7 @@ window.addEventListener("DOMContentLoaded", function () {
             userSpan.setAttribute("id", "user-span");
             userSpan.appendChild(
               document.createTextNode(
-                `Signed in as: ${user.firstname}  ${user.lastname}`
+                `Signed in as: ${user.firstname} ${user.lastname}`
               )
             );
             controlSection.appendChild(userSpan);
@@ -451,9 +495,6 @@ window.addEventListener("DOMContentLoaded", function () {
         }
       });
     });
-    // .catch((err) => {
-    //   alert(`${err.message}, URL is most likely incorrect (status 404)`);
-    // });
   };
   //FUNCTION: UPDATE BIN
   const updateBin = (checked) => {
@@ -527,6 +568,9 @@ window.addEventListener("DOMContentLoaded", function () {
   /*---          -----       BEGIN       -----          ---*/
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
+  if (spinner.style.display == "inline-block") {
+    mainWrapper.classList.remove("no-tasks");
+  }
   readBin(storedPassword, getUser);
   const signedFlag = sessionStorage.getItem("flag");
   const logInMsg = () => {
@@ -552,7 +596,6 @@ window.addEventListener("DOMContentLoaded", function () {
     logInMsg();
     sessionStorage.setItem("flag", "1");
   }
-
   //FOCUS ON TASK INPUT BOX
   userInput.focus();
   //FOCUS ON TASK INPUT EVERY TIME YOU CHANGE PRIORITY
@@ -577,7 +620,13 @@ window.addEventListener("DOMContentLoaded", function () {
   //REGISTER TO SERVICE (ENTER AND CLICK)
   registerButton.addEventListener("click", () => {
     if (!firstNameInput.value || !lastNameInput.value) {
-      alert("Please enter your name first =)");
+      Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: "Please enter your name first =)",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
     createBin();
@@ -586,62 +635,84 @@ window.addEventListener("DOMContentLoaded", function () {
   lastNameInput.onkeyup = (event) => {
     if (event.keyCode == 13 || event.which == 13) {
       if (!firstNameInput.value || !lastNameInput.value) {
-        alert("Please enter your name first =)");
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Please enter your full name first =)",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         return;
       }
-      registerButton.click();
+      if (!userPassword.value) {
+        registerButton.click();
+      } else if (userPassword.value) {
+        signInButton.click();
+      }
     }
   };
   firstNameInput.onkeyup = (event) => {
     if (event.keyCode == 13 || event.which == 13) {
       if (!firstNameInput.value || !lastNameInput.value) {
-        alert("Please enter your name first =)");
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Please enter your name first =)",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         return;
       }
       registerButton.click();
     }
   };
   //SIGN IN
+  let allPasswords = [];
+  const GET_ALL_PASSWORDS = `http://localhost:3001/all`;
+  fetch(GET_ALL_PASSWORDS).then((response) => {
+    response.json().then((data) => {
+      allPasswords = data;
+    });
+  });
   signInButton.addEventListener("click", () => {
-    if (
-      !userPassword.value ||
-      userPassword.value == "" ||
-      userPassword.value.length === null
-    ) {
-      alert(`Please enter a valid password.`);
-      return;
-    }
-    // if (userPassword.value.length < 24 && storedPassword) {
-    //   alert(
-    //     `Please check your password and try again. Your saved password is: ${storedPassword}.`
-    //   );
-    //   return;}
-    // else if (userPassword.value.length < 24 && !storedPassword) {
-    //   `Please check your password and try again.`;
-    //   return;
-    // }
-
-    if (userPassword.value === storedPassword || userPassword.value === "") {
-      if (firstNameInput.value || lastNameInput.value) {
+    if (!allPasswords.includes(`${userPassword.value}.json`)) {
+      return (
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: `No user found that matches the password: " ${userPassword.value} "`,
+          showConfirmButton: false,
+          timer: 2000,
+        }),
+        (userPassword.value = ""),
+        userPassword.focus()
+      );
+    } else if (allPasswords.includes(`${userPassword.value}.json`)) {
+      if (
+        firstNameInput.value ||
+        lastNameInput.value ||
+        userPassword.value === "cyber4s"
+      ) {
         const credintials = firstNameInput.value + " " + lastNameInput.value;
-        readBin(storedPassword, credintials);
-      } else {
-        readBin(storedPassword);
+        localStorage.setItem("user", credintials);
+        localStorage.setItem("password", JSON.stringify(userPassword.value));
+        readBin(userPassword.value, credintials);
+        window.location.reload();
+      } else if (!firstNameInput.value && !lastNameInput.value) {
+        Swal.fire({
+          icon: "error",
+          title: "Please enter your name first =)",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-      window.location.reload();
-    }
-    if (userPassword.value !== storedPassword) {
-      localStorage.removeItem("password");
-      localStorage.setItem("password", JSON.stringify(userPassword.value));
-      if (firstNameInput.value || lastNameInput.value) {
-        const credintials = firstNameInput.value + " " + lastNameInput.value;
-        readBin(storedPassword, credintials);
-      } else {
-        readBin(storedPassword);
-      }
-      window.location.reload();
     }
   });
+  userPassword.onkeyup = (event) => {
+    if (event.keyCode == 13 || event.which == 13) {
+      signInButton.click();
+    }
+  };
   //DARK MODE
   darkModeSwitch.addEventListener("change", () => {
     if (darkModeselected.checked) {
@@ -655,9 +726,5 @@ window.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("darkmodeon");
     }
     window.location.reload();
-  });
-  window.addEventListener("resize", function () {
-    if (window.innerWidth > 700 && window.innerWidth < 1200)
-      window.location.reload();
   });
 });

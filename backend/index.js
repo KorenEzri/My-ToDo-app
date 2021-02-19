@@ -32,7 +32,7 @@ app.get("/all", (req, res) => {
         msg: `No bins found`,
       });
     } else {
-      res.status(200).send(`Bins available: \n${listofTasks.join("\n")}`);
+      res.status(200).send(listofTasks);
     }
   });
 });
