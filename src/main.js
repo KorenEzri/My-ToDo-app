@@ -165,9 +165,8 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: WIPE LIST
   const wipeList = () => {
     const shouldIwipe = confirm("Are you sure you want to delete?");
-    console.log("Arrived");
-
-    if (storedPassword === "cyber4s" || "default") {
+    if (storedPassword === "cyber4s" || storedPassword === "default") {
+      alert("This is our default bin, and you WILL NOT delete it!");
       return;
     } else if (shouldIwipe) {
       const safeWord = prompt(
@@ -175,12 +174,17 @@ window.addEventListener("DOMContentLoaded", function () {
       );
       if (safeWord === "Taylor Swift was right") {
         const PASS = storedPassword;
+        localStorage.removeItem("password");
+        localStorage.removeItem("user");
+        const defaultpass = [];
+        defaultpass.push(`"cyber4s"`);
+        localStorage.setItem("password", defaultpass); //imhere
+        localStorage.setItem("user", "Cyber4s");
         const DELETE_BIN = `http://localhost:3001/b/${PASS}`;
         fetch(DELETE_BIN, {
           method: "DELETE",
         });
-        localStorage.removeItem("password");
-        localStorage.removeItem("user");
+
         window.location.reload();
       }
     }
@@ -287,16 +291,12 @@ window.addEventListener("DOMContentLoaded", function () {
     // regspinner.hidden = "false";
     // regspinner.style.left = "80px";
     // regspinner.style.top = "80px ";
-    registerData.push({
-      firstname: firstNameInput.value,
-      lastname: lastNameInput.value,
-    });
+    registerData.push(firstNameInput.value);
+    registerData.push(lastNameInput.value);
     newUserDetails.push(registerData);
     registerConfirm.classList.toggle("hidden");
     introUsername.appendChild(
-      document.createTextNode(
-        registerData.firstname + " " + registerData.lastname
-      )
+      document.createTextNode(registerData[0] + " " + registerData[1])
     );
     // regspinner.hidden = "true";
     registerConfirm.appendChild(
@@ -304,7 +304,7 @@ window.addEventListener("DOMContentLoaded", function () {
         "You'll be using it to recover your list info, so don't forget it! In this browser I'll also remember it for you :)"
       )
     );
-    localStorage.setItem("user", JSON.stringify(registerData));
+    localStorage.setItem("user", registerData);
 
     console.log(registerData);
     const data = JSON.stringify(registerData);
@@ -445,7 +445,7 @@ window.addEventListener("DOMContentLoaded", function () {
             userSpan.setAttribute("id", "user-span");
             userSpan.appendChild(
               document.createTextNode(
-                `Signed in as: ${user.firstname} ${user.lastname}`
+                `Signed in as: ${user.firstname}  ${user.lastname}`
               )
             );
             controlSection.appendChild(userSpan);
@@ -453,7 +453,7 @@ window.addEventListener("DOMContentLoaded", function () {
             const userSpan = document.createElement("span");
             userSpan.setAttribute("id", "user-span");
             userSpan.appendChild(
-              document.createTextNode(`Signed in as: ${user}`)
+              document.createTextNode(`Signed in as: ${user.replace(",", " ")}`)
             );
             controlSection.appendChild(userSpan);
           }
