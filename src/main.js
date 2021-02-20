@@ -533,7 +533,7 @@ window.addEventListener("DOMContentLoaded", function () {
       title: `<strong>Hey there,
       <span id="intro-username"> ${localStorage
         .getItem("user")
-        .replace(",", " ")}!</strong>`,
+        .replace(",", " ")}</strong>`,
       icon: "success",
       html:
         `</span>Your super-secret-password is: </br> <strong id="intro-password">${storedPassword}</strong>` +
