@@ -486,9 +486,6 @@ li {
   word-break: break-all;
 }
 
-li * {
-}
-
 li:hover {
   background-color: unset;
   transition: 0.3s;
@@ -496,6 +493,7 @@ li:hover {
 
 .todo-text {
   font-size: 18px;
+  margin-right: 10px;
 }
 
 .todo-created-at {
@@ -1180,5 +1178,43 @@ input:checked + .slider:before {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  ul {
+    word-break: unset;
+  }
+  li {
+    word-break: unset;
+  }
+  .todo-container * {
+    font-size: 12px !important;
+  }
+  .todo-container {
+    overflow-y: scroll;
+  }
+  .todo-text {
+    margin-right: 10px;
+  }
+  .delete-button {
+    padding: 1px 4px;
+  }
+  .copy-button {
+    padding: 1px 6px;
+    margin-bottom: 6px;
+  }
+  .todo-created-at {
+    margin-top: 18px;
+  }
+  .todo-priority {
+    position: relative;
+    top: 4vh;
+    right: 10vw;
+    font-size: 9px !important;
+  }
+  #user-span {
+    top: -9vh;
+    left: -3vw;
   }
 }
