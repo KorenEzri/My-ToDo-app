@@ -5,7 +5,6 @@ const puppeteer = require("puppeteer");
 const full4s = require("@suvelocity/tester");
 const nock = require("nock");
 const useNock = require("nock-puppeteer");
-
 const path = "file://" + __dirname + "/src/index.html";
 let page;
 let browser;
