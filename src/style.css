@@ -495,6 +495,9 @@ li:hover {
   width: calc(8rem - 20px);
   float: left;
   word-wrap: break-word;
+  border-radius: 4px;
+  padding: 4px;
+  background: #ffffff00;
 }
 
 .save-button {

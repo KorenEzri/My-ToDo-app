@@ -3,6 +3,16 @@
     {
       "my-todo": [
         {
+          "date": ", added at: 2021-02-21T7:56:27.537 Priority ",
+          "text": "Koren",
+          "priority": "1"
+        },
+        {
+          "date": ", added at: 2021-02-21T7:56:29.657 Priority ",
+          "text": "sdf",
+          "priority": "1"
+        },
+        {
           "amount": 0
         }
       ]
