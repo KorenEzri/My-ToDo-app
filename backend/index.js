@@ -5,9 +5,9 @@ const fs = require("fs");
 const path = require("path");
 const app = express();
 
-app.use(function (req, res, next) {
-  setTimeout(next, 1000);
-});
+// app.use(function (req, res, next) {
+//   setTimeout(next, 1000);
+// });
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../src"), { etag: false }));
@@ -28,7 +28,7 @@ app.get("/all", (req, res) => {
       listofTasks.push(file);
     });
     if (listofTasks.length < 1) {
-      return res.status(400).json({
+      return res.status(404).json({
         msg: `No bins found`,
       });
     } else {
@@ -43,7 +43,7 @@ app.get("/b/:id", (req, res) => {
     if (!data) {
       res.status(400).json(`No bin found by the id of ${req.params.id}`);
     } else {
-      res.send(JSON.stringify(JSON.parse(data), null, 2));
+      res.status(200).send(JSON.stringify(JSON.parse(data), null, 2));
     }
   });
 });
@@ -53,25 +53,31 @@ app.post("/", (req, res) => {
   const binID = uuid.v4();
   let obj = { record: [] };
   let json = JSON.stringify(obj, null, 2);
-  fs.writeFile(`backend/bins/${binID}.json`, `${json}`, "utf8", () => {
-    res.json(`${binID}`);
-  });
+  try {
+    fs.writeFile(`backend/bins/${binID}.json`, `${json}`, "utf8", () => {
+      res.json(`${binID}`);
+    });
+  } catch {
+    res.status(400).send(`ERROR!, ${err}`);
+  }
 });
 
 //on PUT request: update the bin according to it's id
 app.put("/b/:id", (req, res, next) => {
-  const BIN_ID = req.params.id;
-  let obj = { record: [] };
-  if (req.body) {
+  try {
+    const BIN_ID = req.params.id;
+    let obj = { record: [] };
     obj.record.push(req.body);
     let json = JSON.stringify(obj, null, 2);
     fs.writeFile(`backend/bins/${BIN_ID}.json`, json, "utf8", (data) => {
       res.status(201).send(`bin updated. ${json}`);
     });
-  } else {
-    const error = new Error("Could not update bin");
-    error.httpStatusCode = 400;
-    return next(error);
+  } catch {
+    res.status(404).json({
+      statusCode: 404,
+      error: true,
+      msg: `File ${BIN_ID} not found`,
+    });
   }
 });
 

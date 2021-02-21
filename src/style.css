@@ -169,7 +169,7 @@ body {
   border-radius: 5px;
   background-color: #fbfbfb;
   font-family: Cambria, Cochin, Georgia, serif;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .register-inputs {
@@ -489,6 +489,62 @@ li {
 li:hover {
   background-color: unset;
   transition: 0.3s;
+}
+
+.edit-input {
+  width: calc(8rem - 20px);
+  float: left;
+  word-wrap: break-word;
+}
+
+.save-button {
+  box-shadow: inset 0px 1px 0px 0px #3dc21b;
+  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+  background-color: #44c767;
+  border-radius: 3px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Courier New;
+  font-size: 1rem !important;
+  padding: 3px 9px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+  margin: 6px;
+}
+.save-button:hover {
+  background: linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+  background-color: #5cbf2a;
+}
+.save-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.cancel-button {
+  box-shadow: inset 0px 1px 0px 0px #cf866c;
+  background: linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+  background-color: #d0451b;
+  border-radius: 3px;
+  border: 1px solid #942911;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Courier New;
+  font-size: 1rem !important;
+
+  padding: 3px 6px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #854629;
+}
+.cancel-button:hover {
+  background: linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+  background-color: #bc3315;
+}
+.cancel-button:active {
+  position: relative;
+  top: 1px;
 }
 
 .todo-text {
@@ -1411,4 +1467,7 @@ input:checked + .slider:before {
 
 .todo-priority {
   top: 2.2rem !important;
+}
+ul * {
+  font-size: 16px !important;
 }

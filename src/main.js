@@ -6,6 +6,8 @@ window.addEventListener("DOMContentLoaded", function () {
   const wipeButton = document.getElementById("wipe-button");
   const registerButton = document.getElementById("register-button");
   const signInButton = document.getElementById("load-list");
+  const saveBtn = document.createElement("button");
+  const cancelbtn = document.createElement("button");
   //BUTTONS END
   //DARKMODE
   const swapStyleSheets = (sheet) => {
@@ -156,7 +158,23 @@ window.addEventListener("DOMContentLoaded", function () {
           const DELETE_BIN = `http://localhost:3001/b/${PASS}`;
           fetch(DELETE_BIN, {
             method: "DELETE",
-          });
+          })
+            .then((res) => {
+              res.text();
+            })
+            .catch((err) => {
+              Swal.fire({
+                title: `${err.message}.`,
+                text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "OK",
+              });
+              console.log(err);
+              window.stop();
+            });
           window.location.reload();
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -185,27 +203,17 @@ window.addEventListener("DOMContentLoaded", function () {
       counts.style.display = "none";
     }
     if (n > 0 && n === count) {
-      Swal.fire({
-        width: 0,
-        background: "transparent",
-        backdrop: `
-          rgba(0,0,123,0.4)
-          url("../pics/rickrollgif.gif")
-          left top
-          no-repeat
-        `,
-        showConfirmButton: false,
-      });
+      mainWrapper.classList.add("done-all-tasks");
     } else {
       mainWrapper.classList.remove("done-all-tasks");
     }
     setTimeout(function () {
-      if (count === 0) {
+      if (count === 0 || !count) {
         mainWrapper.classList.add("no-tasks");
       } else {
         mainWrapper.classList.remove("no-tasks");
       }
-    }, 1);
+    }, 800);
   };
   //FUNCTION: COMFY DATE
   const comfyDate = () => {
@@ -280,6 +288,9 @@ window.addEventListener("DOMContentLoaded", function () {
   //FUNCTION: CREATE BIN
   const CREATE_BIN = "http://localhost:3001/";
   const createBin = () => {
+    spinner.style.display = "inline-block";
+    list.style.display = "none";
+    mainWrapper.classList.remove("no-tasks");
     registerData.push(firstNameInput.value);
     registerData.push(lastNameInput.value);
     newUserDetails.push(registerData);
@@ -293,6 +304,7 @@ window.addEventListener("DOMContentLoaded", function () {
       body: data,
     })
       .then((initialResponse) => {
+        console.log(initialResponse);
         initialResponse.json().then((jsonRes) => {
           localStorage.setItem("password", JSON.stringify(jsonRes));
           introPassword.appendChild(document.createTextNode(jsonRes));
@@ -301,13 +313,15 @@ window.addEventListener("DOMContentLoaded", function () {
       .catch((err) => {
         Swal.fire({
           title: `${err.message}.`,
-          text: "URL is most likely incorrect (status)",
+          text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
           icon: "error",
           showCancelButton: false,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
           confirmButtonText: "OK",
         });
+        console.log(err);
+        window.stop();
       });
   };
   //FUNCTION: READ BIN / SIGN IN
@@ -362,6 +376,7 @@ window.addEventListener("DOMContentLoaded", function () {
       todoText.appendChild(document.createTextNode(text));
       todoDate.appendChild(document.createTextNode(date));
       todoPriority.appendChild(document.createTextNode(priority));
+
       buttonsDiv.appendChild(copyBtn);
       buttonsDiv.appendChild(removeBtn);
       list.appendChild(listItem);
@@ -384,7 +399,8 @@ window.addEventListener("DOMContentLoaded", function () {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            e.target.parentNode.parentNode.parentNode.remove();
+            const taskToRemove = e.target.parentNode.parentNode.parentNode;
+            taskToRemove.remove();
             updateCounter();
             updateBin();
           }
@@ -414,45 +430,60 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     if (!cyber4s) PASS = "default";
     const GET_BIN = `http://localhost:3001/b/${password}`;
-    console.log(password);
-    fetch(GET_BIN).then((initialResponse) => {
-      initialResponse.json().then((main) => {
-        if (main.record[0]) {
-          const todoList = main.record[0]["my-todo"];
-          if (todoList) {
-            for (let i = 0; i < todoList.length; i++) {
-              oldList.push(todoList[i]);
+    fetch(GET_BIN)
+      .catch((err) => {
+        Swal.fire({
+          title: `${err.message}.`,
+          text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
+          icon: "error",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+        });
+        console.log(err);
+        window.stop();
+      })
+      .then((initialResponse) => {
+        initialResponse.json().then((main) => {
+          if (main.record[0]) {
+            const todoList = main.record[0]["my-todo"];
+            if (todoList) {
+              for (let i = 0; i < todoList.length; i++) {
+                oldList.push(todoList[i]);
+              }
             }
           }
-        }
-        spinner.style.display = "none";
-        postBin();
-        if (checkedArr.length > 0) {
-          finishedCounter.style.display = "unset";
-          counts.style.display = "unset";
-          finishedCounter.innerText = checkedArr.length;
-        }
-        if (user) {
-          if (user.firstname) {
-            const userSpan = document.createElement("span");
-            userSpan.setAttribute("id", "user-span");
-            userSpan.appendChild(
-              document.createTextNode(
-                `Signed in as: ${user.firstname} ${user.lastname}`
-              )
-            );
-            controlSection.appendChild(userSpan);
-          } else {
-            const userSpan = document.createElement("span");
-            userSpan.setAttribute("id", "user-span");
-            userSpan.appendChild(
-              document.createTextNode(`Signed in as: ${user.replace(",", " ")}`)
-            );
-            controlSection.appendChild(userSpan);
+          spinner.style.display = "none";
+          postBin();
+          if (checkedArr.length > 0) {
+            finishedCounter.style.display = "unset";
+            counts.style.display = "unset";
+            finishedCounter.innerText = checkedArr.length;
           }
-        }
+          if (user) {
+            if (user.firstname) {
+              const userSpan = document.createElement("span");
+              userSpan.setAttribute("id", "user-span");
+              userSpan.appendChild(
+                document.createTextNode(
+                  `Signed in as: ${user.firstname} ${user.lastname} `
+                )
+              );
+              controlSection.appendChild(userSpan);
+            } else {
+              const userSpan = document.createElement("span");
+              userSpan.setAttribute("id", "user-span");
+              userSpan.appendChild(
+                document.createTextNode(
+                  `Signed in as: ${user.replace(",", " ")}`
+                )
+              );
+              controlSection.appendChild(userSpan);
+            }
+          }
+        });
       });
-    });
   };
   //FUNCTION: UPDATE BIN
   const updateBin = (checked) => {
@@ -491,6 +522,18 @@ window.addEventListener("DOMContentLoaded", function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ "my-todo": todoList }),
+    }).catch((err) => {
+      Swal.fire({
+        title: `${err.message}.`,
+        text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "OK",
+      });
+      console.log(err);
+      window.stop();
     });
   };
   //FUNCTION: CHECK ITEM AS DONE
@@ -522,6 +565,45 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     listItemsAllArray.length = 0;
   };
+  //FUNCTION: EDIT TASK
+  const editTask = (e) => {
+    let target = e.target.closest("LI");
+    emptyarray = [];
+    for (let i = 0; i < listItemsAll.length; i++) {
+      emptyarray.push(listItemsAll[i]);
+    }
+    let targetTextBox = emptyarray.indexOf(target) + 1;
+    let itemToEdit = document.querySelector(
+      `#todo-list > li:nth-child(${targetTextBox}) > div > div.todo-text`
+    );
+    const oldText = itemToEdit.textContent;
+    if (itemToEdit.childNodes.length >= 2) return;
+    const inputField = document.createElement("INPUT");
+    const editBtnDiv = document.createElement("div");
+    inputField.setAttribute("placeholder", oldText);
+    editBtnDiv.classList.add("edit-button-div");
+    saveBtn.classList.add("save-button");
+    cancelbtn.classList.add("cancel-button");
+    inputField.classList.add("edit-input");
+    saveBtn.innerHTML = "Save";
+    cancelbtn.innerHTML = "Cancel";
+    itemToEdit.style.color = "transparent";
+    itemToEdit.appendChild(inputField);
+    editBtnDiv.appendChild(saveBtn);
+    editBtnDiv.appendChild(cancelbtn);
+    itemToEdit.appendChild(editBtnDiv);
+    saveBtn.addEventListener("click", () => {
+      itemToEdit.textContent = inputField.value;
+      itemToEdit.style.color = "unset";
+      updateBin();
+    });
+    cancelbtn.addEventListener("click", () => {
+      itemToEdit.style.color = "unset";
+      inputField.remove();
+      editBtnDiv.remove();
+    });
+  };
+
   ///////////////////////***********************************************************/////////////////////////////////
   /*---          -----       BEGIN       -----          ---*/
   ///////////////////////***********************************************************/////////////////////////////////
@@ -559,6 +641,7 @@ window.addEventListener("DOMContentLoaded", function () {
   });
   //CHECKBOX WHEN HOVER ON LI: "FINISH TASK"
   list.addEventListener("click", checkFinishedTasks);
+  list.addEventListener("dblclick", editTask);
   //ADD TO LIST (ENTER AND CLICK)
   addButton.addEventListener("click", addToList);
   userInput.onkeyup = (event) => {
@@ -624,11 +707,25 @@ window.addEventListener("DOMContentLoaded", function () {
   //SIGN IN
   let allPasswords = [];
   const GET_ALL_PASSWORDS = `http://localhost:3001/all`;
-  fetch(GET_ALL_PASSWORDS).then((response) => {
-    response.json().then((data) => {
-      allPasswords = data;
+  fetch(GET_ALL_PASSWORDS)
+    .catch((err) => {
+      Swal.fire({
+        title: `${err.message}.`,
+        text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "OK",
+      });
+      console.log(err);
+      window.stop();
+    })
+    .then((response) => {
+      response.json().then((data) => {
+        allPasswords = data;
+      });
     });
-  });
   signInButton.addEventListener("click", () => {
     sessionStorage.removeItem("flag");
     if (!allPasswords.includes(`${userPassword.value}.json`)) {
