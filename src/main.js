@@ -65,13 +65,22 @@ window.addEventListener("DOMContentLoaded", function () {
   const regspinner = document.getElementById("regspinner");
   spinner.style.display = "none";
   regspinner.style.display = "none";
-  if (spinner.style.display == "inline-block") {
-    mainWrapper.classList.remove("no-tasks");
-  }
   //BASE END
   //FUNCTIONS
   //FUNCTION: ADD TO LIST
   const addToList = () => {
+    if (storedPassword === "cyber4s" || storedPassword === `"cyber4s"`) {
+      Swal.fire({
+        title: "Can't update default bin!",
+        text: "Please sign in or register to continue :)",
+        icon: "info",
+        position: "center",
+        showConfirmButton: true,
+        toast: true,
+        confirmButtonColor: "#3085d6",
+      });
+      return;
+    }
     list.style.display = "none";
     if (userInput.value === "") {
       userInput.focus();
@@ -175,8 +184,10 @@ window.addEventListener("DOMContentLoaded", function () {
               console.log(err);
               window.stop();
             });
-          window.location.reload();
+          const userSpan = document.getElementById("user-span");
+          userSpan.style.display = "none";
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          localStorage.setItem("deleted", "true");
         }
       }
     });
@@ -308,6 +319,7 @@ window.addEventListener("DOMContentLoaded", function () {
         initialResponse.json().then((jsonRes) => {
           localStorage.setItem("password", JSON.stringify(jsonRes));
           introPassword.appendChild(document.createTextNode(jsonRes));
+          window.location.reload();
         });
       })
       .catch((err) => {
@@ -387,6 +399,18 @@ window.addEventListener("DOMContentLoaded", function () {
       itemContainer.appendChild(buttonsDiv);
       itemContainer.appendChild(checkedLabel);
       removeBtn.addEventListener("click", (e) => {
+        if (storedPassword === "cyber4s" || storedPassword === `"cyber4s"`) {
+          Swal.fire({
+            title: "Can't update default bin!",
+            text: "Please sign in or register to continue :)",
+            icon: "info",
+            position: "center",
+            showConfirmButton: true,
+            toast: true,
+            confirmButtonColor: "#3085d6",
+          });
+          return;
+        }
         Swal.fire({
           title: "Are you sure you want to delete?",
           text: "You won't be able to revert this!",
@@ -421,6 +445,23 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   const readBin = (password, user) => {
     spinner.style.display = "inline-block";
+    if (!password) {
+      localStorage.setItem("password", `"cyber4s"`);
+      password = "cyber4s";
+      Swal.fire({
+        title: `<strong>Hey there!`,
+        icon: "success",
+        html: `</span>You're currently not signed in, so we've signed you into our default bin. To sign in, please register first. \n
+          Your password for the default bin, which you can return to at any time without any username is: </br> <strong id="intro-password">cyber4s</strong>`,
+        showCloseButton: false,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: "Thumbs up, great!",
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: "Thumbs down",
+      });
+    }
     let cyber4s = "cyber4s";
     let PASS = userPassword.value;
     if (password) PASS = password;
@@ -522,19 +563,23 @@ window.addEventListener("DOMContentLoaded", function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ "my-todo": todoList }),
-    }).catch((err) => {
-      Swal.fire({
-        title: `${err.message}.`,
-        text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
-        icon: "error",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "OK",
+    })
+      .catch((err) => {
+        Swal.fire({
+          title: `${err.message}.`,
+          text: `${err}  (URL is most likely incorrect (400 BAD REQUEST))`,
+          icon: "error",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+        });
+        console.log(err);
+        window.stop();
+      })
+      .then(() => {
+        window.location.reload();
       });
-      console.log(err);
-      window.stop();
-    });
   };
   //FUNCTION: CHECK ITEM AS DONE
   const checkFinishedTasks = (e) => {
@@ -567,6 +612,18 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   //FUNCTION: EDIT TASK
   const editTask = (e) => {
+    if (storedPassword === "cyber4s" || storedPassword === `"cyber4s"`) {
+      Swal.fire({
+        title: "Can't update default bin!",
+        text: "Please sign in or register to continue :)",
+        icon: "info",
+        position: "center",
+        showConfirmButton: true,
+        toast: true,
+        confirmButtonColor: "#3085d6",
+      });
+      return;
+    }
     let target = e.target.closest("LI");
     emptyarray = [];
     for (let i = 0; i < listItemsAll.length; i++) {
@@ -603,31 +660,33 @@ window.addEventListener("DOMContentLoaded", function () {
       editBtnDiv.remove();
     });
   };
-
   ///////////////////////***********************************************************/////////////////////////////////
   /*---          -----       BEGIN       -----          ---*/
   ///////////////////////***********************************************************/////////////////////////////////
   //LOAD USER'S LIST
+  localStorage.removeItem("deleted");
   readBin(storedPassword, getUser);
   const signedFlag = sessionStorage.getItem("flag");
   const logInMsg = () => {
-    Swal.fire({
-      title: `<strong>Hey there,
+    if (localStorage.getItem("user")) {
+      Swal.fire({
+        title: `<strong>Hey there,
       <span id="intro-username"> ${localStorage
         .getItem("user")
         .replace(",", " ")}</strong>`,
-      icon: "success",
-      html:
-        `</span>Your super-secret-password is: </br> <strong id="intro-password">${storedPassword}</strong>` +
-        `<br><br>You are now signed in. </span>`,
-      showCloseButton: false,
-      showCancelButton: false,
-      focusConfirm: false,
-      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
-      confirmButtonAriaLabel: "Thumbs up, great!",
-      cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-      cancelButtonAriaLabel: "Thumbs down",
-    });
+        icon: "success",
+        html:
+          `</span>Your super-secret-password is: </br> <strong id="intro-password">${storedPassword}</strong>` +
+          `<br><br>You are now signed in. </span>`,
+        showCloseButton: false,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: "Thumbs up, great!",
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: "Thumbs down",
+      });
+    }
   };
   if (!signedFlag) {
     logInMsg();
@@ -654,7 +713,15 @@ window.addEventListener("DOMContentLoaded", function () {
   //SEARCH LIST
   search.addEventListener("keyup", searchList);
   //WIPE LIST
-  wipeButton.addEventListener("click", wipeList);
+  console.log(localStorage.getItem("deleted"));
+  wipeButton.addEventListener("click", () => {
+    setTimeout(() => {
+      if (localStorage.getItem("deleted")) {
+        window.location.reload();
+      }
+    }, 3000);
+    wipeList();
+  });
   //REGISTER TO SERVICE (ENTER AND CLICK)
   registerButton.addEventListener("click", () => {
     if (!firstNameInput.value || !lastNameInput.value) {
@@ -780,4 +847,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     window.location.reload();
   });
+  if (spinner.style.display !== "none") {
+    mainWrapper.classList.remove("no-tasks");
+  }
 });
