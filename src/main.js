@@ -650,6 +650,13 @@ window.addEventListener("DOMContentLoaded", function () {
     editBtnDiv.appendChild(cancelbtn);
     itemToEdit.appendChild(editBtnDiv);
     saveBtn.addEventListener("click", () => {
+      if (!inputField.value) {
+        itemToEdit.style.color = "unset";
+        inputField.remove();
+        editBtnDiv.remove();
+        saveBtn.remove();
+        return;
+      }
       itemToEdit.textContent = inputField.value;
       itemToEdit.style.color = "unset";
       updateBin();
